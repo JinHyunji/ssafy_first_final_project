@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>데스크탑 알림</title>
+</head>
+
+<body>
+
+  <button onclick="notifyMe()">Notify me!</button>
+
+  <script>
+
+
+    function notifyMe() {
+      if (!("Notification" in window)) {
+        // Check if the browser supports notifications
+        alert("This browser does not support desktop notification");
+      } else if (Notification.permission === "granted") {
+        // Check whether notification permissions have already been granted;
+        // if so, create a notification
+        // const notification = new Notification("Hi there!");
+        var today = new Date().getDay();
+        console.log(today);
+        // const notification = new Notification("월요일에만 울리는 알람")
+        if(today === 1){
+          const notification = new Notification("월요일에만 울리는 알람")
+        }
+
+        setTimeout(function () {
+          window.open("https://www.mozilla.org", "_blank");
+        }, 5000);
+        
+        notification.onclick = (event) => {
+          event.preventDefault(); // prevent the browser from focusing the Notification's tab
+          window.open("https://www.mozilla.org", "_blank");
+        };
+
+        // …
+      } else if (Notification.permission !== "denied") {
+        // We need to ask the user for permission
+        Notification.requestPermission().then((permission) => {
+          // If the user accepts, let's create a notification
+          if (permission === "granted") {
+            const notification = new Notification("Hi there!");
+            // …
+          }
+        });
+      }
+
+
+
+      // At last, if the user has denied notifications, and you
+      // want to be respectful there is no need to bother them anymore.
+    }
+
+  </script>
+
+</body>
+
+</html>
