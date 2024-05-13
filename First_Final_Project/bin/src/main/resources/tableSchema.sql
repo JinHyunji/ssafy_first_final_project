@@ -26,23 +26,6 @@ CREATE TABLE alarm (
 );
 
 select * from alarm;
+    
+    
 
-create table exer_info (
-	`info_id` int PRIMARY KEY AUTO_INCREMENT,
-    `content` text,
-    `reference` varchar(50),
-    `link` varchar(100)
-);
-
-select * from exer_info;
-
-drop table `template`;
-create table `template` (
-	`temp_id` int PRIMARY KEY AUTO_INCREMENT,
-	`exer_type` VARCHAR(20) not null,
-    `video_id` VARCHAR(20),
-	`img` VARCHAR(100),
-    `count` int default 0
-);
-
-select * from template;
