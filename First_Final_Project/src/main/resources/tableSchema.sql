@@ -14,8 +14,8 @@ SELECT * FROM USER;
 CREATE TABLE alarm (
 	`alarm_id` int PRIMARY KEY AUTO_INCREMENT,
     `title` varchar(20),
-    `start_time` time not null,
-    `end_time` time not null,
+    `start_time` varchar(20) not null,
+    `end_time` varchar(20) not null,
     `term` int not null,
     `cycle` varchar(7) not null,
     `exer_type` VARCHAR(20) not null,
@@ -36,7 +36,6 @@ create table exer_info (
 
 select * from exer_info;
 
-drop table `template`;
 create table `template` (
 	`temp_id` int PRIMARY KEY AUTO_INCREMENT,
 	`exer_type` VARCHAR(20) not null,
@@ -46,3 +45,6 @@ create table `template` (
 );
 
 select * from template;
+    
+    
+
