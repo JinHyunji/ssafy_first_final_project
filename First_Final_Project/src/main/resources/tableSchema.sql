@@ -45,6 +45,3 @@ create table `template` (
 );
 
 select * from template;
-    
-    
-
