@@ -1,6 +1,12 @@
-# Final-PJT
+# SSAFY-FIRST-FINAL-PROJECT
+## Introduce
+- 
 
-## 오성윤
+## Member
 
-## 진현지
+### 👧🏻 오성윤
+- 
+### 👧🏻 진현지
+- 
+
 
