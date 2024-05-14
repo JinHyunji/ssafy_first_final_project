@@ -4,8 +4,32 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
 <mapper namespace="com.ssafy.alarm.model.dao.AlarmDao">
+	
+	<insert id="insertAlarm" parameterType="Alarm">
+		INSERT INTO alarm(title, start_time, end_time, term, cycle, exer_type, video_id, img, user_id) 
+		VALUES (#{title}, #{startTime}, #{endTime}, #{term}, #{cycle}, #{exerType}, #{videoId}, #{img}, #{userId});
+	</insert>
 
+	<delete id="deleteAlarm" parameterType="int">
+		delete 
+		from alarm
+		where alarm_id = #{alarmId};
+	</delete>
+	
+	<update id="updateAlarm" parameterType="Alarm">
+		update alarm
+		set title = #{title}, start_time = #{startTime}, end_time = #{endTime}, term = #{term}, cycle = #{cycle}, exer_type = #{exerType}, video_id = #{videoId}, img = #{img}
+		where alarm_id = #{alarmId};
+	</update>
 
+	<select id="selectOne" parameterType="int">
+		select * 
+		from alarm
+		where alarm_id = #{alarmId};
+	</select>
 
-
+	<select id="selectAll">
+		select *
+		from alarm;
+	</select>
 </mapper>
