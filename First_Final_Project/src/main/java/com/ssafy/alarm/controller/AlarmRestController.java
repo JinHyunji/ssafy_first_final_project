@@ -88,7 +88,5 @@ public class AlarmRestController {
 	@Operation(summary = "알람 전체 가져오기")
 	public ResponseEntity<List<Alarm>> getAlarmList() {
 		return ResponseEntity.ok(alarmService.getAlarmList());
-	}
-	
-	
+	}	
 }
