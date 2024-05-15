@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Component
-public class AdminPageInterceptor implements HandlerInterceptor {
-	
+public class LoginPageInterceptor implements HandlerInterceptor {
+
 	// 예시
 //	@Override
 //	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -27,4 +27,18 @@ public class AdminPageInterceptor implements HandlerInterceptor {
 //		
 //		return true; // 통과
 //	}
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		HttpSession session = request.getSession();
+		User loginUser = (User) session.getAttribute("loginUser");
+		if (loginUser != null) {
+			return true;
+		}
+		
+		throw new Exception("로그인 필요");
+		
+		
+	}
 }
