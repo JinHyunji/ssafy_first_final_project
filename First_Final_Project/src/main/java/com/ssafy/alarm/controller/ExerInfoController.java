@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +16,12 @@ import com.ssafy.alarm.model.service.ExerInfoService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api-exerinfo")
+@CrossOrigin("*")
+@Tag(name = "ExerInfoController", description = "운동 정보 조회")
 public class ExerInfoController {
 	
 	private final ExerInfoService exerInfoService;
@@ -28,7 +32,7 @@ public class ExerInfoController {
 	}
 	
 	@GetMapping("/exerinfo")
-	@Operation(summary="운동 정보 전체 조회")
+	@Operation(summary="운동 정보 리스트 조회")
 	public ResponseEntity<?> getExerInfoList(){
 		List<ExerInfo> list = exerInfoService.getExerInfoList();
 		
@@ -40,7 +44,7 @@ public class ExerInfoController {
 	}
 	
 	@GetMapping("/exerinfo/{id}")
-	@Operation(summary="운동 정보 하나 조회")
+	@Operation(summary="운동 정보 객체 조회")
 	public ResponseEntity<?> getExerInfo(@PathVariable("id") @Parameter(description="운동정보 id") int infoId){
 		ExerInfo info = exerInfoService.getExerInfo(infoId);
 		if(info == null) {
