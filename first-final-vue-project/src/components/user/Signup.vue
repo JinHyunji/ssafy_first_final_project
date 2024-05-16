@@ -1,6 +1,7 @@
 <template>
     <div>
         <h2>Signup</h2>
+<<<<<<< HEAD
         <div>
             <label>아이디</label>
             <input @blur="checkId" v-model="user.userId" type="text" id="userId" placeholder="아이디를 입력해주세요.">
@@ -51,6 +52,12 @@ const checkEmail = function() {
 const createUser = function() {
     store.createUser(user.value);
 };
+=======
+    </div>
+</template>
+
+<script setup>
+>>>>>>> seongyunoh
 
 </script>
 
