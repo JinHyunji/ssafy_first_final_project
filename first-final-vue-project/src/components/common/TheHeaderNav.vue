@@ -29,7 +29,7 @@ const logout = function() {
     <div>
       <h2>Logo</h2>
       <div v-if="isLoggedIn">
-        <RouterLink to="/alarm/list">나의 알람 목록</RouterLink>
+        <RouterLink :to="{ name: 'alarmList' }">나의 알람 목록</RouterLink>
         <RouterLink @click="logout" to="/">로그아웃</RouterLink>
       </div>
     </div>
