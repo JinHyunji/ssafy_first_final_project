@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api-alarm")
-@Tag(name = "AlarmRestController", description = "알람 CRUD")
+@Tag(name = "알람 관리 기능", description = "알람 CRUD")
 public class AlarmRestController {
 	
 	private final AlarmService alarmService;
@@ -86,8 +86,14 @@ public class AlarmRestController {
 	// 알람 전체 가져오기
 	@GetMapping("/alarm")
 	@Operation(summary = "알람 전체 가져오기")
-	public ResponseEntity<List<Alarm>> getAlarmList() {
-		return ResponseEntity.ok(alarmService.getAlarmList());
+	public ResponseEntity<?> getAlarmList() {
+		List<Alarm> list = alarmService.getAlarmList();
+		
+		if (list.size() > 0 && !list.isEmpty()) {
+			return ResponseEntity.ok(list);
+		} else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 	
 	

@@ -10,7 +10,11 @@
 		from template
 		where temp_id = #{tempId};
 	</select>
-
+	
+	<select id="selectAll">
+		select *
+		from template;
+	</select>
 
 
 </mapper>

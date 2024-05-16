@@ -1,3 +1,4 @@
+drop database if exists first_final_project;
 create database first_final_project;
 
 use first_final_project;

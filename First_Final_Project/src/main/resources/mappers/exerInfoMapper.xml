@@ -5,7 +5,15 @@
 <!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
 <mapper namespace="com.ssafy.alarm.model.dao.ExerInfoDao">
 
-
-
+	<select id="selectAll" resultType="exerinfo">
+		SELECT *
+		FROM exer_info;
+	</select>
+	
+	<select id="selectOne" resultType="exerinfo" parameterType="int">
+		SELECT *
+		FROM exer_info
+		WHERE info_id = #{id};
+	</select>
 
 </mapper>
