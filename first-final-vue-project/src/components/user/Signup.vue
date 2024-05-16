@@ -3,7 +3,8 @@
         <h2>Signup</h2>
         <div>
             <label>아이디</label>
-            <input v-model="user.userId" type="text" id="userId" placeholder="아이디를 입력해주세요.">
+            <input @blur="checkId" v-model="user.userId" type="text" id="userId" placeholder="아이디를 입력해주세요.">
+            <span v-if="store.isDuplicate">아이디가 이미 존재합니다.</span>
         </div>
         <div>
             <label>비밀번호</label>
@@ -15,7 +16,8 @@
         </div>
         <div>
             <label>이메일</label>
-            <input v-model="user.email" type="text" id="email" placeholder="이메일을 입력해주세요.">
+            <input @blur="checkEmail" v-model="user.email" type="email" id="email" placeholder="이메일을 입력해주세요.">
+            <span v-if="emailError">올바른 이메일을 입력해주세요.</span>
         </div>
         <div>
             <button @click="createUser">가입하기</button>
@@ -27,6 +29,8 @@
 import { ref } from 'vue';
 import { useUserStore } from "@/stores/user";
 
+const store = useUserStore();
+
 const user = ref({
     userId: "",
     password: "",
@@ -34,7 +38,15 @@ const user = ref({
     email: ""
 });
 
-const store = useUserStore();
+const checkId = function() {
+    store.checkId(user.value);
+};
+
+const emailError = ref(false);
+const checkEmail = function() {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    emailError.value = !emailPattern.test(user.value.email);
+}
 
 const createUser = function() {
     store.createUser(user.value);

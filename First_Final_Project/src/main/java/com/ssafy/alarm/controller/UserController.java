@@ -33,7 +33,7 @@ public class UserController {
 	@Operation(summary = "회원가입")
 	public ResponseEntity<?> signup(@RequestBody User user) {
 		if (userService.getUserByID(user.getUserId()) != null) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.noContent().build();
 		}
 		int result = userService.signup(user);
 		return ResponseEntity.ok(result);
