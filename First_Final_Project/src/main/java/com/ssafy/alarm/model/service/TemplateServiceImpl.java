@@ -4,21 +4,26 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.alarm.model.dao.TemplateDao;
 import com.ssafy.alarm.model.dto.Template;
 
 @Service
 public class TemplateServiceImpl implements TemplateService {
 
+	private final TemplateDao templateDao;
+	
+	public TemplateServiceImpl(TemplateDao templateDao) {
+		this.templateDao = templateDao;
+	}
+
 	@Override
 	public Template getTemplate(int tempId) {
-		// TODO Auto-generated method stub
-		return null;
+		return templateDao.selectOne(tempId);
 	}
 
 	@Override
 	public List<Template> getTemplateList() {
-		// TODO Auto-generated method stub
-		return null;
+		return templateDao.selectAll();
 	}
 
 }
