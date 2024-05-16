@@ -2,11 +2,13 @@
     <div>
         <h2>AlarmView</h2>
     </div>
+    <RouterView />
+    
 </template>
 
 <script setup>
 import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
-
+import AlarmList from '@/components/alarm/AlarmList.vue';
 </script>
 
 <style scoped>

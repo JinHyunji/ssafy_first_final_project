@@ -2,7 +2,7 @@
     <div>
         <h2>Login</h2>
         <input type="text" v-model="loginUser.userId">
-        <input type="text" v-model="loginUser.password">
+        <input type="password" v-model="loginUser.password">
         <button @click="loginTry">로그인</button>
     </div>
 </template>

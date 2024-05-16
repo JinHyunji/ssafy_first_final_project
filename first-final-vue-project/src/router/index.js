@@ -4,7 +4,7 @@ import AlarmView from '@/views/AlarmView.vue';
 import Signup from '@/components/user/Signup.vue';
 import AlarmList from '@/components/alarm/AlarmList.vue';
 import Login from '@/components/user/Login.vue';
-
+import AlarmCreate from '@/components/alarm/AlarmCreate.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,7 +33,12 @@ const router = createRouter({
           path: 'list',
           name: 'alarmList',
           component: AlarmList
-        }
+        },
+        {
+          path: 'create',
+          name: 'alarmCreate',
+          component: AlarmCreate
+        },
       ]
     }
   ]
