@@ -39,6 +39,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const user = ref('');
+  const loginState = ref(false);
 
   const userLogin = function(loginUser){
     axios.post(`${REST_USER_API}/login`, loginUser)
@@ -50,7 +51,7 @@ export const useUserStore = defineStore('user', () => {
 
       router.push({name: 'alarmList'});
       console.log(sessionStorage.getItem("loginUser"))
-    
+      
     })
   }
 

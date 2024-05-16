@@ -1,25 +1,73 @@
-<template>
+<!-- <template>
     <div>
         <h2>Logo</h2>
-        <div v-if="loginUserCheck != null">
+        <div v-show="loginUserCheck != null">
             <RouterLink to="/alarm/list">나의 알람 목록</RouterLink>
-            <RouterLink @click.native="logout" to="/">로그아웃</RouterLink>
+            <RouterLink @click="logout" to="/">로그아웃</RouterLink>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import router from '@/router';
 
-const loginUserCheck = sessionStorage.getItem('loginUser');
+const loginUserCheck = ref(sessionStorage.getItem('loginUser'));
+
 
 const logout = function() {
     sessionStorage.clear();
-    router.push({name: 'home'}); 
 }
+
 </script>
 
 <style scoped>
     
-</style>
+</style> -->
+
+<template>
+    <div>
+      <h2>Logo</h2>
+      <div v-if="isLoggedIn">
+        <RouterLink to="/alarm/list">나의 알람 목록</RouterLink>
+        <RouterLink @click="logout" to="/">로그아웃</RouterLink>
+      </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import { ref, onMounted, onUnmounted } from 'vue';
+  import { useRouter } from 'vue-router';
+  
+  const isLoggedIn = ref(sessionStorage.getItem('loginUser') !== null);
+  const router = useRouter();
+  
+  const updateLoginStatus = () => {
+    isLoggedIn.value = sessionStorage.getItem('loginUser') !== null;
+  };
+  
+  const handleStorageChange = (event) => {
+    if (event.key === 'loginUser') {
+      updateLoginStatus();
+    }
+  };
+  
+  const logout = () => {
+    sessionStorage.removeItem('loginUser');
+    updateLoginStatus();
+    router.push({ name: 'home' });
+  };
+  
+  onMounted(() => {
+    window.addEventListener('storage', handleStorageChange);
+  });
+  
+  onUnmounted(() => {
+    window.removeEventListener('storage', handleStorageChange);
+  });
+  </script>
+  
+  <style scoped>
+  /* 스타일을 여기에 추가할 수 있습니다 */
+  </style>
+  
