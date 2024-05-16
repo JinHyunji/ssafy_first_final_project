@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api-alarm")
-@Tag(name = "알람 관리 기능", description = "알람 CRUD")
+@Tag(name = "AlarmRestController", description = "알람 관리 기능")
 public class AlarmRestController {
 	
 	private final AlarmService alarmService;

@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api-temp")
-@Tag(name = "템플릿 관리 기능", description = "템플릿 가져오기")
+@Tag(name = "TemplateRestController", description = "템플릿 관리 기능")
 public class TemplateRestController {
 	
 	private final TemplateService templateService;
