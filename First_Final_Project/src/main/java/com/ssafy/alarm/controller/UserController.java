@@ -20,12 +20,12 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/api-user")
 @Tag(name = "회원 관리 기능")
 @CrossOrigin("*")
-public class UserRestController {
+public class UserController {
 
 	private final UserService userService;
 
 	@Autowired
-	public UserRestController(UserService userService) {
+	public UserController(UserService userService) {
 		this.userService = userService;
 	}
 
