@@ -2,13 +2,12 @@
   <div>
       <h2>HomeView</h2>
       <Login />
-      <Signup />
+      <RouterLink to="/signup">Signup</RouterLink>
   </div>
 </template>
 
 <script setup>
 import Login from '@/components/user/Login.vue';
-import Signup from '@/components/user/Signup.vue';
 </script>
 
 <style scoped>
