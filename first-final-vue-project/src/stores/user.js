@@ -1,8 +1,8 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
-<<<<<<< HEAD
-import axios from 'axios'
-import router from '@/router'
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
+import axios from 'axios';
+import router from '@/router';
+import AlarmList from '@/components/alarm/AlarmList.vue';
 
 const REST_USER_API = 'http://localhost:8080/api-user';
 
@@ -38,27 +38,10 @@ export const useUserStore = defineStore('user', () => {
     })
   }
 
-  return { 
-    isDuplicate,
-    checkId,
-    createUser,
-
-  }
-
-  
-=======
-import router from '@/router'
-import axios from 'axios'
-import AlarmList from '@/components/alarm/AlarmList.vue'
-
-const userUrl = "http://localhost:8080/api-user"
-
-export const useUserStore = defineStore('user', () => {
- 
   const user = ref('');
 
   const userLogin = function(loginUser){
-    axios.post(`${userUrl}/login`, loginUser)
+    axios.post(`${REST_USER_API}/login`, loginUser)
     .then((res)=>{
       console.log(res);
       user.value = res.data;
@@ -71,6 +54,12 @@ export const useUserStore = defineStore('user', () => {
     })
   }
 
-  return { user, userLogin }
->>>>>>> seongyunoh
+  return { 
+    isDuplicate,
+    checkId,
+    createUser,
+    user, 
+    userLogin,
+
+  }
 })

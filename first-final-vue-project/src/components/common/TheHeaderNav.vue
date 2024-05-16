@@ -1,26 +1,25 @@
 <template>
     <div>
-        <h2>Nav bar</h2>
-<<<<<<< HEAD
-        <RouterLink to="/alarm/list">AlarmList</RouterLink>
-=======
-        <RouterLink v-if="loginUserCheck == null" :to="{name: 'login'}">login</RouterLink>
-        <RouterLink v-else to="/alarm/list">AlarmList</RouterLink>
->>>>>>> seongyunoh
+        <h2>Logo</h2>
+        <div v-if="loginUserCheck != null">
+            <RouterLink to="/alarm/list">나의 알람 목록</RouterLink>
+            <RouterLink @click.native="logout" to="/">로그아웃</RouterLink>
+        </div>
     </div>
 </template>
 
 <script setup>
-<<<<<<< HEAD
-
-=======
 import { ref } from "vue";
-    const loginUserCheck = sessionStorage.getItem('loginUser');
-    console.log(loginUserCheck )
-    const logincheck = ref("")
->>>>>>> seongyunoh
+import router from '@/router';
+
+const loginUserCheck = sessionStorage.getItem('loginUser');
+
+const logout = function() {
+    sessionStorage.clear();
+    router.push({name: 'home'}); 
+}
 </script>
 
 <style scoped>
-
+    
 </style>
