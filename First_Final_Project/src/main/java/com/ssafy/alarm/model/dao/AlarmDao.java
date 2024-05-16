@@ -14,5 +14,5 @@ public interface AlarmDao {
 	
 	Alarm selectOne(int alarmId);
 	
-	List<Alarm> selectAll();
+	List<Alarm> selectAllByUserId(String userId);
 }

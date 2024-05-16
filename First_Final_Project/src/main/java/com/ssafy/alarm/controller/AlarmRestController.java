@@ -3,6 +3,7 @@ package com.ssafy.alarm.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,14 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.alarm.model.dto.Alarm;
+import com.ssafy.alarm.model.dto.User;
 import com.ssafy.alarm.model.service.AlarmService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api-alarm")
 @Tag(name = "AlarmRestController", description = "알람 관리 기능")
+@CrossOrigin("*")
 public class AlarmRestController {
 	
 	private final AlarmService alarmService;
@@ -86,8 +90,10 @@ public class AlarmRestController {
 	// 알람 전체 가져오기
 	@GetMapping("/alarm")
 	@Operation(summary = "알람 전체 가져오기")
-	public ResponseEntity<?> getAlarmList() {
-		List<Alarm> list = alarmService.getAlarmList();
+	public ResponseEntity<?> getAlarmList(HttpSession session) {
+		User loginUser = (User) session.getAttribute("loginUser");
+		
+		List<Alarm> list = alarmService.getAlarmListByUserId(loginUser.getUserId());
 		
 		if (list.size() > 0 && !list.isEmpty()) {
 			return ResponseEntity.ok(list);

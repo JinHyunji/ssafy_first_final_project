@@ -25,13 +25,13 @@ public class WebConfig implements WebMvcConfigurer {
 //		registry.addInterceptor(adminPageInterceptor).addPathPatterns("/users");
 //	}
 	
-	@Autowired
-	LoginPageInterceptor loginPageInterceptor;
-	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		
-		registry.addInterceptor(loginPageInterceptor).addPathPatterns("/**").excludePathPatterns("/api-user/**", "/swagger-ui/**", "/v3/api-docs/**");
-		
-	}
+//	@Autowired
+//	LoginPageInterceptor loginPageInterceptor;
+//	
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		
+//		registry.addInterceptor(loginPageInterceptor).addPathPatterns("/**").excludePathPatterns("/api-user/**", "/swagger-ui/**", "/v3/api-docs/**");
+//		
+//	}
 }

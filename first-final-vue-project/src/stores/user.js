@@ -49,7 +49,7 @@ export const useUserStore = defineStore('user', () => {
       sessionStorage.setItem('loginUser', res.data['userId']);
       // sessionStorage.setMaxInactiveInterval(0);
 
-      router.push({name: 'alarm'});
+      router.push({name: 'alarmList'});
       console.log(sessionStorage.getItem("loginUser"))
       
     })

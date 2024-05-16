@@ -40,8 +40,8 @@ public class AlarmServiceImpl implements AlarmService {
 	}
 
 	@Override
-	public List<Alarm> getAlarmList() {
-		return alarmDao.selectAll();
+	public List<Alarm> getAlarmListByUserId(String userId) {
+		return alarmDao.selectAllByUserId(userId);
 	}
 
 }

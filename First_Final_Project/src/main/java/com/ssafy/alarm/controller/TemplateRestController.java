@@ -3,6 +3,7 @@ package com.ssafy.alarm.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api-temp")
 @Tag(name = "TemplateRestController", description = "템플릿 관리 기능")
+@CrossOrigin("*")
 public class TemplateRestController {
 	
 	private final TemplateService templateService;
