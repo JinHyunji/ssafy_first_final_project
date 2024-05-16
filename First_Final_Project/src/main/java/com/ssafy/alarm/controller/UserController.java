@@ -52,7 +52,7 @@ public class UserController {
 
 		session.setAttribute("loginUser", loginUser);
 
-		return ResponseEntity.ok("login success");
+		return ResponseEntity.ok(userService.getUserByID(user.getUserId()));
 	}
 
 	@GetMapping("/logout")
