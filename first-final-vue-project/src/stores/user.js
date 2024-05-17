@@ -43,7 +43,6 @@ export const useUserStore = defineStore('user', () => {
   const userLogin = function(loginUser){
     axios.post(`${REST_USER_API}/login`, loginUser)
     .then((res)=>{
-      console.log(res.data);
       isLogined.value = true;
       user.value = res.data;
       sessionStorage.setItem('loginUser', res.data['userId']);
@@ -57,7 +56,6 @@ export const useUserStore = defineStore('user', () => {
   const userLogout = function() {
     axios.get(`${REST_USER_API}/logout`)
     .then((res) => {
-      console.log(res.data);
       isLogined.value = false;
       user.value = '';
       sessionStorage.clear();

@@ -13,7 +13,6 @@ export const useAlarmStore = defineStore('alarm', () => {
   const getAlarmList = function(){
     axios.get(REST_ALARM_API)
     .then((res)=>{
-      console.log(res)
       alarmList.value = res.data;
     })
   }
@@ -63,14 +62,12 @@ export const useAlarmStore = defineStore('alarm', () => {
       savedAlarm.value.exerType = res.data.exerType;
       savedAlarm.value.videoId = res.data.videoId;
       savedAlarm.value.img = res.data.img;
-      console.log(savedAlarm.value);
     })
   }
 
   const createAlarm = function() {
     axios.post(REST_ALARM_API, savedAlarm.value)
     .then((res) => {
-      console.log(res.data);
       router.push({name: 'alarmList'});
     })
     .catch((err) => {
