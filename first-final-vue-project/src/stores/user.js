@@ -39,8 +39,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const user = ref('');
-
-
+  const isLogined = ref(false)
   const userLogin = function(loginUser){
     axios.post(`${REST_USER_API}/login`, loginUser)
     .then((res)=>{
@@ -49,14 +48,12 @@ export const useUserStore = defineStore('user', () => {
       user.value = res.data;
       // sessionStorage.setItem('loginUser', res.data['userId']);
       // sessionStorage.setMaxInactiveInterval(0);
-
       router.push({name: 'alarmList'});
       // console.log(sessionStorage.getItem("loginUser"))
       
     })
   }
-
-  const isLogined = ref(false);
+  
   const userLogout = function() {
     axios.get(`${REST_USER_API}/logout`)
     .then((res) => {

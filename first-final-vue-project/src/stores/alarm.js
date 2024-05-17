@@ -17,10 +17,24 @@ export const useAlarmStore = defineStore('alarm', () => {
     })
   }
 
+  const savedAlarm = ref({});
+  const alarm = ref({
+    title: "",
+    startTime: "",
+    endTime: "",
+    term: "",
+    cycle: "",
+    exerType: "",
+    videoId: "",
+    img: "",
+    userId: ""
+  });
+
   return { 
-    
     alarmList,
     getAlarmList,
+    savedAlarm,
+    alarm,
 
   }
 })
