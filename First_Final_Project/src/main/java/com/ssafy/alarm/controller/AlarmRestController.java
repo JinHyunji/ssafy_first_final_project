@@ -50,7 +50,7 @@ public class AlarmRestController {
 	@Operation(summary = "알람 삭제")
 	public ResponseEntity<?> removeAlarm(@PathVariable("alarmId") int alarmId) {
 		int result = alarmService.removeAlarm(alarmId);
-		
+		System.out.println(alarmId+"번이 삭제됨");
 		if (result > 0) {
 			return ResponseEntity.ok(result);
 		} else {
@@ -63,8 +63,8 @@ public class AlarmRestController {
 	@PutMapping("/alarm")
 	@Operation(summary = "알람 수정")
 	public ResponseEntity<?> modifyAlarm(@RequestBody Alarm alarm) {
+		System.out.println(alarm);
 		int result = alarmService.modifyAlarm(alarm);
-		
 		if (result > 0) {
 			return ResponseEntity.ok(result);
 		} else {
@@ -77,7 +77,6 @@ public class AlarmRestController {
 	@Operation(summary = "알람 하나 가져오기")
 	public ResponseEntity<?> getAlarm(@PathVariable("alarmId") int alarmId) {
 		Alarm alarm = alarmService.getAlarm(alarmId);
-		
 		if (alarm != null) {
 			return ResponseEntity.ok(alarm);
 		} else {

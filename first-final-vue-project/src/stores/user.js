@@ -53,7 +53,7 @@ export const useUserStore = defineStore('user', () => {
       
     })
   }
-  
+
   const userLogout = function() {
     axios.get(`${REST_USER_API}/logout`)
     .then((res) => {

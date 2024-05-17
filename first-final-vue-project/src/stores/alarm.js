@@ -17,6 +17,30 @@ export const useAlarmStore = defineStore('alarm', () => {
     })
   }
 
+  const alarmObject = ref({});
+
+  const getAlarm = function(alarmId){
+    axios.get(`${REST_ALARM_API}/alarm/${alarmId}`)
+    .then((res)=>{
+      alarmObject.value = res.data;
+    })
+  }
+
+  const modifyAlarm = function(){
+    axios.put(`${REST_ALARM_API}/alarm`, alarmObject.value)
+    .then((res)=>{
+      router.push({ name: 'alarmList'})
+    })
+  }
+
+  const deleteAlarm = function(alarmId){
+    console.log(alarmId)
+    axios.delete(`${REST_ALARM_API}/alarm/${alarmId}`)
+    .then((res)=>{
+      router.go()
+    })
+  }
+
   const savedAlarm = ref({});
   const alarm = ref({
     title: "",
@@ -31,10 +55,14 @@ export const useAlarmStore = defineStore('alarm', () => {
   });
 
   return { 
+    
     alarmList,
     getAlarmList,
+    alarmObject,
+    getAlarm,
+    modifyAlarm,
+    deleteAlarm,
     savedAlarm,
     alarm,
-
   }
 })
