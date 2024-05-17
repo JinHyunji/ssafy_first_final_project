@@ -53,8 +53,7 @@ const store = useAlarmStore();
 const selectedDay = ref([]);
 
 const saveAlarm = function() {
-    store.alarm.value.cycle = selectedDay.value.join('');
-    console.log(store.alarm.value);
+    store.alarm.cycle = selectedDay.value.join('');
 }
 
 </script>

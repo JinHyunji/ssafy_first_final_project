@@ -44,10 +44,6 @@ const createAlarm = function(){
     router.push({name: 'alarmCreate'});
 }
 
-const createAlarm = function(){
-    router.push({name: 'alarmCreate'});
-}
-
 </script>
 
 <style scoped>
