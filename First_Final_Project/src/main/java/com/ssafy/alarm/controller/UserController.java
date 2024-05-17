@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/api-user")
 @Tag(name = "UserController", description = "회원정보 CR")
-@CrossOrigin("*")
 public class UserController {
 
 	private final UserService userService;

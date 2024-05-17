@@ -1,4 +1,5 @@
 <template>
+    <TheHeaderNav/>
     <div>
         <h2>AlarmView</h2>
         <RouterView />

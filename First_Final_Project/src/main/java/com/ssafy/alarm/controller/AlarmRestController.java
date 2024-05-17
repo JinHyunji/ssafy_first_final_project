@@ -24,7 +24,6 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/api-alarm")
 @Tag(name = "AlarmRestController", description = "알람 관리 기능")
-@CrossOrigin("*")
 public class AlarmRestController {
 	
 	private final AlarmService alarmService;

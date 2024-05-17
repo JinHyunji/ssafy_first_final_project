@@ -20,6 +20,10 @@ const router = createRouter({
       component: Signup
     },
     {
+      path: '/logout',
+      redirect: '/'
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login,

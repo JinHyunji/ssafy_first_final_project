@@ -26,8 +26,8 @@ const loginTry = function(){
     // if(loginUser.password.length === 0){
     //     return alert("비밀번호 입력");
     // }
-    console.log(loginUser);
-    console.log("로그인 시도");
+    // console.log(loginUser);
+    // console.log("로그인 시도");
     store.userLogin(loginUser.value);
 }
 

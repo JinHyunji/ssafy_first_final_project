@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api-temp")
 @Tag(name = "TemplateRestController", description = "템플릿 관리 기능")
-@CrossOrigin("*")
 public class TemplateRestController {
 	
 	private final TemplateService templateService;
