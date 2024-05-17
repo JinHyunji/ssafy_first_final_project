@@ -1,5 +1,6 @@
 <template>
     <div>
+    <div>
         <h2>AlarmList</h2> 
     </div>
     <div v-for="alarm in store.alarmList" :key="alarm.alarmId">
@@ -8,10 +9,10 @@
             <button @click="infoAlarm(alarm.alarmId)">상세</button>
             <button @click="deleteAlarm(alarm.alarmId)">삭제</button>
             <!-- <RouterLink :to="{ name: 'alarmModify'}">수정</RouterLink> -->
-            <!-- <RouterLink :to="{ name: 'alarmInfo' }">상세</RouterLink> --> 
-            {{ alarm.title }}      
+            <!-- <RouterLink :to="{ name: 'alarmInfo' }">상세</RouterLink> -->     
     </div>
     <button @click="createAlarm">새로운 알람 생성</button>
+</div>
 </template>
 
 <script setup>

@@ -3,14 +3,15 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import router from '@/router';
 
-const REST_ALARM_API = 'http://localhost:8080/api-alarm';
+const REST_ALARM_API = 'http://localhost:8080/api-alarm/alarm';
+const REST_TEMP_API = 'http://localhost:8080/api-temp/temp';
 
 export const useAlarmStore = defineStore('alarm', () => {
 
   const alarmList = ref([]);
 
   const getAlarmList = function(){
-    axios.get(`${REST_ALARM_API}/alarm`)
+    axios.get(REST_ALARM_API)
     .then((res)=>{
       console.log(res)
       alarmList.value = res.data;
@@ -20,14 +21,14 @@ export const useAlarmStore = defineStore('alarm', () => {
   const alarmObject = ref({});
 
   const getAlarm = function(alarmId){
-    axios.get(`${REST_ALARM_API}/alarm/${alarmId}`)
+    axios.get(`${REST_ALARM_API}/${alarmId}`)
     .then((res)=>{
       alarmObject.value = res.data;
     })
   }
 
   const modifyAlarm = function(){
-    axios.put(`${REST_ALARM_API}/alarm`, alarmObject.value)
+    axios.put(REST_ALARM_API, alarmObject.value)
     .then((res)=>{
       router.push({ name: 'alarmList'})
     })
@@ -35,24 +36,47 @@ export const useAlarmStore = defineStore('alarm', () => {
 
   const deleteAlarm = function(alarmId){
     console.log(alarmId)
-    axios.delete(`${REST_ALARM_API}/alarm/${alarmId}`)
+    axios.delete(`${REST_ALARM_API}/${alarmId}`)
     .then((res)=>{
       router.go()
     })
   }
 
   const savedAlarm = ref({});
-  const alarm = ref({
-    title: "",
-    startTime: "",
-    endTime: "",
-    term: "",
-    cycle: "",
-    exerType: "",
-    videoId: "",
-    img: "",
-    userId: ""
-  });
+  const saveAlarm = function(alarm) {
+    savedAlarm.value = alarm.value;
+    savedAlarm.value.userId = sessionStorage.getItem('loginUser');
+  };
+
+  const templates = ref(null);
+  const getTemplates = function() {
+    axios.get(REST_TEMP_API)
+    .then((res)=>{
+      templates.value = res.data;
+    })
+  }
+
+  const selectedTemp = ref({});
+  const clickTemp = function(tempId) {
+    axios.get(`${REST_TEMP_API}/${tempId}`)
+    .then((res) => {
+      savedAlarm.value.exerType = res.data.exerType;
+      savedAlarm.value.videoId = res.data.videoId;
+      savedAlarm.value.img = res.data.img;
+      console.log(savedAlarm.value);
+    })
+  }
+
+  const createAlarm = function() {
+    axios.post(REST_ALARM_API, savedAlarm.value)
+    .then((res) => {
+      console.log(res.data);
+      router.push({name: 'alarmList'});
+    })
+    .catch((err) => {
+      console.log('err')
+    })
+  }
 
   return { 
     
@@ -63,6 +87,12 @@ export const useAlarmStore = defineStore('alarm', () => {
     modifyAlarm,
     deleteAlarm,
     savedAlarm,
-    alarm,
+    saveAlarm,
+    templates,
+    getTemplates,
+    clickTemp,
+    createAlarm,
+    selectedTemp,
+    
   }
 })

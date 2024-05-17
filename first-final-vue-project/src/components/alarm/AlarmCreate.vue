@@ -4,19 +4,19 @@
         <div>
             <div>
                 <label for="">알람 제목</label>
-                <input v-model="store.alarm.title" type="text">
+                <input v-model="alarm.title" type="text">
             </div>
             <div>
                 <label for="">시작 시간</label>
-                <input v-model="store.alarm.startTime" type="time">
+                <input v-model="alarm.startTime" type="time">
             </div>
             <div>
                 <label for="">종료 시간</label>
-                <input v-model="store.alarm.endTime" type="time">
+                <input v-model="alarm.endTime" type="time">
             </div>
             <div>
                 <label for="">간격</label>
-                <input v-model="store.alarm.term" type="number">
+                <input v-model="alarm.term" type="number">
             </div>
             <div>
                 <label for="">반복</label>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div>
-                <button @click="saveAlarm"><RouterLink :to="{name:'alarmCreate2'}">&gt;</RouterLink></button>
+                <RouterLink @click="saveAlarm" :to="{name:'alarmCreate2'}">&gt;</RouterLink>
             </div>
         </div>
     </div>
@@ -51,9 +51,21 @@ import { useAlarmStore } from '@/stores/alarm';
 const store = useAlarmStore();
 
 const selectedDay = ref([]);
+const alarm = ref({
+    title: "",
+    startTime: "",
+    endTime: "",
+    term: "",
+    cycle: "",
+    exerType: "",
+    videoId: "",
+    img: "",
+    userId: ""
+})
 
 const saveAlarm = function() {
-    store.alarm.cycle = selectedDay.value.join('');
+    alarm.value.cycle = selectedDay.value.join('');
+    store.saveAlarm(alarm);
 }
 
 </script>
