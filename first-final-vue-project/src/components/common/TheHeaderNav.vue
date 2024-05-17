@@ -1,9 +1,7 @@
 <template>
     <div>
-        <RouterLink to="/">
         <h2>Logo</h2>
-    </RouterLink>
-        <div v-if="store.isLogined">
+        <div v-show="store.isLogined">
             <RouterLink to="/alarm/list">나의 알람 목록</RouterLink>
             <RouterLink @click="logout" to="/logout">로그아웃</RouterLink>
         </div>

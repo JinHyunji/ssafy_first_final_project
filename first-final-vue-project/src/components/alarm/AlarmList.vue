@@ -9,6 +9,7 @@
             <button @click="deleteAlarm(alarm.alarmId)">삭제</button>
             <!-- <RouterLink :to="{ name: 'alarmModify'}">수정</RouterLink> -->
             <!-- <RouterLink :to="{ name: 'alarmInfo' }">상세</RouterLink> --> 
+            {{ alarm.title }}      
     </div>
     <button @click="createAlarm">새로운 알람 생성</button>
 </template>
@@ -43,6 +44,9 @@ const createAlarm = function(){
     router.push({name: 'alarmCreate'});
 }
 
+const createAlarm = function(){
+    router.push({name: 'alarmCreate'});
+}
 
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
         <h2>Login</h2>
         <input type="text" v-model="loginUser.userId">
         <input type="password" v-model="loginUser.password">
@@ -30,6 +30,9 @@ const loginTry = function(){
     // console.log("로그인 시도");
     store.userLogin(loginUser.value);
 }
+
+window.history.forward();
+function noBack(){window.history.forward();}
 
 </script>
 

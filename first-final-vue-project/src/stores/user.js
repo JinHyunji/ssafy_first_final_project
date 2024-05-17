@@ -5,7 +5,6 @@ import router from '@/router';
 import AlarmList from '@/components/alarm/AlarmList.vue';
 
 const REST_USER_API = 'http://localhost:8080/api-user';
-const isLogined = ref(false);
 
 export const useUserStore = defineStore('user', () => {
 
@@ -40,8 +39,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const user = ref('');
-
-
+  const isLogined = ref(false)
   const userLogin = function(loginUser){
     axios.post(`${REST_USER_API}/login`, loginUser)
     .then((res)=>{
@@ -50,13 +48,11 @@ export const useUserStore = defineStore('user', () => {
       user.value = res.data;
       // sessionStorage.setItem('loginUser', res.data['userId']);
       // sessionStorage.setMaxInactiveInterval(0);
-
       router.push({name: 'alarmList'});
       // console.log(sessionStorage.getItem("loginUser"))
       
     })
   }
-
 
   const userLogout = function() {
     axios.get(`${REST_USER_API}/logout`)
@@ -64,7 +60,6 @@ export const useUserStore = defineStore('user', () => {
       console.log(res.data);
       isLogined.value = false;
       user.value = '';
-      console.log("로그아웃 응답을 받음");
     })
   }
 

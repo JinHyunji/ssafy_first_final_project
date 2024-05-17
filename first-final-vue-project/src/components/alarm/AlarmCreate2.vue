@@ -1,22 +1,22 @@
 <template>
     <div>
-        <h2>시간 설정하기</h2>
+        <h2>운동 설정하기</h2>
         <div>
             <div>
                 <label for="">알람 제목</label>
-                <input v-model="store.alarm.title" type="text">
+                <input type="text">
             </div>
             <div>
                 <label for="">시작 시간</label>
-                <input v-model="store.alarm.startTime" type="time">
+                <input type="time">
             </div>
             <div>
                 <label for="">종료 시간</label>
-                <input v-model="store.alarm.endTime" type="time">
+                <input type="time">
             </div>
             <div>
                 <label for="">간격</label>
-                <input v-model="store.alarm.term" type="number">
+                <input type="number">
             </div>
             <div>
                 <label for="">반복</label>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div>
-                <button @click="saveAlarm"><RouterLink :to="{name:'alarmCreate2'}">&gt;</RouterLink></button>
+                <button @click="saveAlarm"><RouterLink :to="{name:'alarmCreate'}">&lt;</RouterLink></button>
             </div>
         </div>
     </div>
@@ -48,13 +48,18 @@
 import { ref } from 'vue';
 import { useAlarmStore } from '@/stores/alarm';
 
-const store = useAlarmStore();
-
 const selectedDay = ref([]);
+const alarm = ref({
+    title: "",
+    startTime: "",
+    endTime: "",
+    term: "",
+    cycle: ""
+});
 
 const saveAlarm = function() {
-    store.alarm.value.cycle = selectedDay.value.join('');
-    console.log(store.alarm.value);
+    alarm.value.cycle = selectedDay.join(' ');
+    store.saveAlarm.value = alarm.value;
 }
 
 </script>

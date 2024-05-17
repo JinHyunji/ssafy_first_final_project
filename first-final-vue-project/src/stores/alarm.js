@@ -12,6 +12,7 @@ export const useAlarmStore = defineStore('alarm', () => {
   const getAlarmList = function(){
     axios.get(`${REST_ALARM_API}/alarm`)
     .then((res)=>{
+      console.log(res)
       alarmList.value = res.data;
     })
   }
@@ -40,6 +41,18 @@ export const useAlarmStore = defineStore('alarm', () => {
     })
   }
 
+  const savedAlarm = ref({});
+  const alarm = ref({
+    title: "",
+    startTime: "",
+    endTime: "",
+    term: "",
+    cycle: "",
+    exerType: "",
+    videoId: "",
+    img: "",
+    userId: ""
+  });
 
   return { 
     
@@ -49,6 +62,7 @@ export const useAlarmStore = defineStore('alarm', () => {
     getAlarm,
     modifyAlarm,
     deleteAlarm,
-
+    savedAlarm,
+    alarm,
   }
 })
