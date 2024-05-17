@@ -41,4 +41,7 @@ const declined = function () {
 
 </script>
     
-<style scoped></style>
+<style scoped>
+
+</style>
+
