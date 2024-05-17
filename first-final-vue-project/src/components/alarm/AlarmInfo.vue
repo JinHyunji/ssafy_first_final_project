@@ -9,7 +9,7 @@
                 <div>{{store.alarmObject.term}}</div>
                 <div>{{store.alarmObject.cycle}}</div>
                 <div>
-                    <button @click="modified">수정</button>
+                    <button @click="modifyAlarm(store.alarmObject.alarmId)">수정</button>
                     <button @click="declined">취소</button>
                 </div>
             </div>
@@ -31,9 +31,9 @@
         store.getAlarm(route.params.alarmId);
     })
     
-    const modified = function(){
-        store.modifyAlarm();
-    }
+    const modifyAlarm = function(id){
+    router.push({ name: 'alarmModify', params: { alarmId: id} });
+}
     
     const declined = function(){
         router.go(-1);
