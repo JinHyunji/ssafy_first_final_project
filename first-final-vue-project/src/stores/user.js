@@ -17,11 +17,9 @@ export const useUserStore = defineStore('user', () => {
     })
     .then((res) => {
       isDuplicate.value = false;
-      console.log(res.data);
     })
     .catch((err) => {
       isDuplicate.value = true;
-      console.log(err);
     })
   }
   
@@ -32,7 +30,6 @@ export const useUserStore = defineStore('user', () => {
       data: user
     })
     .then((res) => {
-      console.log(res.status)
       alert('회원가입을 축하합니다!');
       router.push({name: 'home'});
     })
