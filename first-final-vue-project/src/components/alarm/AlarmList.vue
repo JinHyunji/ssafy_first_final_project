@@ -5,6 +5,7 @@
         </div>
         <div v-for="alarm in store.alarmList" :key="alarm.alarmId">
             <div>{{ alarm.title }}</div>
+            <div>{{ alarm.exerType }}</div>
             <button @click="modifyAlarm(alarm.alarmId)">수정</button>
             <button @click="infoAlarm(alarm.alarmId)">상세</button>
             <button @click="deleteAlarm(alarm.alarmId)">삭제</button>

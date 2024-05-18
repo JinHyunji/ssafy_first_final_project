@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,17 @@ public class AlarmServiceImpl implements AlarmService {
 
 	@Override
 	public List<Alarm> getAlarmListByUserId(String userId) {
-		return alarmDao.selectAllByUserId(userId);
+		List<Alarm> alarmList = alarmDao.selectAllByUserId(userId);
+		Collections.sort(alarmList, new Comparator<Alarm>() {
+			@Override
+			public int compare(Alarm a, Alarm b) {
+				if(a.getExerType().equals(b.getExerType())) {
+					return a.getAlarmId() - b.getAlarmId();
+				}
+				return a.getExerType().compareTo(b.getExerType());
+			}
+		});
+		return alarmList;
 	}
 
 	@Override
