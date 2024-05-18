@@ -38,37 +38,33 @@ export const useUserStore = defineStore('user', () => {
     })
   }
 
-  const user = ref({});
-  const isLogined = ref(false)
   const userLogin = function(loginUser){
     axios.post(`${REST_USER_API}/login`, loginUser)
     .then((res)=>{
-      isLogined.value = true;
-      user.value = res.data;
-      sessionStorage.setItem('loginUser', res.data['userId']);
-      // sessionStorage.setMaxInactiveInterval(0);
+      sessionStorage.setItem('loginUser', JSON.stringify(res.data));
       router.push({name: 'alarmList'});
-      // console.log(sessionStorage.getItem("loginUser"))
-      
+    })
+    .catch((err) => {
+      alert('로그인 실패');
     })
   }
 
   const userLogout = function() {
     axios.get(`${REST_USER_API}/logout`)
     .then((res) => {
-      isLogined.value = false;
-      user.value = '';
       sessionStorage.clear();
+      window.location.reload();
     })
+    .catch((err) => {
+      alert('로그아웃 실패');
+    });
   }
 
   return { 
     isDuplicate,
     checkId,
-    createUser,
-    user, 
+    createUser, 
     userLogin,
-    isLogined,
     userLogout,
 
   }
