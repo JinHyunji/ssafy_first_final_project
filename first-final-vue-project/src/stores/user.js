@@ -41,7 +41,7 @@ export const useUserStore = defineStore('user', () => {
   const userLogin = function(loginUser){
     axios.post(`${REST_USER_API}/login`, loginUser)
     .then((res)=>{
-      sessionStorage.setItem('loginUser', JSON.stringify(res.data));
+      sessionStorage.setItem('loginUser', res.data.userId);
       router.push({name: 'alarmList'});
     })
     .catch((err) => {

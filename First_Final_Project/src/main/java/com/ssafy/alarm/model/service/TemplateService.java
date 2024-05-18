@@ -9,4 +9,6 @@ public interface TemplateService {
 	Template getTemplate(int tempId);
 	
 	List<Template> getTemplateList();
+	
+	void countTemp(int tempId);
 }

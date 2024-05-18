@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.alarm.model.dto.Alarm;
 import com.ssafy.alarm.model.dto.User;
 import com.ssafy.alarm.model.service.AlarmService;
+import com.ssafy.alarm.model.service.TemplateService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,20 +28,24 @@ import jakarta.servlet.http.HttpSession;
 public class AlarmRestController {
 	
 	private final AlarmService alarmService;
+	private final TemplateService templateService;
 
-	public AlarmRestController(AlarmService alarmService) {
+	public AlarmRestController(AlarmService alarmService, TemplateService templateService) {
 		this.alarmService = alarmService;
+		this.templateService = templateService;
 	}
 	
 	// 알람 생성
-	@PostMapping("/alarm")
+	@PostMapping("/alarm/{tempId}")
 	@Operation(summary = "알람 생성")
-	public ResponseEntity<?> createAlarm(@RequestBody Alarm alarm) {
+	public ResponseEntity<?> createAlarm(@RequestBody Alarm alarm, @PathVariable("tempId") int tempId) {
 		int result = alarmService.createAlarm(alarm);
 		
 		if (result > 0) {
+			templateService.countTemp(tempId);
 			return ResponseEntity.ok(result);
 		} else {
+			
 			return ResponseEntity.notFound().build();
 		}
 	}
