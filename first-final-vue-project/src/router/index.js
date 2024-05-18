@@ -5,6 +5,7 @@ import Signup from '@/components/user/Signup.vue';
 import AlarmList from '@/components/alarm/AlarmList.vue';
 import Login from '@/components/user/Login.vue';
 import AlarmCreate from '@/components/alarm/AlarmCreate.vue';
+import PopupView from '@/views/PopupView.vue';
 
 import AlarmModify from '@/components/alarm/AlarmModify.vue';
 import AlarmInfo from '@/components/alarm/AlarmInfo.vue';
@@ -65,6 +66,11 @@ const router = createRouter({
           component: AlarmCreate2
         },
       ]
+    },
+    {
+      path: '/popup',
+      name: 'popUp',
+      component: PopupView,
     }
   ]
 })
