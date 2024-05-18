@@ -8,18 +8,20 @@ const REST_USER_API = 'http://localhost:8080/api-user';
 
 export const useUserStore = defineStore('user', () => {
 
-  const isDuplicate = ref(null);
+  const isDuplicate = ref(false);
   const checkId = function(user) {
     axios({
-      url: `${REST_USER_API}/signup`,
+      url: `${REST_USER_API}/dupl`,
       method: 'POST',
       data: user
     })
     .then((res) => {
-      isDuplicate.value = res.status === 204;
+      isDuplicate.value = false;
+      console.log(res.data);
     })
     .catch((err) => {
-      console.log('중복검사 오류');
+      isDuplicate.value = true;
+      console.log(err);
     })
   }
   
@@ -30,6 +32,7 @@ export const useUserStore = defineStore('user', () => {
       data: user
     })
     .then((res) => {
+      console.log(res.status)
       alert('회원가입을 축하합니다!');
       router.push({name: 'home'});
     })
