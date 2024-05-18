@@ -3,7 +3,6 @@ package com.ssafy.alarm.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +38,11 @@ public class AlarmRestController {
 	@PostMapping("/alarm/{tempId}")
 	@Operation(summary = "알람 생성")
 	public ResponseEntity<?> createAlarm(@RequestBody Alarm alarm, @PathVariable("tempId") int tempId) {
+		if (alarm.getImg() == null || alarm.getImg().length() != 0) {
+			String alarmImgFileSource = alarmService.base64ToFileSource(alarm.getImg());
+			alarm.setImg(alarmImgFileSource);
+		}
+		
 		int result = alarmService.createAlarm(alarm);
 		
 		if (result > 0) {

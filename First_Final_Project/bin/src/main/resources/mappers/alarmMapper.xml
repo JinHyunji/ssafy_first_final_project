@@ -28,8 +28,9 @@
 		where alarm_id = #{alarmId};
 	</select>
 
-	<select id="selectAll">
+	<select id="selectAllByUserId" parameterType="String">
 		select *
-		from alarm;
+		from alarm
+		where user_id = #{userId};
 	</select>
 </mapper>

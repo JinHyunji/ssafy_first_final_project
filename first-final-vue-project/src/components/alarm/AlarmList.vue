@@ -5,12 +5,11 @@
         </div>
         <div v-for="alarm in store.alarmList" :key="alarm.alarmId">
             <div>{{ alarm.title }}</div>
+            <div>{{ alarm.exerType }}</div>
             <button @click="modifyAlarm(alarm.alarmId)">수정</button>
             <button @click="infoAlarm(alarm.alarmId)">상세</button>
             <button @click="deleteAlarm(alarm.alarmId)">삭제</button>
             <button @click="previewAlarm(alarm)">미리보기</button>
-            <!-- <RouterLink :to="{ name: 'alarmModify'}">수정</RouterLink> -->
-            <!-- <RouterLink :to="{ name: 'alarmInfo' }">상세</RouterLink> -->
         </div>
         <button @click="createAlarm">새로운 알람 생성</button>
     </div>
@@ -53,7 +52,7 @@ const previewAlarm = (alarm) => {
         const notification = new Notification(
             alarm.title,
             {
-                image: '../../../public/images/image.png',
+                image: "/public/images/" + alarm.img, // 경로를 바꾸라는 경고문이 뜨지만 바꾸면 이미지가 안뜸..
                 body: "alarm.duration" + " | 척추수술 1700만원",
                 requireInteraction: false // true -> 사용자가 동작하기 전까지 꺼지지 않음
             });
