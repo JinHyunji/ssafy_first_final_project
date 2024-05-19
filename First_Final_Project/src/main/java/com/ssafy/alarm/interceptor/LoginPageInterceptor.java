@@ -1,5 +1,7 @@
 package com.ssafy.alarm.interceptor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -27,18 +29,23 @@ public class LoginPageInterceptor implements HandlerInterceptor {
 //		
 //		return true; // 통과
 //	}
-
-//	@Override
-//	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-//			throws Exception {
-//		HttpSession session = request.getSession();
-//		User loginUser = (User) session.getAttribute("loginUser");
-//		if (loginUser != null) {
-//			return true;
-//		}
-//		
-//		throw new Exception("로그인 필요");
-//		
-//		
-//	}
+	
+	
+	
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		
+		if(request.getMethod().equals("OPTIONS")) {
+			return true;
+		}
+		
+		HttpSession session = request.getSession();
+		User loginUser = (User) session.getAttribute("loginUser");
+		if (loginUser != null) {
+			return true;
+		}
+		response.sendError(403);;
+		return false;
+	}
 }

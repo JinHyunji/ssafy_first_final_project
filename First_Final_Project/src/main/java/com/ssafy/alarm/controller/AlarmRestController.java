@@ -98,7 +98,12 @@ public class AlarmRestController {
 	@GetMapping("/alarm")
 	@Operation(summary = "알람 전체 가져오기")
 	public ResponseEntity<?> getAlarmList(HttpSession session) {
+		
 		User loginUser = (User) session.getAttribute("loginUser");
+		
+//		if(loginUser == null) {
+//			return ResponseEntity.notFound().build();
+//		}
 		
 		List<Alarm> list = alarmService.getAlarmListByUserId(loginUser.getUserId());
 		

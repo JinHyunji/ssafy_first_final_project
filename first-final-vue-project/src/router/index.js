@@ -11,7 +11,7 @@ import AlarmModify from '@/components/alarm/AlarmModify.vue';
 import AlarmInfo from '@/components/alarm/AlarmInfo.vue';
 
 import AlarmCreate2 from '@/components/alarm/AlarmCreate2.vue';
-
+import axios from 'axios';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,5 +70,15 @@ const router = createRouter({
     }
   ]
 })
+
+axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (error.response && error.response.status === 403) {
+    alert("로그인이 필요합니다.");
+    router.push({ name: 'login' })
+  }
+  return Promise.reject(error);
+});
 
 export default router

@@ -20,7 +20,7 @@
             <span v-if="emailError">올바른 이메일을 입력해주세요.</span>
         </div>
         <div>
-            <button @click="createUser">가입하기</button>
+            <button @click="createUser(user)">가입하기</button>
         </div>
     </div>
 </template>
@@ -48,8 +48,15 @@ const checkEmail = function() {
     emailError.value = !emailPattern.test(user.value.email);
 }
 
-const createUser = function() {
-    store.createUser(user.value);
+const createUser = function(user) {
+    if (user.userId === '' || user.password === '' || user.nickname === '' || user.email === '') {
+        alert("모든 항목을 입력해주세요");
+        return;
+    } else if (emailError.value||store.isDuplicate){
+        alert("항목을 바르게 입력해주세요")
+        return;
+    } 
+    store.createUser(user);
 };
 </script>
 
