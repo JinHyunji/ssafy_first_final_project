@@ -45,28 +45,8 @@ const createAlarm = function(){
     router.push({name: 'alarmCreate'});
 }
 
-const previewAlarm = (alarm) => {
-    if (!("Notification" in window)) {
-        alert("이 브라우저는 알림 기능이 지원되지 않습니다.");
-    } else if (Notification.permission === "granted") {
-        const notification = new Notification(
-            alarm.title,
-            {
-                image: "/public/images/" + alarm.img, // 경로를 바꾸라는 경고문이 뜨지만 바꾸면 이미지가 안뜸..
-                body: "alarm.duration" + " | 척추수술 1700만원",
-                requireInteraction: false // true -> 사용자가 동작하기 전까지 꺼지지 않음
-            });
-        notification.onclick = (event) => {
-            event.preventDefault(); // prevent the browser from focusing the Notification's tab
-            window.open("http://localhost:5173/popup", "_blank");
-        };
-    } else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then((permission) => {
-            if (permission === "granted") {
-                const notification = new Notification("알람이 허용되었습니다!", { body: "미리보기를 다시 눌러주세요!" });
-            }
-        });
-    }
+const previewAlarm = function(alarm){
+    store.callAlarm(alarm);
 }
 
 </script>

@@ -64,7 +64,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/popup',
+      path: '/popup/:alarmId',
       name: 'popUp',
       component: PopupView,
     }
