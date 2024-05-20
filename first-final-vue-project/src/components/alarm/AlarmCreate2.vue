@@ -1,4 +1,5 @@
 <template>
+    <button @click="goCancel" style="margin-top: 30px; margin-left: 1060px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     <div class="exer-setting-all">
         <AlarmTemplateList />
         <div class="exer-setting">
@@ -74,7 +75,7 @@ import { useAlarmStore } from '@/stores/alarm';
 import AlarmTemplateList from '@/components/alarm/AlarmTempList.vue';
 import { useYoutubeStore } from '@/stores/youtube';
 import YoutubeListItem from '@/components/youtube/YoutubeListItem.vue';
-import { useRouter } from 'vue-router';
+import router from '@/router';
 
 const store = useAlarmStore();
 const youtubeStore = useYoutubeStore();
@@ -114,13 +115,16 @@ const deleteVideo = function() {
     youtubeStore.checkedVideoTitle = null;
 }
 
+const goCancel = function() {
+    router.push({name: 'alarmList'})
+}
 </script>
 
 <style scoped>
 
 .exer-setting-all {
     display: flex;
-    margin-top: 40px;
+    margin-top: 10px;
 }
  .exer-setting {
    display: inline-flex;
