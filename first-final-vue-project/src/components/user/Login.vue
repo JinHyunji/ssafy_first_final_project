@@ -1,4 +1,5 @@
 <template>
+    <TheHeaderNav/>
     <div onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
         <h2>Login</h2>
         <input type="text" v-model="loginUser.userId">
@@ -8,6 +9,7 @@
 </template>
 
 <script setup>
+import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
 import { useUserStore } from '@/stores/user';
 import { ref } from 'vue';
 

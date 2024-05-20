@@ -1,31 +1,87 @@
 <template>
-    <div>
+    <TheHeaderNav/>
+    <div class="container">
         <h2>Signup</h2>
-        <div>
-            <label>아이디</label>
-            <input @blur="checkId" v-model="user.userId" type="text" id="userId" placeholder="아이디를 입력해주세요.">
-            <span v-if="store.isDuplicate">아이디가 이미 존재합니다.</span>
+        <div class="signup-inputs">
+            <div class="input">
+                <div class="row g-3 align-items-center">
+                    <!-- <div class="col-auto">
+                        <label for="inputPassword6" class="col-form-label">ID</label>
+                    </div> -->
+                    <div class="col-auto">
+                        <input @blur="checkId" v-model="user.userId" type="text" id="userId" placeholder="아이디 입력" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                    <div class="col-auto">
+                        <span v-show="store.isDuplicate" id="passwordHelpInline" class="form-text" style="color: red;">
+                            <i class="bi bi-ban" style="color: red;"> 아이디가 이미 존재합니다.</i>
+                        </span>
+                    </div>
+                    <div id="passwordHelpBlock" class="form-text">
+                        아이디는 0 ~ 20자 내로 입력해주세요.
+                    </div>
+                </div>
+                <!-- <label>아이디</label>
+                <input @blur="checkId" v-model="user.userId" type="text" id="userId" placeholder="아이디를 입력해주세요.">
+                <span v-if="store.isDuplicate">아이디가 이미 존재합니다.</span> -->
+            </div>
+            <div class="input">
+                <div class="row g-3 align-items-center">
+                    <!-- <div class="col-auto">
+                        <label for="inputPassword6" class="col-form-label">Password</label>
+                    </div> -->
+                    <div class="col-auto">
+                        <input v-model="user.password" type="text" id="password" placeholder="비밀번호 입력" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                    <div id="passwordHelpBlock" class="form-text">
+                        패스워드는 0 ~ 20자 내로 입력해주세요.
+                    </div>
+                </div>
+                <!-- <label>비밀번호</label>
+                <input v-model="user.password" type="text" id="password" placeholder="비밀번호를 입력해주세요."> -->
+            </div>
+            <div class="input">
+                <div class="row g-3 align-items-center">
+                    <!-- <div class="col-auto">
+                        <label for="inputPassword6" class="col-form-label">Nickname</label>
+                    </div> -->
+                    <div class="col-auto">
+                        <input v-model="user.nickname" type="text" id="nickname" placeholder="닉네임 입력" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                </div>
+                <!-- <label>닉네임</label>
+                <input v-model="user.nickname" type="text" id="nickname" placeholder="닉네임을 입력해주세요."> -->
+            </div>
+            <div class="input">
+                <div class="row g-3 align-items-center">
+                    <!-- <div class="col-auto">
+                        <label for="inputPassword6" class="col-form-label">Email</label>
+                    </div> -->
+                    <div class="col-auto">
+                        <input @blur="checkEmail" v-model="user.email" type="email" id="email" placeholder="이메일 입력" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                    <div class="col-auto">
+                        <span v-show="emailError" id="passwordHelpInline" class="form-text" style="color: red;">
+                            <i class="bi bi-ban" style="color: red;"> 올바른 이메일을 입력해주세요.</i>
+                        </span>
+                    </div>
+                </div>
+                <!-- <label>이메일</label>
+                <input @blur="checkEmail" v-model="user.email" type="email" id="email" placeholder="이메일을 입력해주세요.">
+                <span v-if="emailError">올바른 이메일을 입력해주세요.</span> -->
+            </div>
         </div>
-        <div>
-            <label>비밀번호</label>
-            <input v-model="user.password" type="text" id="password" placeholder="비밀번호를 입력해주세요.">
-        </div>
-        <div>
-            <label>닉네임</label>
-            <input v-model="user.nickname" type="text" id="nickname" placeholder="닉네임을 입력해주세요.">
-        </div>
-        <div>
-            <label>이메일</label>
-            <input @blur="checkEmail" v-model="user.email" type="email" id="email" placeholder="이메일을 입력해주세요.">
-            <span v-if="emailError">올바른 이메일을 입력해주세요.</span>
-        </div>
-        <div>
-            <button @click="createUser(user)">가입하기</button>
+        <div class="signup-btns">
+            <button @click="goBack" class="btn btn-outline-warning">취소</button>
+            <button @click="createUser(user)" class="btn btn-outline-warning">가입하기</button>
         </div>
     </div>
+
+    
+    
 </template>
  
 <script setup>
+import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
 import { ref } from 'vue';
 import { useUserStore } from "@/stores/user";
 
@@ -58,8 +114,37 @@ const createUser = function(user) {
     } 
     store.createUser(user);
 };
+
+const goBack = function() {
+    window.history.back();
+}
 </script>
 
 <style scoped>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 60px;
+    }
+    .signup-inputs {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        margin: 20px 0px 30px 300px;
+        width: 630px;
+    }
+    .input {
+        margin: 10px;
+        /* height: 70px; */
+    }
+    input {
+        width: 300px;
+    }
+    button {
+        width: 145px;
+        margin-right: 10px;
+    }
 
+    
 </style>

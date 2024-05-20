@@ -1,19 +1,26 @@
 <template>
-    <div>
-        <h2>Logo</h2>
-        <div v-if="isLogined">
-            <RouterLink to="/alarm/list">나의 알람 목록</RouterLink>
-            <RouterLink @click.prevent="logout" to="/">로그아웃</RouterLink>
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/src/assets/img/Logo8.png" width="40">
+                <span style="color: #FFC107;"> Alarm</span>
+            </a>
+            <div class="nav-icons" v-if="isLogined">
+                <RouterLink to="/alarm/list">
+                    <button type="button" class="btn btn-outline-warning">나의 알람 목록</button>
+                </RouterLink>
+                <RouterLink @click.prevent="logout" to="/">
+                    <button type="button" class="btn btn-outline-secondary">로그아웃</button>
+                </RouterLink>
+            </div>
         </div>
-    </div>
+    </nav>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import router from '@/router';
 import { useUserStore } from "@/stores/user";
-
-// const loginUserCheck = ref(sessionStorage.getItem('loginUser'));
 
 const store = useUserStore();
 const isLogined = ref(false);
@@ -36,5 +43,12 @@ const logout = function() {
 </script>
 
 <style scoped>
-    
+    a {
+        text-decoration: none;
+        margin-left: 20px;
+    }
+
+    .navbar {
+        border-bottom: 1px solid #e7e7e7;
+    }
 </style>

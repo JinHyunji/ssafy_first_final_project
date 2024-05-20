@@ -1,68 +1,68 @@
 <template>
-    <div>
-        <h2>운동 설정하기</h2>
-        <div>
-            <AlarmTemplateList />
-        </div>
-        <div>
-            <div>
-                <label for="">운동 부위</label>
-                <input type="text" v-model="store.savedAlarm.exerType">
-            </div>
-            <div>
-                <label for="">영상 추가</label>
-                <!-- <input type="text" name="videoId" v-model="store.savedAlarm.videoId"> -->
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                영상 검색
-                </button>
-                <span>{{ youtubeStore.checkedVideoTitle }}</span>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">영상 검색</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="exer-setting-all">
+        <AlarmTemplateList />
+        <div class="exer-setting">
+            <h3>운동 설정하기</h3>
+            <div class="inputs">
+                <div class="input">
+                    <label for="inputPassword5" class="form-label">운동 부위</label>
+                    <input v-model="store.savedAlarm.exerType" type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
                 </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="input-group mb-3">
-                        <span class="input-group-text"><i class="bi bi-search"></i></span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="검색어 입력"
-                            v-model="keyword"
-                            @keyup.enter="search"
-                        />
-                        <button class="btn btn-outline-primary" @click="search">검색</button>
+                <div class="input">
+                    <label for="inputPassword5" class="form-label">영상 추가</label>
+                    <br>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    영상 검색
+                    </button>
+                    <span style="margin: 0px 5px 0px 10px;">{{ youtubeStore.checkedVideoTitle }}</span>
+                    <button @click="deleteVideo" v-if="youtubeStore.checkedVideoTitle" class="btn-close" aria-label="Close"></button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">영상 검색</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <YoutubeListItem
-                        v-for="(video,index) in youtubeStore.videos"
-                        :key="video.id.videoId"
-                        :video="video"
-                        :index="index"
-                        :current="current"
-                        ></YoutubeListItem>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="검색어 입력"
+                                    v-model="keyword"
+                                    @keyup.enter="search"
+                                />
+                                <button class="btn btn-outline-secondary" @click="search">검색</button>
+                                </div>
+                                <YoutubeListItem
+                                v-for="(video,index) in youtubeStore.videos"
+                                :key="video.id.videoId"
+                                :video="video"
+                                :index="index"
+                                :current="current"
+                                ></YoutubeListItem>
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
-                <!-- <div class="modal-footer">
-                    <button @click="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button @click="saveVideo" type="button" class="btn btn-primary">저장</button>
-                </div> -->
+            </div class="input">
+                <div class="mb-3">
+                    <label for="inputPassword5" class="form-label">이미지 추가</label>
+                    <input multiple type="file" name="img" @change="imageUpload($event.target.files)" ref="imageInput" class="form-control" id="formFile">
                 </div>
-            </div>
-            </div>
-        </div>
-            <div>
-                <label for="">이미지 추가</label>
-                <input multiple type="file" name="img" @change="imageUpload($event.target.files)" ref="imageInput">
-            </div>
-            <div>
-                <RouterLink :to="{name:'alarmCreate'}">&lt;</RouterLink>
-                <button @click="createAlarm">생성</button>
+                <div class="btns">
+                    <RouterLink :to="{name:'alarmCreate'}"><button type="button" class="btn btn-dark">
+                        <i class="bi bi-arrow-left"></i></button>
+                    </RouterLink>
+                    <button @click="createAlarm" class="btn btn-dark">
+                        <i class="bi bi-check-lg"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -110,7 +110,39 @@ const search = function () {
   youtubeStore.youtubeSearch(keyword.value);
 };
 
+const deleteVideo = function() {
+    youtubeStore.checkedVideoTitle = null;
+}
 
 </script>
 
-<style scoped></style>
+<style scoped>
+
+.exer-setting-all {
+    display: flex;
+    margin-top: 40px;
+}
+ .exer-setting {
+   display: inline-flex;
+   flex-direction: column;
+   align-items: center;
+   /* margin: 0px auto; */
+ }
+
+ .inputs {
+    margin-top: 10px;
+    width: 500px;
+ }
+
+ .input {
+    margin-bottom: 20px;
+ }
+ .btns {
+    text-align: end;
+    margin-top: 30px;
+ }
+
+ .btns > button {
+    margin-left: 10px;
+ }
+</style>

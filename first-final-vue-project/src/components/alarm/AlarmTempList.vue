@@ -1,11 +1,15 @@
 <template>
-    <div>
-        <h3>TemplateList</h3>
+
+    <div class="temp">
+        <h3>템플릿 선택하기</h3>
         <div v-for="template in store.templates" 
-        :key="template.tempId">
-            <button @click="clickTemp(template.tempId)">{{ template.exerType }}</button>
+            :key="template.tempId" class="list-group">
+            <a @click="clickTemp(template.tempId)" class="list-group-item list-group-item-action list-group-item-light">
+                {{ template.exerType }} 템플릿
+            </a>
         </div>
     </div>
+
 </template>
 
 <script setup>
@@ -24,5 +28,14 @@ const clickTemp = function(tempId) {
 </script>
 
 <style scoped>
+    .temp {
+        margin-left: 250px;
+        margin-right: 100px;
+        text-align: center;
+    }
+
+    .list-group {
+        margin-top: 20px;
+    }
 
 </style>
