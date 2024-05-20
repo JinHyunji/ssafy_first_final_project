@@ -67,6 +67,12 @@ export const useAlarmStore = defineStore('alarm', () => {
     })
   }
 
+  const updateAlarmVideoId = function(newVideoId) {
+    console.log(newVideoId);
+    savedAlarm.value.videoId = newVideoId;
+    console.log(savedAlarm.value);
+  }
+
   const createAlarm = function() {
     axios.post(`${REST_ALARM_API}/${savedTempId.value}`, savedAlarm.value)
     .then((res) => {
@@ -101,6 +107,8 @@ export const useAlarmStore = defineStore('alarm', () => {
     }
   }
 
+
+
   return { 
     
     alarmList,
@@ -118,6 +126,7 @@ export const useAlarmStore = defineStore('alarm', () => {
     selectedTemp,
     savedTempId,
     callAlarm,
+    updateAlarmVideoId
     
     
   }

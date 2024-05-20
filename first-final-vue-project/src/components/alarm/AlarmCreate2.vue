@@ -16,6 +16,7 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 영상 검색
                 </button>
+                <span>{{ youtubeStore.checkedVideoTitle }}</span>
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -39,7 +40,7 @@
                         <button class="btn btn-outline-primary" @click="search">검색</button>
                         </div>
                         <YoutubeListItem
-                        v-for="(video,index) in store.videos"
+                        v-for="(video,index) in youtubeStore.videos"
                         :key="video.id.videoId"
                         :video="video"
                         :index="index"
@@ -47,10 +48,10 @@
                         ></YoutubeListItem>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary">저장</button>
-                </div>
+                <!-- <div class="modal-footer">
+                    <button @click="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button @click="saveVideo" type="button" class="btn btn-primary">저장</button>
+                </div> -->
                 </div>
             </div>
             </div>
@@ -73,6 +74,7 @@ import { useAlarmStore } from '@/stores/alarm';
 import AlarmTemplateList from '@/components/alarm/AlarmTempList.vue';
 import { useYoutubeStore } from '@/stores/youtube';
 import YoutubeListItem from '@/components/youtube/YoutubeListItem.vue';
+import { useRouter } from 'vue-router';
 
 const store = useAlarmStore();
 const youtubeStore = useYoutubeStore();
@@ -107,6 +109,7 @@ const keyword = ref('');
 const search = function () {
   youtubeStore.youtubeSearch(keyword.value);
 };
+
 
 </script>
 
