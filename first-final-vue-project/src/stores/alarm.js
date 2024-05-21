@@ -132,5 +132,6 @@ export const useAlarmStore = defineStore('alarm', () => {
     savedTempId,
     callAlarm,
     updateAlarmVideoId,
+    
   }
 })

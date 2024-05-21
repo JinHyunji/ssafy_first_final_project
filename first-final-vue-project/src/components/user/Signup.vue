@@ -62,6 +62,7 @@
 import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
 import { ref } from 'vue';
 import { useUserStore } from "@/stores/user";
+import router from '@/router';
 
 const store = useUserStore();
 
@@ -94,7 +95,7 @@ const createUser = function(user) {
 };
 
 const goBack = function() {
-    window.history.back();
+    router.push({name:'home'})
 }
 </script>
 
