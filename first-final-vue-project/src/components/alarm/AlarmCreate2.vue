@@ -1,5 +1,6 @@
 <template>
-    <button @click="goCancel" style="margin-top: 30px; margin-left: 1060px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <button @click="goCancel" style="margin-top: 30px; margin-left: 1060px;" class="btn-close" data-bs-dismiss="modal"
+        aria-label="Close"></button>
     <div class="exer-setting-all">
         <AlarmTemplateList />
         <div class="exer-setting">
@@ -7,62 +8,61 @@
             <div class="inputs">
                 <div class="input">
                     <label for="inputPassword5" class="form-label">운동 부위</label>
-                    <input v-model="store.savedAlarm.exerType" type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+                    <input v-model="store.savedAlarm.exerType" type="text" id="inputPassword5" class="form-control"
+                        aria-describedby="passwordHelpBlock">
                 </div>
                 <div class="input">
                     <label for="inputPassword5" class="form-label">영상 추가</label>
                     <br>
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    영상 검색
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        영상 검색
                     </button>
                     <span style="margin: 0px 5px 0px 10px;">{{ youtubeStore.checkedVideoTitle }}</span>
-                    <button @click="deleteVideo" v-if="youtubeStore.checkedVideoTitle" class="btn-close" aria-label="Close"></button>
+                    <button @click="deleteVideo" v-if="youtubeStore.checkedVideoTitle" class="btn-close"
+                        aria-label="Close"></button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">영상 검색</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="input-group mb-3">
-                                <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="검색어 입력"
-                                    v-model="keyword"
-                                    @keyup.enter="search"
-                                />
-                                <button class="btn btn-outline-secondary" @click="search">검색</button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">영상 검색</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
-                                <YoutubeListItem
-                                v-for="(video,index) in youtubeStore.videos"
-                                :key="video.id.videoId"
-                                :video="video"
-                                :index="index"
-                                :current="current"
-                                ></YoutubeListItem>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                            <input type="text" class="form-control" placeholder="검색어 입력"
+                                                v-model="keyword" @keyup.enter="search" />
+                                            <button class="btn btn-outline-secondary" @click="search">검색</button>
+                                        </div>
+                                        <YoutubeListItem v-for="(video, index) in youtubeStore.videos"
+                                            :key="video.id.videoId" :video="video" :index="index" :current="current">
+                                        </YoutubeListItem>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
-            </div class="input">
-                <div class="mb-3">
-                    <label for="inputPassword5" class="form-label">이미지 추가</label>
-                    <input multiple type="file" name="img" @change="imageUpload($event.target.files)" ref="imageInput" class="form-control" id="formFile">
-                </div>
-                <div class="btns">
-                    <RouterLink :to="{name:'alarmCreate'}"><button type="button" class="btn btn-dark">
-                        <i class="bi bi-arrow-left"></i></button>
-                    </RouterLink>
-                    <button @click="createAlarm" class="btn btn-dark">
-                        <i class="bi bi-check-lg"></i>
-                    </button>
+                <div class="input">
+                    <div class="mb-3">
+                        <label for="inputPassword5" class="form-label">이미지 추가</label>
+                        <input multiple type="file" name="img" @change="imageUpload($event.target.files)"
+                            ref="imageInput" class="form-control" id="formFile">
+                    </div>
+                    <div class="btns">
+                        <RouterLink :to="{ name: 'alarmCreate' }"><button type="button" class="btn btn-dark">
+                                <i class="bi bi-arrow-left"></i></button>
+                        </RouterLink>
+                        <button @click="createAlarm" class="btn btn-dark">
+                            <i class="bi bi-check-lg"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@ import router from '@/router';
 const store = useAlarmStore();
 const youtubeStore = useYoutubeStore();
 
-const createAlarm = function() {
+const createAlarm = function () {
     store.createAlarm();
 }
 
@@ -108,45 +108,46 @@ const imageUpload = async (gotImage) => {
 const keyword = ref('');
 
 const search = function () {
-  youtubeStore.youtubeSearch(keyword.value);
+    youtubeStore.youtubeSearch(keyword.value);
 };
 
-const deleteVideo = function() {
+const deleteVideo = function () {
     youtubeStore.checkedVideoTitle = null;
 }
 
-const goCancel = function() {
-    router.push({name: 'alarmList'})
+const goCancel = function () {
+    router.push({ name: 'alarmList' })
 }
 </script>
 
 <style scoped>
-
 .exer-setting-all {
     display: flex;
     margin-top: 10px;
 }
- .exer-setting {
-   display: inline-flex;
-   flex-direction: column;
-   align-items: center;
-   /* margin: 0px auto; */
- }
 
- .inputs {
+.exer-setting {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin: 0px auto; */
+}
+
+.inputs {
     margin-top: 10px;
     width: 500px;
- }
+}
 
- .input {
+.input {
     margin-bottom: 20px;
- }
- .btns {
+}
+
+.btns {
     text-align: end;
     margin-top: 30px;
- }
+}
 
- .btns > button {
+.btns>button {
     margin-left: 10px;
- }
+}
 </style>
