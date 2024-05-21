@@ -1,12 +1,12 @@
 <template>
-    <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="position-absolute top-20 start-50 translate-middle-x mt-5">
         <div>
             <h2 class="my-3 ms-4">{{ user }}님의 알람목록</h2>
         </div>
 
         <div class="d-flex align-self-start" id="listBox">
             <div class="d-flex flex-column mb-3 mx-3">
-                <button type="button" class="btn btn-link px-1 ms-auto p-0 text-decoration-none text-secondary"
+                <button type="button" class="btn btn-link px-1 ms-auto p-0 text-decoration-none text-body"
                     @click="createAlarm">새로운 알람 생성</button>
                 <div v-for="alarm in listForAlarm" :key="alarm.alarmId" class="d-flex w-100" id="alarmBox">
                     <input type="radio" class="btn-check p-2 flex-grow-1" name="options" :id="'option' + alarm.alarmId"
@@ -27,16 +27,13 @@
                 </div>
             </div>
 
-
-
             <div class="card card-body d-flex flex-column w-50 p-4" id="infoBox">
-                <div>{{ targetAlarm.activate }}</div>
-                <div>title: {{ targetAlarm.title }}</div>
-                <div>{{ targetAlarm.startTime }} 부터</div>
-                <div>{{ targetAlarm.endTime }} 까지</div>
-                <div>term: {{ targetAlarm.term }}</div>
-                <div>exerType: {{ targetAlarm.exerType }}</div>
-                <div>img: {{ targetAlarm.img }}</div>
+                <div>{{ targetAlarm.title }}</div>
+                <div>{{ targetAlarm.startTime }}부터</div>
+                <div>{{ targetAlarm.endTime }}까지</div>
+                <div>{{ targetAlarm.term }}분 마다</div>
+                <div>{{ targetAlarm.exerType }} 운동을</div>
+                <img :src="getImgSrc(targetAlarm.img)">
                 <div>cycle: {{ targetAlarm.cycle }}</div>
             </div>
 
@@ -44,9 +41,6 @@
     </div>
 
 </template>
-
-
-
 
 <script setup>
 import { ref, onMounted, onUpdated, watch, computed, onBeforeMount, onUnmounted } from 'vue';
@@ -64,6 +58,7 @@ const targetAlarm = ref({
     img: "",
     videoId: "",
 });
+
 const user = sessionStorage.getItem('loginUser');
 
 const listForAlarm = ref([]);
@@ -100,14 +95,10 @@ watch(
     (newValue, oldValue) => {
         console.log("알림 재설정 로드")
         alarmMap.forEach((newAlarm) => {
+            console.log(newAlarm, "이 초기화 됩니다.");
             clearInterval(newAlarm);
         })
         if (oldValue.length === 0) {
-            //시간 가져오기
-            var hr = new Date().getHours(); // 5
-            var min = new Date().getMinutes(); //12
-            var sec = new Date().getSeconds();
-
             //요일 가져오기
             var today = new Date().getDay();
 
@@ -121,7 +112,6 @@ watch(
                     }
                     const alarmDay = newValue[j].cycle.split("").map(Number);
                     if (alarmDay.includes(today)) {
-                        console.log(calculateGap(newValue[j].endTime));
                         if (calculateGap(newValue[j].endTime) < 0) {
                             const curAlarm = newValue[j];
                             // const srtTime = curAlarm.startTime.split(":").map(Number);
@@ -162,7 +152,18 @@ const changed = function (alarm) {
 }
 
 const changeShowAlarm = function (alarm) {
-    targetAlarm.value = alarm;
+    targetAlarm.value.title = alarm.title
+    targetAlarm.value.startTime = alarm.startTime.split(":")[0]+"시 "+alarm.startTime.split(":")[1]+"분";
+    targetAlarm.value.endTime = alarm.endTime.split(":")[0]+"시 "+alarm.endTime.split(":")[1]+"분";
+    targetAlarm.value.term = alarm.term;
+    targetAlarm.value.exerType = alarm.exerType;
+    targetAlarm.value.cycle = alarm.exerType;
+
+
+}
+
+const getImgSrc = function (imgLink) {
+    return '/images/' + imgLink;
 }
 
 const modifyAlarm = function (id) {

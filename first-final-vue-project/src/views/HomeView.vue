@@ -23,10 +23,12 @@ import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
     display: flex;
     flex-direction: column;
     align-items: center;
+
     margin-top: 180px;
   }
   .homeImg {
     width: 150px;
+
     /* height: 300px; */
     /* margin: 40px; */
   }

@@ -8,6 +8,7 @@
                     ">
                     <h3 style="color: #FFC107;"> Alarm</h3>
                 </div>
+
             </RouterLink>
             <div class="nav-icons" v-if="isLogined">
                 <RouterLink to="/alarm/list">
@@ -56,6 +57,7 @@ const logout = function() {
         border-bottom: 1px solid #e7e7e7;
     }
 
+
     .logos {
         display: flex;
         align-items: center;
@@ -65,4 +67,5 @@ const logout = function() {
         margin-left: 10px;
         margin-bottom: 0px;
     }
+
 </style>

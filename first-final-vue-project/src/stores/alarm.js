@@ -106,6 +106,10 @@ export const useAlarmStore = defineStore('alarm', () => {
         window.open("http://localhost:5173/popup/"+alarm.alarmId, "_blank");
       };
 
+
+
+      console.log(alarm.title, "알림이 전송되었습니다.", new Date())
+
     } else if (Notification.permission !== "denied") {
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
@@ -114,6 +118,7 @@ export const useAlarmStore = defineStore('alarm', () => {
       });
     }
   }
+
 
   return { 
     alarmList,
@@ -132,6 +137,8 @@ export const useAlarmStore = defineStore('alarm', () => {
     savedTempId,
     callAlarm,
     updateAlarmVideoId,
+    alarmOnOff,
+
     
   }
 })

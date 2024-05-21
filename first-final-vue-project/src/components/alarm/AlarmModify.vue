@@ -143,7 +143,7 @@ const imageUpload = async (gotImage) => {
         try {
             // const imageName = gotImage[0].name;
             const data = await fileToBase64(gotImage[0]);
-            store.savedAlarm.img = data;
+            store.alarmObject.img = data;
             // console.log(data);
         } catch (error) {
             alert("파일을 변환하는데 실패했습니다.")

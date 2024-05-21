@@ -2,25 +2,33 @@
     <TheHeaderNav/>
     <div onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
         <div class="position-absolute top-50 start-50 translate-middle">
-            <div class="d-flex flex-column align-items-start">
+            <div class="d-flex flex-column align-items-start" id="loginBox">
                 <div class="mx-auto p-2 bd-highlight">
-                <h2 >Log In</h2></div>
-                <div class="p-2 bd-highlight" id="login_forms" >
-                    
-                    <div class="input-group mb-2">
+
+
+                    <h2>Login</h2>
+                </div>
+                <div class="d-flex flex-column align-items-start w-100" id="login_forms">
+                    <div class="p-2 input-group mt-1">
                         <span class="input-group-text bi bi-person-heart" id="basic-addon1"></span>
                         <input type="text" class="form-control" placeholder="Username" aria-label="Username"
                             aria-describedby="basic-addon1" v-model="loginUser.userId">
                     </div>
-                    <div class="input-group mb-2">
+                    <div class="p-2 input-group mt-1">
                         <span class="input-group-text bi bi-lock-fill" id="basic-addon1"></span>
                         <input @keyup.enter="loginTry" type="password" class="form-control" placeholder="Password" aria-label="Username"
                             aria-describedby="basic-addon1" v-model="loginUser.password">
                     </div>
-                    <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-outline-warning" @click="loginTry" id="login_button">로그인</button></div>
-                    <div id="signupLink" class="d-flex flex-row-reverse bd-highlight">
-                    <RouterLink :to="{name:'signup'}" class="ms-auto p-2 bd-highlight text-decoration-none text-secondary">회원가입</RouterLink></div>
+
+
+                    <div class="p-2 d-grid gap-2 w-100" id="login_div">
+                        <button type="button" class="btn btn-outline-warning w-100" @click="loginTry"
+                            id="login_button">로그인</button>
+                    </div>
+                    <div id="signupLink" class="ms-auto d-flex flex-row-reverse bd-highlight">
+                        <RouterLink :to="{ name: 'signup' }"
+                            class="ms-auto p-2 bd-highlight text-decoration-none text-secondary">회원가입</RouterLink>
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,4 +67,11 @@ function noBack() { window.history.forward(); }
 </script>
 
 <style scoped>
+#login_button{
+    width: 260px;
+}
+
+#loginBox{
+    width: 300px;
+}
 </style>
