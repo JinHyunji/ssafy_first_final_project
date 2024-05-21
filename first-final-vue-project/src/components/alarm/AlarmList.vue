@@ -32,7 +32,7 @@
                 <div class="my-2">{{ targetAlarm.startTime }}부터 {{ targetAlarm.endTime }}까지</div>
                 <div class="my-2">{{ targetAlarm.term }}분 마다</div>
                 <div class="my-2">{{ targetAlarm.exerType }} 운동을</div>
-                <img class="my-2" :src="getImgSrc(targetAlarm.img)">
+                <img class="my-2" :src="targetAlarmImgSrc" style="width:100px">
                 <div class="my-2">{{ targetAlarm.cycle }} 요일 마다</div>
             </div>
 
@@ -57,8 +57,9 @@ const targetAlarm = ref({
     img: "",
     videoId: "",
 });
+const targetAlarmImgSrc = ref("/src/assets/img/Logo10.png")
 
-const user = sessionStorage.getItem('loginUser');
+const user = JSON.parse(sessionStorage.getItem('loginUser')).nickname;
 
 const listForAlarm = ref([]);
 const alarmMap = new Map();
@@ -66,6 +67,8 @@ const alarmMap = new Map();
 onMounted(async () => {
     await store.getAlarmList();
     listForAlarm.value = store.alarmList;
+    console.log(sessionStorage.getItem('loginUser'))
+    console.log()
 })
 
 onUnmounted(() => {
@@ -93,10 +96,12 @@ watch(
     listForAlarm,
     (newValue, oldValue) => {
         console.log("알림 재설정 로드")
+
         alarmMap.forEach((newAlarm) => {
             console.log(newAlarm, "이 초기화 됩니다.");
             clearInterval(newAlarm);
         })
+
         if (oldValue.length === 0) {
             //요일 가져오기
             var today = new Date().getDay();
@@ -104,17 +109,19 @@ watch(
             //처음 로드되었을 경우, 시간을 계산해서 일회성 알림을 보내야 함
             for (var j = 0; j < newValue.length; j++) {
                 if (newValue[j].activate === "true" || newValue[j].activate === true) {
+
                     if (newValue[j].term === 0) {
                         alert("알림 간격이 0인 알림을 비활성화 함");
                         changed(newValue[j]);
                         return
                     }
+
                     const alarmDay = newValue[j].cycle.split("").map(Number);
                     if (alarmDay.includes(today)) {
-                        if (calculateGap(newValue[j].endTime) < 0) {
+                        if (store.calculateGap(newValue[j].endTime) < 0) {
                             const curAlarm = newValue[j];
                             // const srtTime = curAlarm.startTime.split(":").map(Number);
-                            const calTime = calculateGap(newValue[j].startTime);
+                            const calTime = store.calculateGap(newValue[j].startTime);
 
                             let plusGap = 0;
                             if (calTime >= 0) {
@@ -123,7 +130,6 @@ watch(
                             } else {
                                 plusGap = Math.abs(calTime);
                             }
-
                             setTimeout(() => { alarmOn(curAlarm) }, plusGap)
                             console.log(curAlarm.title, "알림을 활성화했습니다.", new Date());
                         }
@@ -134,17 +140,6 @@ watch(
     },
     { deep: true },
 )
-
-const calculateGap = function (timeString) {
-    const timeArr = timeString.split(":").map(Number);
-
-    const now = new Date();
-    const calTime = new Date().setHours(timeArr[0], timeArr[1], 0, 0);
-
-    const timeGap = now - calTime;
-
-    return timeGap;
-}
 
 const changed = function (alarm) {
     store.alarmOnOff(alarm.alarmId);
@@ -157,12 +152,12 @@ const changeShowAlarm = function (alarm) {
     targetAlarm.value.term = alarm.term;
     targetAlarm.value.exerType = alarm.exerType;
     targetAlarm.value.cycle = alarm.exerType;
+    if(alarm.videoId !== undefined){
+        targetAlarmImgSrc.value = 'https://img.youtube.com/vi/'+alarm.videoId+"/mqdefault.jpg";
+    } else {
+    targetAlarmImgSrc.value = '/images/' + alarm.img;
+    }
 
-
-}
-
-const getImgSrc = function (imgLink) {
-    return '/images/' + imgLink;
 }
 
 const modifyAlarm = function (id) {
@@ -185,12 +180,12 @@ const previewAlarm = function (alarm) {
 
 <style scoped>
 #listBox {
-    min-width: 900px;
+    min-width: 1000px;
 }
 
 #alarmBox {
     min-width: 320px;
-    max-width: 600px;
+    max-width: 700px;
 }
 
 #infoBox {

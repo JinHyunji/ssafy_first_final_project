@@ -44,7 +44,7 @@ export const useAlarmStore = defineStore('alarm', () => {
   const savedAlarm = ref({});
   const saveAlarm = function (alarm) {
     savedAlarm.value = alarm.value;
-    savedAlarm.value.userId = sessionStorage.getItem('loginUser');
+    savedAlarm.value.userId = JSON.parse(sessionStorage.getItem('loginUser')).userId;
   };
 
   const templates = ref(null);
@@ -67,7 +67,7 @@ export const useAlarmStore = defineStore('alarm', () => {
       })
   }
 
-  const updateAlarmVideoId = function(newVideoId) {
+  const updateAlarmVideoId = function (newVideoId) {
     console.log(newVideoId);
     savedAlarm.value.videoId = newVideoId;
     console.log(savedAlarm.value);
@@ -91,22 +91,34 @@ export const useAlarmStore = defineStore('alarm', () => {
   }
 
   const callAlarm = (alarm) => {
+
+    if (calculateGap(alarm.endTime) > 0) {
+      console.log("페이지를 로드하여 알람을 비활성화합니다.");
+      router.go(0);
+    }
+
+    let imgSrc = "";
+
+    if (alarm.videoId !== undefined) {
+      imgSrc = 'https://img.youtube.com/vi/' + alarm.videoId + "/mqdefault.jpg";
+    } else {
+      imgSrc = '/images/' + alarm.img;
+    }
+
     if (!("Notification" in window)) {
       alert("이 브라우저는 알림 기능이 지원되지 않습니다.");
     } else if (Notification.permission === "granted") {
       const notification = new Notification(
         alarm.title,
         {
-          image: "/public/images/" + alarm.img, // 경로를 바꾸라는 경고문이 뜨지만 바꾸면 이미지가 안뜸..
+          image: imgSrc, // 경로를 바꾸라는 경고문이 뜨지만 바꾸면 이미지가 안뜸..
           body: "alarm.duration" + " | 척추수술 1700만원",
-          requireInteraction: false // true -> 사용자가 동작하기 전까지 꺼지지 않음
+          requireInteraction: true // true -> 사용자가 동작하기 전까지 꺼지지 않음
         });
       notification.onclick = (event) => {
         event.preventDefault(); // prevent the browser from focusing the Notification's tab
-        window.open("http://localhost:5173/popup/"+alarm.alarmId, "_blank");
+        window.open("http://localhost:5173/popup/" + alarm.alarmId, "_blank");
       };
-
-
 
       console.log(alarm.title, "알림이 전송되었습니다.", new Date())
 
@@ -119,8 +131,20 @@ export const useAlarmStore = defineStore('alarm', () => {
     }
   }
 
+  const calculateGap = function (timeString) {
+    const timeArr = timeString.split(":").map(Number);
 
-  return { 
+    const now = new Date();
+    const calTime = new Date().setHours(timeArr[0], timeArr[1], 0, 0);
+
+    const timeGap = now - calTime;
+
+    // 미래는 음수로, 과거는 양수로 반환함
+    return timeGap;
+  }
+
+
+  return {
     alarmList,
     getAlarmList,
     alarmObject,
@@ -138,7 +162,8 @@ export const useAlarmStore = defineStore('alarm', () => {
     callAlarm,
     updateAlarmVideoId,
     alarmOnOff,
+    calculateGap,
 
-    
+
   }
 })

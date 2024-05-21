@@ -41,11 +41,11 @@ export const useUserStore = defineStore('user', () => {
   const userLogin = function(loginUser){
     axios.post(`${REST_USER_API}/login`, loginUser)
     .then((res)=>{
-      sessionStorage.setItem('loginUser', res.data.userId);
+      sessionStorage.setItem('loginUser', JSON.stringify(res.data));
       router.push({name: 'alarmList'});
     })
     .catch((err) => {
-      alert('로그인 실패');
+      alert('일치하는 회원 정보가 없습니다.');
     })
   }
 
