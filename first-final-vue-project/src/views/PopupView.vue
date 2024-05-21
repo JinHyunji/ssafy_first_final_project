@@ -4,14 +4,14 @@
             {{ store.alarmObject.title }}
         </h1>
         <div v-if="store.alarmObject.img">
-
             <img :src="getImgSrc(store.alarmObject.img)">
         </div>
         <div v-else-if="store.alarmObject.videoId">
             <iframe width="700px" height="393.75px" :src="getVideoSrc(store.alarmObject.videoId)"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
         </div>
         <div v-else>
 

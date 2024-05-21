@@ -26,6 +26,9 @@ const clickTemp = function(tempId) {
 </script>
 
 <style scoped>
+    h3 {
+        margin-bottom: 30px;
+    }
     .temp {
         margin-left: 250px;
         margin-right: 100px;
