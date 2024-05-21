@@ -6,16 +6,20 @@
 
         <div class="d-flex align-self-start" id="listBox">
             <div class="d-flex flex-column mb-3 mx-3">
-                <button type="button" class="btn btn-link px-1 ms-auto p-0" @click="createAlarm">새로운 알람 생성</button>
+                <button type="button" class="btn btn-link px-1 ms-auto p-0 text-decoration-none text-secondary"
+                    @click="createAlarm">새로운 알람 생성</button>
                 <div v-for="alarm in listForAlarm" :key="alarm.alarmId" class="d-flex w-100" id="alarmBox">
                     <input type="radio" class="btn-check p-2 flex-grow-1" name="options" :id="'option' + alarm.alarmId"
                         autocomplete="off" data-bs-toggle="collapse" href="#alarmInfo" role="button"
                         aria-expanded="false" aria-controls="collapseExample" @click="changeShowAlarm(alarm)">
                     <label class="btn px-2 flex-grow-1 mx-1" :for="'option' + alarm.alarmId">{{ alarm.title }}</label>
-                    <button type="button" class="btn btn-link px-1" @click="modifyAlarm(alarm.alarmId)">수정</button>
+                    <button type="button" class="btn btn-link px-1 text-decoration-none text-secondary"
+                        @click="modifyAlarm(alarm.alarmId)">수정</button>
                     <!-- <button type="button" class="btn btn-link px-1" @click="infoAlarm(alarm.alarmId)">상세</button> -->
-                    <button type="button" class="btn btn-link px-1" @click="deleteAlarm(alarm.alarmId)">삭제</button>
-                    <button type="button" class="btn btn-link px-1" @click="previewAlarm(alarm)">미리보기</button>
+                    <button type="button" class="btn btn-link px-1 text-decoration-none text-secondary"
+                        @click="deleteAlarm(alarm.alarmId)">삭제</button>
+                    <button type="button" class="btn btn-link px-1 text-decoration-none text-secondary"
+                        @click="previewAlarm(alarm)">미리보기</button>
                     <div class="form-check form-switch pt-2">
                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
                             v-model="alarm.activate" @change="changed(alarm)">
@@ -68,13 +72,6 @@ const alarmMap = new Map();
 onMounted(async () => {
     await store.getAlarmList();
     listForAlarm.value = store.alarmList;
-
-    // 오늘이 무슨 요일인지 가져오기 (일:0 ~ 토:6)
-
-
-    // 지금이 몇시 몇분인지 가져오기 // ex 5시 12분
-
-
 })
 
 onUnmounted(() => {
@@ -101,6 +98,10 @@ const alarmOn = function (alarm) {
 watch(
     listForAlarm,
     (newValue, oldValue) => {
+        console.log("알림 재설정 로드")
+        alarmMap.forEach((newAlarm) => {
+            clearInterval(newAlarm);
+        })
         if (oldValue.length === 0) {
             //시간 가져오기
             var hr = new Date().getHours(); // 5
@@ -110,40 +111,51 @@ watch(
             //요일 가져오기
             var today = new Date().getDay();
 
-            if (sec > 0) {
-                min++;
-            }
-
             //처음 로드되었을 경우, 시간을 계산해서 일회성 알림을 보내야 함
             for (var j = 0; j < newValue.length; j++) {
-                const alarmDay = newValue[j].cycle.split("").map(Number);
-                if (alarmDay.includes(today)) {
-                    if (newValue[j].activate === "true" || newValue[j].activate === true) {
-                        const curAlarm = newValue[j];
-                        const srtTime = curAlarm.startTime.split(":").map(Number);
-                        const gap = ((hr * 60) + min) - ((srtTime[0] * 60) + srtTime[1]);
-                        const gapSec = ((60 - sec) * 1000);
-                        const firstAlarmTime = curAlarm.term - (gap % curAlarm.term);
-                        const plusGap = firstAlarmTime * 60 * 1000 + gapSec;
-                        setTimeout(() => { alarmOn(curAlarm) }, plusGap)
-                        console.log(curAlarm.title, "알림을 활성화했습니다.", new Date());
+                if (newValue[j].activate === "true" || newValue[j].activate === true) {
+                    if (newValue[j].term === 0) {
+                        alert("알림 간격이 0인 알림을 비활성화 함");
+                        changed(newValue[j]);
+                        return
+                    }
+                    const alarmDay = newValue[j].cycle.split("").map(Number);
+                    if (alarmDay.includes(today)) {
+                        console.log(calculateGap(newValue[j].endTime));
+                        if (calculateGap(newValue[j].endTime) < 0) {
+                            const curAlarm = newValue[j];
+                            // const srtTime = curAlarm.startTime.split(":").map(Number);
+                            const calTime = calculateGap(newValue[j].startTime);
+
+                            let plusGap = 0;
+                            if (calTime >= 0) {
+                                const modTerm = curAlarm.term * 60 * 1000;
+                                plusGap = calTime % modTerm;
+                            } else {
+                                plusGap = Math.abs(calTime);
+                            }
+
+                            setTimeout(() => { alarmOn(curAlarm) }, plusGap)
+                            console.log(curAlarm.title, "알림을 활성화했습니다.", new Date());
+                        }
                     }
                 }
             }
         }
-        // console.log(newValue);
-        // console.log(oldValue); // oldValue==newValue인 이유가 궁금함
-        // for (var i = 0; i < newValue.length; i++) {
-        //     // console.log(newValue[i].title, "출력됨");
-
-        //     if (newValue[i].activate === "true" || newValue[i].activate === true) {
-        //         alarmOn(newValue[i]);
-        //         console.log(newValue[i].title, "활성화됨");
-        //     }
-        // }
     },
     { deep: true },
 )
+
+const calculateGap = function (timeString) {
+    const timeArr = timeString.split(":").map(Number);
+
+    const now = new Date();
+    const calTime = new Date().setHours(timeArr[0], timeArr[1], 0, 0);
+
+    const timeGap = now - calTime;
+
+    return timeGap;
+}
 
 const changed = function (alarm) {
     store.alarmOnOff(alarm.alarmId);

@@ -38,7 +38,7 @@ public class AlarmRestController {
 	@PostMapping("/alarm/{tempId}")
 	@Operation(summary = "알람 생성")
 	public ResponseEntity<?> createAlarm(@RequestBody Alarm alarm, @PathVariable("tempId") int tempId) {
-		if (alarm.getImg() == null || alarm.getImg().length() != 0) {
+		if (alarm.getImg() != null && alarm.getImg().length() != 0) {
 			String alarmImgFileSource = alarmService.base64ToFileSource(alarm.getImg());
 			alarm.setImg(alarmImgFileSource);
 		}

@@ -1,61 +1,104 @@
 <template>
-    <div>
-        <h2>AlarmModify</h2>
-        <div>
-            <h2>알람 수정 하기</h2>
-            <div>
-                <div>
-                    <label for="">알람 제목</label>
-                    <input type="text" v-model="store.alarmObject.title">
+    <div class="exer-setting-all ">
+        <div class="exer-setting position-absolute top-20 start-50 translate-middle-x">
+            <h2>알람 수정하기</h2>
+            <div class="inputs">
+                <div class="input">
+                    <label for="inputPassword5" class="form-label">알람 제목</label>
+                    <input v-model="store.alarmObject.title" type="text" id="inputPassword5" class="form-control"
+                        aria-describedby="passwordHelpBlock">
                 </div>
-                <div>
-                    <label for="">시작 시간</label>
-                    <input type="text" v-model="store.alarmObject.startTime">
+                <div class="input">
+                    <label for="inputPassword5" class="form-label">시작 시간</label>
+                    <input v-model="store.alarmObject.startTime" type="time" id="inputPassword5" class="form-control"
+                        aria-describedby="passwordHelpBlock">
                 </div>
-                <div>
-                    <label for="">종료 시간</label>
-                    <input type="text" v-model="store.alarmObject.endTime">
+                <div class="input">
+                    <label for="inputPassword5" class="form-label">종료 시간</label>
+                    <input v-model="store.alarmObject.endTime" type="time" id="inputPassword5" class="form-control"
+                        aria-describedby="passwordHelpBlock">
                 </div>
-                <div>
-                    <label for="">간격</label>
-                    <input type="text" v-model="store.alarmObject.term">
+                <div class="input">
+                    <label for="inputPassword5" class="form-label">간격</label>
+                    <input v-model="store.alarmObject.term" type="number" class="form-control" placeholder="분 마다"
+                        aria-label="default input example">
                 </div>
-                <div>
-                    <label for="">반복</label>
-                    <div v-for="day in selectedDay" :key="day">
-                        <label>월</label>
-                        <input v-model="selectedDay" value="1" name="mon" type="checkbox">
-                        <label>화</label>
-                        <input v-model="selectedDay" value="2" name="tue" type="checkbox">
-                        <label>수</label>
-                        <input v-model="selectedDay" value="3" name="wed" type="checkbox">
-                        <label>목</label>
-                        <input v-model="selectedDay" value="4" name="thur" type="checkbox">
-                        <label>금</label>
-                        <input v-model="selectedDay" value="5" name="fri" type="checkbox">
-                        <label>토</label>
-                        <input v-model="selectedDay" value="6" name="sat" type="checkbox">
-                        <label>일</label>
-                        <input v-model="selectedDay" value="7" name="sun" type="checkbox">
+                <div class="input">
+                    <label for="inputPassword5" class="form-label">반복</label>
+                    <div class="checkboxes d-flex flex-row mx-1">
+                        <div class="form-check d-flex flex-row mx-1">
+                            <input v-model="selectedDay" value="1" class="form-check-input" type="checkbox" id="flexCheckDefault1">
+                            <label class="form-check-label" for="flexCheckDefault1">
+                                월
+                            </label>
+                        </div>
+                        <div class="form-check d-flex flex-row mx-1">
+                            <input v-model="selectedDay" value="2" class="form-check-input" type="checkbox"
+                                id="flexCheckDefault2">
+                            <label class="form-check-label" for="flexCheckDefault2">
+                                화
+                            </label>
+                        </div>
+                        <div class="form-check d-flex flex-row mx-1">
+                            <input v-model="selectedDay" value="3" class="form-check-input" type="checkbox"
+                                id="flexCheckDefault3">
+                            <label class="form-check-label" for="flexCheckDefault3">
+                                수
+                            </label>
+                        </div>
+                        <div class="form-check d-flex flex-row mx-1">
+                            <input v-model="selectedDay" value="4" class="form-check-input" type="checkbox"
+                                id="flexCheckDefault4">
+                            <label class="form-check-label" for="flexCheckDefault4">
+                                목
+                            </label>
+                        </div>
+                        <div class="form-check d-flex flex-row mx-1">
+                            <input v-model="selectedDay" value="5" class="form-check-input" type="checkbox"
+                                id="flexCheckDefault5">
+                            <label class="form-check-label" for="flexCheckDefault5">
+                                금
+                            </label>
+                        </div>
+                        <div class="form-check d-flex flex-row mx-1">
+                            <input v-model="selectedDay" value="6" class="form-check-input" type="checkbox" id="flexCheckDefault6">
+                            <label class="form-check-label" for="flexCheckDefault6">
+                                토
+                            </label>
+                        </div>
+                        <div class="form-check d-flex flex-row mb-3 mx-1">
+                            <input v-model="selectedDay" value="7" class="form-check-input" type="checkbox"
+                                id="flexCheckDefault7">
+                            <label class="form-check-label" for="flexCheckDefault7">
+                                일
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <label for="">운동 부위</label>
-                    <input type="text" v-model="store.alarmObject.exerType">
+                <div class="input">
+                    <label for="inputPassword5" class="form-label">운동 부위</label>
+                    <input v-model="store.alarmObject.exerType" type="text" id="inputPassword5" class="form-control"
+                        aria-describedby="passwordHelpBlock">
                 </div>
-                <div>
-                    <label for="">영상 검색</label>
-                    <input type="text" name="videoId" v-model="store.alarmObject.videoId">
+                <div class="input">
+                    <label for="inputPassword5" class="form-label">영상 추가</label>
+                    <br>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        영상 검색
+                    </button>
                 </div>
-                <div>
-                    <label for="file">                        <div class="btn-upload">이미지 추가</div>
-                    </label>
-                    <input multiple type="file" accept=".png, .jpg" name="img"
-                        @change="store.imageUpload($event.target.files)" ref="imageInput">
-                </div>
-                <div>
-                    <button @click="modified">수정</button>
-                    <button @click="declined">취소</button>
+                <div class="input">
+                    <div class="mb-3">
+                        <label for="inputPassword5" class="form-label">이미지 추가</label>
+                        <input multiple type="file" name="img" @change="imageUpload($event.target.files)"
+                            ref="imageInput" class="form-control" id="formFile">
+                    </div>
+
+                    <div>
+                        <button @click="modified" type="button" class="btn btn-outline-warning mx-2">수정</button>
+                        <button @click="declined" type="button" class="btn btn-outline-warning mx-2">취소</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,12 +119,36 @@ const selectedDay = ref([]);
 
 onMounted(async () => {
     await store.getAlarm(route.params.alarmId);
-    selectedDay.value = store.alarmObject.cycle;
+    selectedDay.value = store.alarmObject.cycle.split("");
     console.log(selectedDay.value)
 })
 
 const modified = function () {
+    store.alarmObject.cycle = selectedDay.value.join('');
+    console.log(selectedDay)
     store.modifyAlarm();
+}
+
+const fileToBase64 = function (file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+const imageUpload = async (gotImage) => {
+    if (gotImage) {
+        try {
+            // const imageName = gotImage[0].name;
+            const data = await fileToBase64(gotImage[0]);
+            store.savedAlarm.img = data;
+            // console.log(data);
+        } catch (error) {
+            alert("파일을 변환하는데 실패했습니다.")
+        }
+    }
 }
 
 const declined = function () {
@@ -90,4 +157,34 @@ const declined = function () {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.exer-setting-all {
+    display: flex;
+    margin-top: 10px;
+}
+
+.exer-setting {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin: 0px auto; */
+}
+
+.inputs {
+    margin-top: 10px;
+    width: 500px;
+}
+
+.input {
+    margin-bottom: 20px;
+}
+
+.btns {
+    text-align: end;
+    margin-top: 30px;
+}
+
+.btns>button {
+    margin-left: 10px;
+}
+</style>

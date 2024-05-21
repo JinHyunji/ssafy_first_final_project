@@ -1,10 +1,9 @@
 <template>
-    <TheHeaderNav/>
     <div onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="d-flex flex-column align-items-start">
                 <div class="mx-auto p-2 bd-highlight">
-                <h2 >Sign In</h2></div>
+                <h2 >Log In</h2></div>
                 <div class="p-2 bd-highlight" id="login_forms" >
                     
                     <div class="input-group mb-2">
@@ -20,7 +19,7 @@
                     <div class="d-grid gap-2">
                     <button type="button" class="btn btn-outline-warning" @click="loginTry" id="login_button">로그인</button></div>
                     <div id="signupLink" class="d-flex flex-row-reverse bd-highlight">
-                    <RouterLink :to="{name:'signup'}" class="ms-auto p-2 bd-highlight text-warning">회원가입</RouterLink></div>
+                    <RouterLink :to="{name:'signup'}" class="ms-auto p-2 bd-highlight text-decoration-none text-secondary">회원가입</RouterLink></div>
                 </div>
             </div>
         </div>
@@ -28,7 +27,6 @@
 </template>
 
 <script setup>
-import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
 import { useUserStore } from '@/stores/user';
 import { ref } from 'vue';
 import Signup from './Signup.vue';
