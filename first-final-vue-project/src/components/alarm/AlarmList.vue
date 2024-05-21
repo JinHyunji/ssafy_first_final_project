@@ -1,40 +1,39 @@
 <template>
     <div class="position-absolute top-20 start-50 translate-middle-x mt-5">
         <div>
-            <h2 class="my-3 ms-4">{{ user }}님의 알람목록</h2>
+            <h2 class="my-3 ms-4 mb-4">{{ user }}님의 알람목록</h2>
         </div>
 
         <div class="d-flex align-self-start" id="listBox">
-            <div class="d-flex flex-column mb-3 mx-3">
-                <button type="button" class="btn btn-link px-1 ms-auto p-0 text-decoration-none text-body"
+            <div class="d-flex flex-column mb-3 mx-3 my-1">
+                <button type="button" class="btn btn btn-dark px-2 ms-auto p-1 mb-2"
                     @click="createAlarm">새로운 알람 생성</button>
-                <div v-for="alarm in listForAlarm" :key="alarm.alarmId" class="d-flex w-100" id="alarmBox">
+                <div v-for="alarm in listForAlarm" :key="alarm.alarmId" class="d-flex w-100 m-2" id="alarmBox">
                     <input type="radio" class="btn-check p-2 flex-grow-1" name="options" :id="'option' + alarm.alarmId"
                         autocomplete="off" data-bs-toggle="collapse" href="#alarmInfo" role="button"
                         aria-expanded="false" aria-controls="collapseExample" @click="changeShowAlarm(alarm)">
                     <label class="btn px-2 flex-grow-1 mx-1" :for="'option' + alarm.alarmId">{{ alarm.title }}</label>
-                    <button type="button" class="btn btn-link px-1 text-decoration-none text-secondary"
+                    <button type="button" class="btn btn-link px-2 text-decoration-none text-secondary mx-1"
                         @click="modifyAlarm(alarm.alarmId)">수정</button>
                     <!-- <button type="button" class="btn btn-link px-1" @click="infoAlarm(alarm.alarmId)">상세</button> -->
-                    <button type="button" class="btn btn-link px-1 text-decoration-none text-secondary"
+                    <button type="button" class="btn btn-link px-2 text-decoration-none text-secondary mx-1"
                         @click="deleteAlarm(alarm.alarmId)">삭제</button>
-                    <button type="button" class="btn btn-link px-1 text-decoration-none text-secondary"
+                    <button type="button" class="btn btn-link px-2 text-decoration-none text-secondary mx-1"
                         @click="previewAlarm(alarm)">미리보기</button>
-                    <div class="form-check form-switch pt-2">
+                    <div class="form-check form-switch pt-2 mx-2">
                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
                             v-model="alarm.activate" @change="changed(alarm)">
                     </div>
                 </div>
             </div>
 
-            <div class="card card-body d-flex flex-column w-50 p-4" id="infoBox">
-                <div>{{ targetAlarm.title }}</div>
-                <div>{{ targetAlarm.startTime }}부터</div>
-                <div>{{ targetAlarm.endTime }}까지</div>
-                <div>{{ targetAlarm.term }}분 마다</div>
-                <div>{{ targetAlarm.exerType }} 운동을</div>
-                <img :src="getImgSrc(targetAlarm.img)">
-                <div>cycle: {{ targetAlarm.cycle }}</div>
+            <div class="card card-body d-flex flex-column align-items-center w-50 p-4 mx-4" id="infoBox">
+                <h4 class="my-3 ">{{ targetAlarm.title }}</h4>
+                <div class="my-2">{{ targetAlarm.startTime }}부터 {{ targetAlarm.endTime }}까지</div>
+                <div class="my-2">{{ targetAlarm.term }}분 마다</div>
+                <div class="my-2">{{ targetAlarm.exerType }} 운동을</div>
+                <img class="my-2" :src="getImgSrc(targetAlarm.img)">
+                <div class="my-2">{{ targetAlarm.cycle }} 요일 마다</div>
             </div>
 
         </div>
