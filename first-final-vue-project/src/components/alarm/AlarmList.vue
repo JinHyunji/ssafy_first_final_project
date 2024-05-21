@@ -152,7 +152,7 @@ const changeShowAlarm = function (alarm) {
     targetAlarm.value.term = alarm.term;
     targetAlarm.value.exerType = alarm.exerType;
     targetAlarm.value.cycle = alarm.exerType;
-    if(alarm.videoId !== undefined){
+    if(alarm.videoId !== undefined && alarm.videoId != null&& alarm.videoId != ""){
         targetAlarmImgSrc.value = 'https://img.youtube.com/vi/'+alarm.videoId+"/mqdefault.jpg";
     } else {
     targetAlarmImgSrc.value = '/images/' + alarm.img;
