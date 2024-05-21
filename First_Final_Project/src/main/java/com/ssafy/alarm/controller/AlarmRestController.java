@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/api-alarm")
 @Tag(name = "AlarmRestController", description = "알람 관리 기능")
 public class AlarmRestController {
-
+	
 	private final AlarmService alarmService;
 	private final TemplateService templateService;
 
@@ -33,7 +33,7 @@ public class AlarmRestController {
 		this.alarmService = alarmService;
 		this.templateService = templateService;
 	}
-
+	
 	// 알람 생성
 	@PostMapping("/alarm/{tempId}")
 	@Operation(summary = "알람 생성")
@@ -44,7 +44,7 @@ public class AlarmRestController {
 		}
 		
 		int result = alarmService.createAlarm(alarm);
- 
+		
 		if (result > 0) {
 			templateService.countTemp(tempId);
 			return ResponseEntity.ok(result);
@@ -52,22 +52,22 @@ public class AlarmRestController {
 			
 			return ResponseEntity.notFound().build();
 		}
-
 	}
-
+	
 	// 알람 삭제
 	@DeleteMapping("/alarm/{alarmId}")
 	@Operation(summary = "알람 삭제")
 	public ResponseEntity<?> removeAlarm(@PathVariable("alarmId") int alarmId) {
 		int result = alarmService.removeAlarm(alarmId);
-		System.out.println(alarmId + "번이 삭제됨");
+		System.out.println(alarmId+"번이 삭제됨");
 		if (result > 0) {
 			return ResponseEntity.ok(result);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
+	
+	
 	// 알람 수정
 	@PutMapping("/alarm")
 	@Operation(summary = "알람 수정")
@@ -80,7 +80,7 @@ public class AlarmRestController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
+	
 	// 알람 하나 가져오기
 	@GetMapping("/alarm/{alarmId}")
 	@Operation(summary = "알람 하나 가져오기")
@@ -92,21 +92,39 @@ public class AlarmRestController {
 			return ResponseEntity.noContent().build();
 		}
 	}
-
+	
+	
 	// 알람 전체 가져오기
 	@GetMapping("/alarm")
 	@Operation(summary = "알람 전체 가져오기")
 	public ResponseEntity<?> getAlarmList(HttpSession session) {
 		
 		User loginUser = (User) session.getAttribute("loginUser");
-
+		
+//		if(loginUser == null) {
+//			return ResponseEntity.notFound().build();
+//		}
+		
 		List<Alarm> list = alarmService.getAlarmListByUserId(loginUser.getUserId());
-
+		
 		if (list.size() > 0 && !list.isEmpty()) {
 			return ResponseEntity.ok(list);
 		} else {
 			return ResponseEntity.noContent().build();
 		}
 	}
-
+	
+	// 알람 onOff 기능
+	@GetMapping("/alarm/onoff/{alarmId}")
+	@Operation(summary="알람 on/off")
+	public ResponseEntity<?> alarmOnOff(@PathVariable("alarmId") int alarmId){
+		int result = alarmService.activateAlarm(alarmId);
+		if (result > 0) {
+			return ResponseEntity.ok(result);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	
 }

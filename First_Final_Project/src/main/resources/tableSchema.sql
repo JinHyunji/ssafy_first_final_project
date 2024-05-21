@@ -23,6 +23,7 @@ CREATE TABLE alarm (
     `video_id` VARCHAR(20),
     `img` VARCHAR(100),
     `user_id` varchar(20) not null,
+    `activate` varchar(5) default 'true',
     foreign key(user_id) REFERENCES user (user_id)
 );
 

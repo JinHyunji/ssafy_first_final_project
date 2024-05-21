@@ -8,7 +8,6 @@ import AlarmCreate from '@/components/alarm/AlarmCreate.vue';
 import PopupView from '@/views/PopupView.vue';
 
 import AlarmModify from '@/components/alarm/AlarmModify.vue';
-import AlarmInfo from '@/components/alarm/AlarmInfo.vue';
 
 import AlarmCreate2 from '@/components/alarm/AlarmCreate2.vue';
 import axios from 'axios';
@@ -52,11 +51,6 @@ const router = createRouter({
           component: AlarmModify
         },
         {
-          path: 'info/:alarmId',
-          name: 'alarmInfo',
-          component: AlarmInfo
-        },
-        {
           path: 'create',
           name: 'alarmCreate2',
           component: AlarmCreate2
@@ -77,6 +71,7 @@ axios.interceptors.response.use(function (response) {
   if (error.response && error.response.status === 403) {
     alert("로그인이 필요합니다.");
     router.push({ name: 'login' })
+    // router.replace({ name: 'login' }) // 뒤로 못가게 하는 다른방법
   }
   return Promise.reject(error);
 });

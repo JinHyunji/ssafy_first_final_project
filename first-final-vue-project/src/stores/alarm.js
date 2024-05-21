@@ -10,61 +10,61 @@ export const useAlarmStore = defineStore('alarm', () => {
 
   const alarmList = ref([]);
 
-  const getAlarmList = function(){
-    axios.get(REST_ALARM_API)
-    .then((res)=>{
-      alarmList.value = res.data;
-    })
+  const getAlarmList = async function () {
+    await axios.get(REST_ALARM_API)
+      .then((res) => {
+        alarmList.value = res.data;
+      })
   }
 
   const alarmObject = ref({});
 
-  const getAlarm = function(alarmId){
-    axios.get(`${REST_ALARM_API}/${alarmId}`)
-    .then((res)=>{
-      alarmObject.value = res.data;
-      console.log(alarmObject);
-    })
+  const getAlarm = async function (alarmId) {
+    await axios.get(`${REST_ALARM_API}/${alarmId}`)
+      .then((res) => {
+        alarmObject.value = res.data;
+        // console.log(alarmObject);
+      })
   }
 
-  const modifyAlarm = function(){
+  const modifyAlarm = function () {
     axios.put(REST_ALARM_API, alarmObject.value)
-    .then((res)=>{
-      router.push({ name: 'alarmList'})
-    })
+      .then((res) => {
+        router.push({ name: 'alarmList' })
+      })
   }
 
-  const deleteAlarm = function(alarmId){
+  const deleteAlarm = function (alarmId) {
     axios.delete(`${REST_ALARM_API}/${alarmId}`)
-    .then((res)=>{
-      router.go()
-    })
+      .then((res) => {
+        router.go()
+      })
   }
 
   const savedAlarm = ref({});
-  const saveAlarm = function(alarm) {
+  const saveAlarm = function (alarm) {
     savedAlarm.value = alarm.value;
     savedAlarm.value.userId = sessionStorage.getItem('loginUser');
   };
 
   const templates = ref(null);
-  const getTemplates = function() {
+  const getTemplates = function () {
     axios.get(REST_TEMP_API)
-    .then((res)=>{
-      templates.value = res.data;
-    })
+      .then((res) => {
+        templates.value = res.data;
+      })
   }
 
   const savedTempId = ref('');
   const selectedTemp = ref({});
-  const clickTemp = function(tempId) {
+  const clickTemp = function (tempId) {
     savedTempId.value = tempId;
     axios.get(`${REST_TEMP_API}/${tempId}`)
-    .then((res) => {
-      savedAlarm.value.exerType = res.data.exerType;
-      savedAlarm.value.videoId = res.data.videoId;
-      savedAlarm.value.img = res.data.img;
-    })
+      .then((res) => {
+        savedAlarm.value.exerType = res.data.exerType;
+        savedAlarm.value.videoId = res.data.videoId;
+        savedAlarm.value.img = res.data.img;
+      })
   }
 
   const updateAlarmVideoId = function(newVideoId) {
@@ -73,14 +73,21 @@ export const useAlarmStore = defineStore('alarm', () => {
     console.log(savedAlarm.value);
   }
 
-  const createAlarm = function() {
+  const createAlarm = function () {
     axios.post(`${REST_ALARM_API}/${savedTempId.value}`, savedAlarm.value)
-    .then((res) => {
-      router.push({name: 'alarmList'});
-    })
-    .catch((err) => {
-      console.log('err')
-    })
+      .then((res) => {
+        router.push({ name: 'alarmList' });
+      })
+      .catch((err) => {
+        console.log('err')
+      })
+  }
+
+  const alarmOnOff = function (alarmId) {
+    axios.get(`${REST_ALARM_API}/onoff/${alarmId}`)
+      .then((res) => {
+        console.log("알림 온오프 완료");
+      })
   }
 
   const callAlarm = (alarm) => {
@@ -98,6 +105,7 @@ export const useAlarmStore = defineStore('alarm', () => {
         event.preventDefault(); // prevent the browser from focusing the Notification's tab
         window.open("http://localhost:5173/popup/"+alarm.alarmId, "_blank");
       };
+
     } else if (Notification.permission !== "denied") {
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
@@ -108,7 +116,6 @@ export const useAlarmStore = defineStore('alarm', () => {
   }
 
   return { 
-    
     alarmList,
     getAlarmList,
     alarmObject,
@@ -124,7 +131,6 @@ export const useAlarmStore = defineStore('alarm', () => {
     selectedTemp,
     savedTempId,
     callAlarm,
-    updateAlarmVideoId
-    
+    updateAlarmVideoId,
   }
 })
