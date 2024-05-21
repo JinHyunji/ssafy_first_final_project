@@ -18,7 +18,6 @@
             <div class="input">
                 <label for="inputPassword5" class="form-label">간격</label>        
                 <input v-model="alarm.term" type="number" class="form-control" placeholder="분 마다" aria-label="default input example">
-
             </div>
             <div class="input">
                 <label for="inputPassword5" class="form-label">반복</label>

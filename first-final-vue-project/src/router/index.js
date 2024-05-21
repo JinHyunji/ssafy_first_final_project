@@ -64,7 +64,11 @@ const router = createRouter({
       ]
     },
     {
+<<<<<<< HEAD
       path: '/popup/:alarmId',
+=======
+      path: '/popup',
+>>>>>>> seongyunoh
       name: 'popUp',
       component: PopupView,
     }

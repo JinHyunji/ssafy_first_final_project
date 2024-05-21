@@ -35,6 +35,10 @@ export const useAlarmStore = defineStore('alarm', () => {
   }
 
   const deleteAlarm = function(alarmId){
+<<<<<<< HEAD
+=======
+    console.log(alarmId)
+>>>>>>> seongyunoh
     axios.delete(`${REST_ALARM_API}/${alarmId}`)
     .then((res)=>{
       router.go()
@@ -55,10 +59,15 @@ export const useAlarmStore = defineStore('alarm', () => {
     })
   }
 
+<<<<<<< HEAD
   const savedTempId = ref('');
   const selectedTemp = ref({});
   const clickTemp = function(tempId) {
     savedTempId.value = tempId;
+=======
+  const selectedTemp = ref({});
+  const clickTemp = function(tempId) {
+>>>>>>> seongyunoh
     axios.get(`${REST_TEMP_API}/${tempId}`)
     .then((res) => {
       savedAlarm.value.exerType = res.data.exerType;
@@ -67,6 +76,7 @@ export const useAlarmStore = defineStore('alarm', () => {
     })
   }
 
+<<<<<<< HEAD
   const updateAlarmVideoId = function(newVideoId) {
     console.log(newVideoId);
     savedAlarm.value.videoId = newVideoId;
@@ -75,6 +85,10 @@ export const useAlarmStore = defineStore('alarm', () => {
 
   const createAlarm = function() {
     axios.post(`${REST_ALARM_API}/${savedTempId.value}`, savedAlarm.value)
+=======
+  const createAlarm = function() {
+    axios.post(REST_ALARM_API, savedAlarm.value)
+>>>>>>> seongyunoh
     .then((res) => {
       router.push({name: 'alarmList'});
     })
@@ -82,6 +96,7 @@ export const useAlarmStore = defineStore('alarm', () => {
       console.log('err')
     })
   }
+<<<<<<< HEAD
 
   const callAlarm = (alarm) => {
     if (!("Notification" in window)) {
@@ -108,6 +123,8 @@ export const useAlarmStore = defineStore('alarm', () => {
   }
 
 
+=======
+>>>>>>> seongyunoh
 
   return { 
     
@@ -124,10 +141,13 @@ export const useAlarmStore = defineStore('alarm', () => {
     clickTemp,
     createAlarm,
     selectedTemp,
+<<<<<<< HEAD
     savedTempId,
     callAlarm,
     updateAlarmVideoId
     
+=======
+>>>>>>> seongyunoh
     
   }
 })

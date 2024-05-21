@@ -1,5 +1,4 @@
 <template>
-
     <div class="temp">
         <h3>템플릿 선택하기</h3>
         <div v-for="template in store.templates" 
@@ -9,7 +8,6 @@
             </a>
         </div>
     </div>
-
 </template>
 
 <script setup>
@@ -37,5 +35,4 @@ const clickTemp = function(tempId) {
     .list-group {
         margin-top: 20px;
     }
-
 </style>

@@ -17,4 +17,5 @@ public interface AlarmService {
 	List<Alarm> getAlarmListByUserId(String userId);
 	
 	String base64ToFileSource(String FileinBase64);
+
 }
