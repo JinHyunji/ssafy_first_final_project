@@ -5,9 +5,6 @@
         <div class="signup-inputs">
             <div class="input">
                 <div class="row g-3 align-items-center">
-                    <!-- <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">ID</label>
-                    </div> -->
                     <div class="col-auto">
                         <input @blur="checkId" v-model="user.userId" type="text" id="userId" placeholder="아이디 입력" class="form-control" aria-describedby="passwordHelpInline">
                     </div>
@@ -20,15 +17,9 @@
                         아이디는 0 ~ 20자 내로 입력해주세요.
                     </div>
                 </div>
-                <!-- <label>아이디</label>
-                <input @blur="checkId" v-model="user.userId" type="text" id="userId" placeholder="아이디를 입력해주세요.">
-                <span v-if="store.isDuplicate">아이디가 이미 존재합니다.</span> -->
             </div>
             <div class="input">
                 <div class="row g-3 align-items-center">
-                    <!-- <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">Password</label>
-                    </div> -->
                     <div class="col-auto">
                         <input v-model="user.password" type="text" id="password" placeholder="비밀번호 입력" class="form-control" aria-describedby="passwordHelpInline">
                     </div>
@@ -36,26 +27,16 @@
                         패스워드는 0 ~ 20자 내로 입력해주세요.
                     </div>
                 </div>
-                <!-- <label>비밀번호</label>
-                <input v-model="user.password" type="text" id="password" placeholder="비밀번호를 입력해주세요."> -->
             </div>
             <div class="input">
                 <div class="row g-3 align-items-center">
-                    <!-- <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">Nickname</label>
-                    </div> -->
                     <div class="col-auto">
                         <input v-model="user.nickname" type="text" id="nickname" placeholder="닉네임 입력" class="form-control" aria-describedby="passwordHelpInline">
                     </div>
                 </div>
-                <!-- <label>닉네임</label>
-                <input v-model="user.nickname" type="text" id="nickname" placeholder="닉네임을 입력해주세요."> -->
             </div>
             <div class="input">
                 <div class="row g-3 align-items-center">
-                    <!-- <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">Email</label>
-                    </div> -->
                     <div class="col-auto">
                         <input @blur="checkEmail" v-model="user.email" type="email" id="email" placeholder="이메일 입력" class="form-control" aria-describedby="passwordHelpInline">
                     </div>
@@ -65,9 +46,6 @@
                         </span>
                     </div>
                 </div>
-                <!-- <label>이메일</label>
-                <input @blur="checkEmail" v-model="user.email" type="email" id="email" placeholder="이메일을 입력해주세요.">
-                <span v-if="emailError">올바른 이메일을 입력해주세요.</span> -->
             </div>
         </div>
         <div class="signup-btns">
