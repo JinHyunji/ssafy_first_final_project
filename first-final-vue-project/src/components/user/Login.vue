@@ -1,4 +1,5 @@
 <template>
+    <TheHeaderNav/>
     <div onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="d-flex flex-column align-items-start">
@@ -13,7 +14,7 @@
                     </div>
                     <div class="input-group mb-2">
                         <span class="input-group-text bi bi-lock-fill" id="basic-addon1"></span>
-                        <input type="text" class="form-control" placeholder="Password" aria-label="Username"
+                        <input @keyup.enter="loginTry" type="password" class="form-control" placeholder="Password" aria-label="Username"
                             aria-describedby="basic-addon1" v-model="loginUser.password">
                     </div>
                     <div class="d-grid gap-2">
@@ -30,6 +31,7 @@
 import { useUserStore } from '@/stores/user';
 import { ref } from 'vue';
 import Signup from './Signup.vue';
+import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
 
 const store = useUserStore();
 const loginUser = ref({

@@ -1,10 +1,10 @@
 <template>
     <nav class="navbar">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="/src/assets/img/Logo8.png" width="40">
+            <RouterLink class="navbar-brand" to="/">
+                <img src="/src/assets/img/Logo10.png" width="40">
                 <span style="color: #FFC107;"> Alarm</span>
-            </a>
+            </RouterLink>
             <div class="nav-icons" v-if="isLogined">
                 <RouterLink to="/alarm/list">
                     <button type="button" class="btn btn-outline-warning">나의 알람 목록</button>

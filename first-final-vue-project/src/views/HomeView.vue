@@ -1,7 +1,7 @@
 <template>
   <!-- <TheHeaderNav/> -->
   <div class="container"> 
-    <img class="homeImg" src="/src/assets/img/Logo8.png">
+    <img class="homeImg" src="/src/assets/img/Logo10.png">
     <h1 class="logo">Logo</h1>
     <div class="home-btns">
       <RouterLink to="/login">
