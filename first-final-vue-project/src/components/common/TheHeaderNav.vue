@@ -2,8 +2,12 @@
     <nav class="navbar">
         <div class="container">
             <RouterLink class="navbar-brand" to="/">
-                <img src="/src/assets/img/Logo10.png" width="40">
-                <span style="color: #FFC107;"> Alarm</span>
+                <div class="logos">
+                    <img src="/src/assets/img/Logo10.png" width="30px
+                    
+                    ">
+                    <h3 style="color: #FFC107;"> Alarm</h3>
+                </div>
             </RouterLink>
             <div class="nav-icons" v-if="isLogined">
                 <RouterLink to="/alarm/list">
@@ -50,5 +54,15 @@ const logout = function() {
 
     .navbar {
         border-bottom: 1px solid #e7e7e7;
+    }
+
+    .logos {
+        display: flex;
+        align-items: center;
+    }
+
+    h3 {
+        margin-left: 10px;
+        margin-bottom: 0px;
     }
 </style>

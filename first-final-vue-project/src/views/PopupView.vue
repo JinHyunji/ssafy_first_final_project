@@ -1,20 +1,21 @@
 <template>
-    <div>
-        {{ store.alarmObject.title }}
-    </div>
-    <div v-if="store.alarmObject.img">
-        이미지에 값이 있을 때 표시되는 항목
-        <img :src="getImgSrc(store.alarmObject.img)">
-    </div>
-    <div v-else-if="store.alarmObject.videoId">
-        비디오에 값이 있을때 표시되는 항목
-        <iframe width="560" height="315" :src="getVideoSrc(store.alarmObject.videoId)"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-    <div v-else>
-        아무것도 없을 때 표시되는 항목
+    <div class="container">
+        <h1>
+            {{ store.alarmObject.title }}
+        </h1>
+        <div v-if="store.alarmObject.img">
+
+            <img :src="getImgSrc(store.alarmObject.img)">
+        </div>
+        <div v-else-if="store.alarmObject.videoId">
+            <iframe width="700px" height="393.75px" :src="getVideoSrc(store.alarmObject.videoId)"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div v-else>
+
+        </div>
     </div>
 </template>
 
@@ -41,5 +42,13 @@ const getVideoSrc = function (videoLink) {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+    .container {
+        margin-top: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+</style>
 

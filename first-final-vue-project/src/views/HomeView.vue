@@ -2,7 +2,7 @@
   <!-- <TheHeaderNav/> -->
   <div class="container"> 
     <img class="homeImg" src="/src/assets/img/Logo10.png">
-    <h1 class="logo">Logo</h1>
+    <h1 class="logo">Alarm Service</h1>
     <div class="home-btns">
       <RouterLink to="/login">
         <button type="button" class="btn btn-outline-warning">로그인</button>
@@ -23,10 +23,10 @@ import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 130px;
+    margin-top: 180px;
   }
   .homeImg {
-    width: 250px;
+    width: 150px;
     /* height: 300px; */
     /* margin: 40px; */
   }
