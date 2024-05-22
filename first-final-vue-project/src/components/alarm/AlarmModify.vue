@@ -159,6 +159,7 @@ const modified = function () {
     store.alarmObject.cycle = selectedDay.value.join('');
     console.log(selectedDay)
     store.modifyAlarm();
+    youtubeStore.checkedVideoTitle = null;
 }
 
 const fileToBase64 = function (file) {
@@ -197,9 +198,6 @@ const deleteVideo = function () {
     youtubeStore.checkedVideoTitle = null;
 }
 
-// $('#myModal').on('shown.bs.modal', function () {
-//   $('#myInput').trigger('focus')
-// })
 
 </script>
 

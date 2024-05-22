@@ -36,7 +36,7 @@ const getImgSrc = function (imgLink) {
 }
 
 const getVideoSrc = function (videoLink) {
-    console.log('www.youtube.com?v=' + videoLink)
+    console.log('www.youtube.com?v=' + videoLink);
     return "https://www.youtube.com/embed/"+videoLink+"?autoplay=1";
 }
 

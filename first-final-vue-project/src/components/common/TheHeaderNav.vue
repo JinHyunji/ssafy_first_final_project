@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar">
         <div class="container">
-            <RouterLink class="navbar-brand" to="/">
+            <RouterLink class="navbar-brand" :to="{name:'alarmList'}">
                 <div class="logos">
                     <img src="/src/assets/img/Logo10.png" width="30px
                     
