@@ -30,22 +30,35 @@ export const useUserStore = defineStore('user', () => {
       data: user
     })
     .then((res) => {
-      alert('회원가입을 축하합니다!');
-      router.push({name: 'home'});
+      Swal.fire({
+        text: "회원가입을 축하합니다!",
+        icon: "success"
+      });
+      router.push({name: 'login'});
     })
     .catch((err) => {
-      alert('회원가입을 실패했습니다.');
+      Swal.fire({
+        text: "회원가입을 실패했습니다.",
+        icon: "error"
+      });
     })
   }
 
   const userLogin = function(loginUser){
     axios.post(`${REST_USER_API}/login`, loginUser)
     .then((res)=>{
+      Swal.fire({
+        text: `${res.data.nickname}` + "님 반갑습니다!",
+        icon: "success"
+      });
       sessionStorage.setItem('loginUser', JSON.stringify(res.data));
       router.push({name: 'alarmList'});
     })
     .catch((err) => {
-      alert('일치하는 회원 정보가 없습니다.');
+      Swal.fire({
+        text: "일치하는 회원 정보가 없습니다.",
+        icon: "error"
+      });
     })
   }
 
@@ -53,10 +66,13 @@ export const useUserStore = defineStore('user', () => {
     axios.get(`${REST_USER_API}/logout`)
     .then((res) => {
       sessionStorage.clear();
-      window.location.reload();
+      router.replace({name: 'home'})
     })
     .catch((err) => {
-      alert('로그아웃 실패');
+      Swal.fire({
+        text: "로그아웃 실패",
+        icon: "error"
+      });
     });
   }
 

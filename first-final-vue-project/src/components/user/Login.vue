@@ -1,5 +1,5 @@
 <template>
-    <TheHeaderNav/>
+    <TheHeaderNav2/>
     <div onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="d-flex flex-column align-items-start" id="loginBox">
@@ -37,7 +37,7 @@
 import { useUserStore } from '@/stores/user';
 import { ref } from 'vue';
 import Signup from './Signup.vue';
-import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
+import TheHeaderNav2 from '@/components/common/TheHeaderNav2.vue';
 
 const store = useUserStore();
 const loginUser = ref({

@@ -1,5 +1,5 @@
 <template>
-    <TheHeaderNav/>
+    <TheHeaderNav2/>
     <div class="container">
         <h2>Signup</h2>
         <div class="signup-inputs">
@@ -59,7 +59,7 @@
 </template>
  
 <script setup>
-import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
+import TheHeaderNav2 from '@/components/common/TheHeaderNav2.vue';
 import { ref } from 'vue';
 import { useUserStore } from "@/stores/user";
 import router from '@/router';
