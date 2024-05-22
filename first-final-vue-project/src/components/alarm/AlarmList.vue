@@ -68,9 +68,6 @@ const alarmMap = new Map();
 onMounted(async () => {
     await store.getAlarmList();
     listForAlarm.value = store.alarmList;
-    alarmMap.forEach((intervalId, alarmId) => {
-        clearInterval(intervalId);
-    });
     clearAlarm();
 })
 
@@ -161,6 +158,7 @@ const changeShowAlarm = function (alarm) {
     targetAlarm.value.term = alarm.term;
     targetAlarm.value.exerType = alarm.exerType;
     const weekArr = alarm.cycle.split("").map(Number);
+    targetAlarm.value.cycle = ""
     for (var i = 0; i < weekArr.length; i++) {
         targetAlarm.value.cycle += transWeek[weekArr[i]] + ", ";
     }
