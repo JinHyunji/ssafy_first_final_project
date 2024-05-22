@@ -4,8 +4,6 @@
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="d-flex flex-column align-items-start" id="loginBox">
                 <div class="mx-auto p-2 bd-highlight">
-
-
                     <h2>Login</h2>
                 </div>
                 <div class="d-flex flex-column align-items-start w-100" id="login_forms">

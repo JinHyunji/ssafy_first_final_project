@@ -1,4 +1,30 @@
 <template>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">영상 검색</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" placeholder="검색어 입력"
+                                v-model="keyword" @keyup.enter="search" />
+                            <button class="btn btn-outline-secondary" @click="search">검색</button>
+                        </div>
+                        <YoutubeListItem v-for="(video, index) in youtubeStore.videos"
+                            :key="video.id.videoId" :video="video" :index="index" :current="current">
+                        </YoutubeListItem>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="exer-setting-all ">
         <div class="exer-setting position-absolute top-20 start-50 translate-middle-x">
             <h2>알람 수정하기</h2>
@@ -90,33 +116,7 @@
                     <span style="margin: 0px 5px 0px 10px;">{{ youtubeStore.checkedVideoTitle }}</span>
                     <button @click="deleteVideo" v-if="youtubeStore.checkedVideoTitle" class="btn-close"
                         aria-label="Close"></button>
-
-                    <!-- Modal -->
-                    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">영상 검색</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="container">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                            <input type="text" class="form-control" placeholder="검색어 입력"
-                                                v-model="keyword" @keyup.enter="search" />
-                                            <button class="btn btn-outline-secondary" @click="search">검색</button>
-                                        </div>
-                                        <YoutubeListItem v-for="(video, index) in youtubeStore.videos"
-                                            :key="video.id.videoId" :video="video" :index="index" :current="current">
-                                        </YoutubeListItem>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+                    
                 </div>
                 <div class="input">
                     <div class="mb-3">
@@ -196,6 +196,10 @@ const search = function () {
 const deleteVideo = function () {
     youtubeStore.checkedVideoTitle = null;
 }
+
+// $('#myModal').on('shown.bs.modal', function () {
+//   $('#myInput').trigger('focus')
+// })
 
 </script>
 

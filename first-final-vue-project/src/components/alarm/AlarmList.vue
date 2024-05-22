@@ -57,7 +57,7 @@ const targetAlarm = ref({
     img: "",
     videoId: "",
 });
-const targetAlarmImgSrc = ref("/src/assets/img/Logo10.png")
+const targetAlarmImgSrc = ref("/src/assets/img/Logo10.png");
 
 const user = JSON.parse(sessionStorage.getItem('loginUser')).nickname;
 
