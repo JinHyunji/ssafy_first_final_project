@@ -100,8 +100,8 @@ export const useAlarmStore = defineStore('alarm', () => {
     }
 
     let imgSrc = "";
-
-    if (alarm.videoId !== undefined) {
+    console.log(alarm.videoId)
+    if (alarm.videoId.length === 11) {
       imgSrc = 'https://img.youtube.com/vi/' + alarm.videoId + "/mqdefault.jpg";
     } else {
       imgSrc = '/images/' + alarm.img;
