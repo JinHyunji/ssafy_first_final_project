@@ -71,6 +71,7 @@ export const useAlarmStore = defineStore('alarm', () => {
   const updateAlarmVideoId = function (newVideoId) {
     console.log(newVideoId);
     savedAlarm.value.videoId = newVideoId;
+    alarmObject.value.videoId = newVideoId;
     console.log(savedAlarm.value);
   }
 
