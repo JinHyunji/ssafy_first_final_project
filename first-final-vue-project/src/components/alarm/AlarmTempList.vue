@@ -12,8 +12,10 @@
 
 <script setup>
 import { useAlarmStore } from '@/stores/alarm';
+import { useYoutubeStore } from '@/stores/youtube';
 import { onMounted, ref } from 'vue';
 const store = useAlarmStore();
+const youtubeStore = useYoutubeStore();
 
 onMounted(() => {
   store.getTemplates();
@@ -21,6 +23,8 @@ onMounted(() => {
 
 const clickTemp = function(tempId) {
     store.clickTemp(tempId);
+    store.updateAlarmVideoId(tempId);
+    // youtubeStore.checkedVideoTitle = 
 }
 
 </script>

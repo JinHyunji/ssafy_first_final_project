@@ -5,7 +5,7 @@
         </div>
 
         <div class="d-flex align-self-start" id="listBox">
-            <div class="d-flex flex-column mb-3 mx-3 my-1">
+            <div class="d-flex flex-column mb-3 mx-3 my-1" id="alarmlistBox">
                 <button type="button" class="btn btn btn-dark px-2 ms-auto p-1 mb-2" @click="createAlarm">새로운 알람
                     생성</button>
                 <div v-for="alarm in listForAlarm" :key="alarm.alarmId" class="d-flex w-100 m-2" id="alarmBox">
@@ -68,87 +68,76 @@ const alarmMap = new Map();
 onMounted(async () => {
     await store.getAlarmList();
     listForAlarm.value = store.alarmList;
-    clearAlarm();
 })
 
-onUnmounted(() => {
-    clearAlarm();
+onUnmounted(async () => {
+    console.log(alarmMap)
+    await clearAlarm();
+    console.log(alarmMap)
 })
 
 const alarmOn = function (alarm) {
-    if (alarmMap.has(alarm.alarmId)) {
-        clearInterval(alarmMap.get(alarm.alarmId));
-        alarmMap.delete(alarm.alarmId);
-    }
-
-    if (alarm.activate === false || alarm.activate === "false") {
-        alarmMap.delete(alarm.alarmId);
-        return;
+    console.log(alarmMap)
+    if (alarmMap.has(alarm)) {
+        console.log(alarm.title, "알림을 초기화합니다.")
+        clearInterval(alarm);
     }
 
     store.callAlarm(alarm);
     const newAlarm = setInterval(() => store.callAlarm(alarm), alarm.term * 1000 * 60);
-    alarmMap.set(alarm.alarmId, newAlarm);
+    alarmMap.set(alarm, newAlarm);
+    console.log(alarm.title, "알림 자동전송이 설정되었습니다.")
+    console.log(alarmMap)
 }
-
-// 처음 오는 알림은 시간을 계산해서 보내야함
-// 시작시간과 종료시간을 조건에 추가해야함
-// 알림 오는 날도 시작시간을 조건에 추가해야 함
 
 watch(
     listForAlarm,
     async (newValue, oldValue) => {
-        console.log("알림 재설정 로드")
 
-        if (oldValue.length === 0) { // -> 중복체크로 
-
-            //요일 가져오기
-            var today = new Date().getDay();
+        if (oldValue.length === 0) {
+            console.log("알림 재설정 로드")
+            console.log("처음 로드되었을 때의 map 정보", alarmMap)
 
             //처음 로드되었을 경우, 시간을 계산해서 일회성 알림을 보내야 함
             for (var j = 0; j < newValue.length; j++) {
-                if (!alarmMap.has(newValue[j].alarmId)) {
-                    console.log(newValue[j].title, " 알림은 ", newValue[j].activate);
+                if (!alarmMap.has(newValue[j])) {
                     if (newValue[j].activate === "true" || newValue[j].activate === true) {
-                        console.log("활성화된 알림 : ", newValue[j].title)
                         if (newValue[j].term === 0) {
                             alert("알림 간격이 0인 알림을 비활성화 함");
                             changed(newValue[j]);
-                            return
+                            router.go(0);
                         }
-                    }
-                    const alarmDay = newValue[j].cycle.split("").map(Number);
-                    if (alarmDay.includes(today)) {
-
-                        if (store.calculateGap(newValue[j].endTime) < 0) {
-                            const curAlarm = newValue[j];
-                            // const srtTime = curAlarm.startTime.split(":").map(Number);
-                            const calTime = store.calculateGap(newValue[j].startTime);
-
-                            let plusGap = 0;
-                            if (calTime >= 0) {
+                        var today = new Date().getDay();
+                        const alarmDay = newValue[j].cycle.split("").map(Number);
+                        if (alarmDay.includes(today)) {
+                            if (store.calculateGap(newValue[j].endTime) < 0) {
+                                const curAlarm = newValue[j];
+                                let calTime = store.calculateGap(newValue[j].startTime);
                                 const modTerm = curAlarm.term * 60 * 1000;
-                                plusGap = calTime % modTerm;
-                            } else {
-                                plusGap = Math.abs(calTime);
-                            }
+                                let plusGap = 0;
+                                if (calTime >= 0) {
+                                    plusGap = modTerm - (calTime % modTerm);
+                                } else {
+                                    plusGap = Math.abs(calTime);
+                                }
 
-                            alarmMap.set(curAlarm.alarmId, 0);
-                            setTimeout(() => { alarmOn(curAlarm) }, plusGap)
-                            console.log(curAlarm.title, "알림을 활성화했습니다.", new Date());
+                                alarmMap.set(curAlarm, 0);
+                                setTimeout(() => { alarmOn(curAlarm) }, plusGap)
+                                console.log(curAlarm.title, "알림을 활성화했습니다.", new Date(), " 알림까지 남은 시간 : ", Math.floor(plusGap / 60 / 1000), "분 ", Math.floor(plusGap/1000)%60, "초");
+                                console.log(alarmMap)
+                            }
                         }
                     }
-                } else {
-                    console.log(newValue[j].alarmId)
-                    console.log(alarmMap)
-                    if (alarmMap.has(newValue[j].alarmId)) {
-                        console.log(newValue[j].title, "알림을 삭제함")
-                        alarmMap.delete(newValue[j].alarmId);
-                    }
-                    setTimeout(() => { alarmOn(curAlarm) }, plusGap)
-                    console.log(curAlarm.title, "알림을 활성화했습니다.", new Date());
                 }
             }
+        } else {
+            alarmMap.forEach((newAlarm, alarm) => {
+                if (!alarm.activate) {
+                    console.log(alarm.title, "알림의 자동전송을 삭제합니다.")
+                    clearInterval(newAlarm);  // intervalId는 newAlarm을 의미
+                    alarmMap.delete(alarm);
+                }
+            });
         }
     }
 
@@ -162,8 +151,8 @@ const changed = function (alarm) {
 
 const clearAlarm = function () {
     console.log("clearAlarm")
-    alarmMap.forEach((newAlarm, alarmId) => {
-        console.log(newAlarm, alarmId);
+    alarmMap.forEach((newAlarm, alarm) => {
+        console.log(newAlarm, alarm);
         clearInterval(newAlarm);  // intervalId는 newAlarm을 의미
     });
     alarmMap.clear();
@@ -172,24 +161,23 @@ const clearAlarm = function () {
 const transWeek = ["0", "월", "화", "수", "목", "금", "토", "일"];
 
 const changeShowAlarm = function (alarm) {
-    targetAlarm.value = {cycle: ""};
+    targetAlarm.value = { cycle: "" };
     targetAlarm.value.title = alarm.title
     targetAlarm.value.startTime = alarm.startTime.split(":")[0] + "시 " + alarm.startTime.split(":")[1] + "분";
     targetAlarm.value.endTime = alarm.endTime.split(":")[0] + "시 " + alarm.endTime.split(":")[1] + "분";
     targetAlarm.value.term = alarm.term;
     targetAlarm.value.exerType = alarm.exerType;
     const weekArr = alarm.cycle.split("").map(Number);
+    weekArr.sort();
     for (var i = 0; i < weekArr.length; i++) {
         targetAlarm.value.cycle += transWeek[weekArr[i]] + ", ";
     }
     targetAlarm.value.cycle = targetAlarm.value.cycle.slice(0, -2);
-    if (alarm.videoId.length === 11) {
+    if (alarm.videoId !== null && alarm.videoId.length === 11) {
         targetAlarmImgSrc.value = 'https://img.youtube.com/vi/' + alarm.videoId + "/mqdefault.jpg";
     } else if (alarm.img.length === 17) {
         targetAlarmImgSrc.value = '/images/' + alarm.img;
     }
-    console.log(targetAlarmImgSrc.value)
-
 }
 
 const modifyAlarm = function (id) {
@@ -213,6 +201,10 @@ const previewAlarm = function (alarm) {
 <style scoped>
 #listBox {
     min-width: 1000px;
+}
+
+#alarmlistBox {
+    min-width: 420px;
 }
 
 #alarmBox {

@@ -152,7 +152,6 @@ const selectedDay = ref([]);
 onMounted(async () => {
     await store.getAlarm(route.params.alarmId);
     selectedDay.value = store.alarmObject.cycle.split("");
-    console.log(selectedDay.value)
 })
 
 const modified = function () {
