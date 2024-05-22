@@ -4,8 +4,22 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
 <mapper namespace="com.ssafy.alarm.model.dao.TemplateDao">
+	
+	<select id="selectOne" parameterType="Integer">
+		select * 
+		from template
+		where temp_id = #{tempId};
+	</select>
+	
+	<select id="selectAll">
+		select *
+		from template;
+	</select>
 
-
-
+	<update id="countTemp" parameterType="Integer">
+		update template
+		set count = count+1
+		where temp_id = #{tempId};
+	</update>
 
 </mapper>

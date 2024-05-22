@@ -147,7 +147,6 @@ import { useAlarmStore } from '@/stores/alarm';
 import { useYoutubeStore } from '@/stores/youtube';
 import YoutubeListItem from '@/components/youtube/YoutubeListItem.vue';
 
-
 const route = useRoute();
 const router = useRouter();
 const store = useAlarmStore();

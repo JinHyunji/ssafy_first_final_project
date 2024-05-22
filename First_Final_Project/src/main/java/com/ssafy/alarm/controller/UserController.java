@@ -2,7 +2,6 @@ package com.ssafy.alarm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api-user")
-@Tag(name = "회원 관리 기능")
-@CrossOrigin("*")
+@Tag(name = "UserController", description = "회원정보 CR")
 public class UserController {
 
 	private final UserService userService;
@@ -34,15 +32,16 @@ public class UserController {
 	public ResponseEntity<?> signup(@RequestBody User user) {
 		if (userService.getUserByID(user.getUserId()) != null) {
 			return ResponseEntity.notFound().build();
+		} else {
+			int result = userService.signup(user);
+			return ResponseEntity.ok(result);
 		}
-		int result = userService.signup(user);
-		return ResponseEntity.ok(result);
 	}
 
 	@PostMapping("/login")
 	@Operation(summary = "로그인")
 	public ResponseEntity<?> login(@RequestBody User user, HttpSession session) {
-		if(session.getAttribute("loginUser") != null) {
+		if (session.getAttribute("loginUser") != null) {
 			return ResponseEntity.notFound().build();
 		}
 		User loginUser = userService.login(user.getUserId(), user.getPassword());
@@ -52,7 +51,7 @@ public class UserController {
 
 		session.setAttribute("loginUser", loginUser);
 
-		return ResponseEntity.ok("login success");
+		return ResponseEntity.ok(userService.getUserByID(user.getUserId()));
 	}
 
 	@GetMapping("/logout")
@@ -65,4 +64,12 @@ public class UserController {
 		return ResponseEntity.ok("logout success");
 	}
 
+	@PostMapping("/dupl")
+	public ResponseEntity<?> isDuplicate(@RequestBody User user) {
+		User isUser = userService.getUserByID(user.getUserId());
+		if (isUser != null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok("no duplication");
+	}
 }

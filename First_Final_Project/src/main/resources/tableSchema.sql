@@ -1,3 +1,4 @@
+drop database if exists first_final_project;
 create database first_final_project;
 
 use first_final_project;
@@ -22,6 +23,7 @@ CREATE TABLE alarm (
     `video_id` VARCHAR(20),
     `img` VARCHAR(100),
     `user_id` varchar(20) not null,
+    `activate` varchar(5) default 'true',
     foreign key(user_id) REFERENCES user (user_id)
 );
 
@@ -37,11 +39,18 @@ create table exer_info (
 select * from exer_info;
 
 create table `template` (
-	`temp_id` int PRIMARY KEY AUTO_INCREMENT,
+	`temp_id` int PRIMARY KEY,
 	`exer_type` VARCHAR(20) not null,
     `video_id` VARCHAR(20),
 	`img` VARCHAR(100),
     `count` int default 0
 );
+
+insert into template(temp_id, exer_type) values 
+(1, '기타'),
+(2, '목'),
+(3, '손목'),
+(4, '복근'),
+(5, '호흡');
 
 select * from template;

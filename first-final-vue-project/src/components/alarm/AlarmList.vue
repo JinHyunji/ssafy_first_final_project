@@ -81,6 +81,11 @@ const alarmOn = function (alarm) {
         alarmMap.delete(alarm.alarmId);
     }
 
+    if (alarm.activate === false || alarm.activate === "false") {
+        alarmMap.delete(alarm.alarmId);
+        return;
+    }
+
     store.callAlarm(alarm);
     const newAlarm = setInterval(() => store.callAlarm(alarm), alarm.term * 1000 * 60);
     alarmMap.set(alarm.alarmId, newAlarm);
@@ -92,47 +97,58 @@ const alarmOn = function (alarm) {
 
 watch(
     listForAlarm,
-    (newValue, oldValue) => {
+    async (newValue, oldValue) => {
         console.log("알림 재설정 로드")
-        
-        console.log(alarmMap)
-        clearAlarm();
-        console.log(alarmMap)
 
-        if (oldValue.length === 0) {
-        //요일 가져오기
-        var today = new Date().getDay();
+        if (oldValue.length === 0) { // -> 중복체크로 
 
-        //처음 로드되었을 경우, 시간을 계산해서 일회성 알림을 보내야 함
-        for (var j = 0; j < newValue.length; j++) {
-            if (newValue[j].activate === "true" || newValue[j].activate === true) {
+            //요일 가져오기
+            var today = new Date().getDay();
 
-                if (newValue[j].term === 0) {
-                    alert("알림 간격이 0인 알림을 비활성화 함");
-                    changed(newValue[j]);
-                    return
-                }
-
-                const alarmDay = newValue[j].cycle.split("").map(Number);
-                if (alarmDay.includes(today)) {
-                    if (store.calculateGap(newValue[j].endTime) < 0) {
-                        const curAlarm = newValue[j];
-                        // const srtTime = curAlarm.startTime.split(":").map(Number);
-                        const calTime = store.calculateGap(newValue[j].startTime);
-
-                        let plusGap = 0;
-                        if (calTime >= 0) {
-                            const modTerm = curAlarm.term * 60 * 1000;
-                            plusGap = calTime % modTerm;
-                        } else {
-                            plusGap = Math.abs(calTime);
+            //처음 로드되었을 경우, 시간을 계산해서 일회성 알림을 보내야 함
+            for (var j = 0; j < newValue.length; j++) {
+                if (!alarmMap.has(newValue[j].alarmId)) {
+                    console.log(newValue[j].title, " 알림은 ", newValue[j].activate);
+                    if (newValue[j].activate === "true" || newValue[j].activate === true) {
+                        console.log("활성화된 알림 : ", newValue[j].title)
+                        if (newValue[j].term === 0) {
+                            alert("알림 간격이 0인 알림을 비활성화 함");
+                            changed(newValue[j]);
+                            return
                         }
-                        setTimeout(() => { alarmOn(curAlarm) }, plusGap)
-                        console.log(curAlarm.title, "알림을 활성화했습니다.", new Date());
                     }
+                    const alarmDay = newValue[j].cycle.split("").map(Number);
+                    if (alarmDay.includes(today)) {
+
+                        if (store.calculateGap(newValue[j].endTime) < 0) {
+                            const curAlarm = newValue[j];
+                            // const srtTime = curAlarm.startTime.split(":").map(Number);
+                            const calTime = store.calculateGap(newValue[j].startTime);
+
+                            let plusGap = 0;
+                            if (calTime >= 0) {
+                                const modTerm = curAlarm.term * 60 * 1000;
+                                plusGap = calTime % modTerm;
+                            } else {
+                                plusGap = Math.abs(calTime);
+                            }
+
+                            alarmMap.set(curAlarm.alarmId, 0);
+                            setTimeout(() => { alarmOn(curAlarm) }, plusGap)
+                            console.log(curAlarm.title, "알림을 활성화했습니다.", new Date());
+                        }
+                    }
+                } else {
+                    console.log(newValue[j].alarmId)
+                    console.log(alarmMap)
+                    if (alarmMap.has(newValue[j].alarmId)) {
+                        console.log(newValue[j].title, "알림을 삭제함")
+                        alarmMap.delete(newValue[j].alarmId);
+                    }
+                    setTimeout(() => { alarmOn(curAlarm) }, plusGap)
+                    console.log(curAlarm.title, "알림을 활성화했습니다.", new Date());
                 }
             }
-        }
         }
     },
     { deep: true },
@@ -143,7 +159,9 @@ const changed = function (alarm) {
 }
 
 const clearAlarm = function () {
+    console.log("clearAlarm")
     alarmMap.forEach((newAlarm, alarmId) => {
+        console.log(newAlarm, alarmId);
         clearInterval(newAlarm);  // intervalId는 newAlarm을 의미
     });
     alarmMap.clear();
@@ -152,23 +170,26 @@ const clearAlarm = function () {
 const transWeek = ["0", "월", "화", "수", "목", "금", "토", "일"];
 
 const changeShowAlarm = function (alarm) {
+
+    targetAlarm.value = {cycle: ""};
     targetAlarm.value.title = alarm.title
     targetAlarm.value.startTime = alarm.startTime.split(":")[0] + "시 " + alarm.startTime.split(":")[1] + "분";
     targetAlarm.value.endTime = alarm.endTime.split(":")[0] + "시 " + alarm.endTime.split(":")[1] + "분";
     targetAlarm.value.term = alarm.term;
     targetAlarm.value.exerType = alarm.exerType;
     const weekArr = alarm.cycle.split("").map(Number);
-    targetAlarm.value.cycle = ""
+
     for (var i = 0; i < weekArr.length; i++) {
         targetAlarm.value.cycle += transWeek[weekArr[i]] + ", ";
     }
     targetAlarm.value.cycle = targetAlarm.value.cycle.slice(0, -2);
-    console.log(targetAlarm.value.cycle)
-    if (alarm.videoId !== undefined && alarm.videoId != null && alarm.videoId != "") {
+
+    if (alarm.videoId.length === 11) {
         targetAlarmImgSrc.value = 'https://img.youtube.com/vi/' + alarm.videoId + "/mqdefault.jpg";
-    } else {
+    } else if (alarm.img.length === 17) {
         targetAlarmImgSrc.value = '/images/' + alarm.img;
     }
+    console.log(targetAlarmImgSrc.value)
 
 }
 
@@ -185,7 +206,7 @@ const createAlarm = function () {
 }
 
 const previewAlarm = function (alarm) {
-    store.callAlarm(alarm);
+    store.callAlarm(alarm, "false");
 }
 
 </script>

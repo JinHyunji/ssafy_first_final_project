@@ -26,4 +26,9 @@ public class TemplateServiceImpl implements TemplateService {
 		return templateDao.selectAll();
 	}
 
+	@Override
+	public void countTemp(int tempId) {
+		templateDao.countTemp(tempId);
+	}
+
 }

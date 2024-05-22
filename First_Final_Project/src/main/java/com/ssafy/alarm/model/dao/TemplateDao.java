@@ -10,4 +10,6 @@ public interface TemplateDao {
 	
 	List<Template> selectAll();
 	
+	void countTemp(int tempId);
+	
 }
