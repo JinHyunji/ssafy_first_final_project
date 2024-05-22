@@ -92,9 +92,9 @@ export const useAlarmStore = defineStore('alarm', () => {
       })
   }
 
-  const callAlarm = (alarm) => {
+  const callAlarm = (alarm, isNew="true") => {
 
-    if (calculateGap(alarm.endTime) > 0) {
+    if (isNew==="true" && calculateGap(alarm.endTime) > 0) {
       console.log("페이지를 로드하여 알람을 비활성화합니다.");
       router.go(0);
     }
