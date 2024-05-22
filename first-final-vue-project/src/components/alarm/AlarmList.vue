@@ -1,10 +1,10 @@
 <template>
-    <div class="position-absolute top-20 start-50 translate-middle-x mt-5">
+    <div class="position-absolute top-20 start-50 translate-middle-x mt-3">
         <div>
-            <h2 class="my-3 ms-4 mb-4">{{ user }}님의 알람목록</h2>
+            <h2 class="p-3 mb-2">{{ user }}님의 알람목록</h2>
         </div>
 
-        <div class="d-flex align-self-start" id="listBox">
+        <div class="d-flex align-self-start shadow p-3 mb-5 bg-body rounded" id="listBox">
             <div class="d-flex flex-column mb-3 mx-3 my-1">
                 <button type="button" class="btn btn btn-dark px-2 ms-auto p-1 mb-2" @click="createAlarm">새로운 알람
                     생성</button>

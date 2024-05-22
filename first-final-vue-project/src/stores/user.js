@@ -61,9 +61,6 @@ export const useUserStore = defineStore('user', () => {
         text: "일치하는 회원 정보가 없습니다.",
         icon: "error"
       });
-
-      alert('일치하는 회원 정보가 없습니다.');
-
     })
   }
 
