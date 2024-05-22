@@ -9,8 +9,6 @@ const REST_TEMP_API = 'http://localhost:8080/api-temp/temp';
 export const useAlarmStore = defineStore('alarm', () => {
 
   const alarmList = ref([]);
-  const savedAlarm = ref({});
-
 
   const getAlarmList = async function () {
     await axios.get(REST_ALARM_API)
@@ -30,6 +28,7 @@ export const useAlarmStore = defineStore('alarm', () => {
   }
 
   const modifyAlarm = function () {
+    console.log(alarmObject.value.tempId)
     axios.put(REST_ALARM_API, alarmObject.value)
       .then((res) => {
         router.push({ name: 'alarmList' })
@@ -43,6 +42,7 @@ export const useAlarmStore = defineStore('alarm', () => {
       })
   }
 
+  const savedAlarm = ref({});
   const saveAlarm = function (alarm) {
     savedAlarm.value = alarm.value;
     savedAlarm.value.userId = JSON.parse(sessionStorage.getItem('loginUser')).userId;
@@ -56,7 +56,7 @@ export const useAlarmStore = defineStore('alarm', () => {
       })
   }
 
-  const savedTempId = ref('');
+  const savedTempId = ref('0');
   const selectedTemp = ref({});
   const clickTemp = function (tempId) {
     savedTempId.value = tempId;
@@ -71,7 +71,6 @@ export const useAlarmStore = defineStore('alarm', () => {
   const updateAlarmVideoId = function (newVideoId) {
     console.log(newVideoId);
     savedAlarm.value.videoId = newVideoId;
-    alarmObject.value.videoId = newVideoId;
     console.log(savedAlarm.value);
   }
 
