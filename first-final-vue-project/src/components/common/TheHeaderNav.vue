@@ -1,7 +1,9 @@
 <template>
     <nav class="navbar">
         <div class="container">
-            <RouterLink class="navbar-brand" :to=logoLink>
+
+            <RouterLink class="navbar-brand" :to="{name:'alarmList'}">
+
                 <div class="logos">
                     <img src="/src/assets/img/Logo10.png" width="30px
                     
@@ -14,8 +16,8 @@
                 <RouterLink to="/alarm/list">
                     <button type="button" class="btn btn-outline-warning">나의 알람 목록</button>
                 </RouterLink>
-                <RouterLink @click.prevent="logout" to="/">
-                    <button type="button" class="btn btn-outline-secondary">로그아웃</button>
+                <RouterLink>
+                    <button  @click="logout" class="btn btn-outline-secondary">로그아웃</button>
                 </RouterLink>
             </div>
         </div>
@@ -44,7 +46,22 @@ onMounted(() => {
 })
 
 const logout = function() {
-    store.userLogout();
+    Swal.fire({
+        text: "로그아웃 하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+    }).then((result) => {
+    if (result.isConfirmed) {
+        Swal.fire({
+        text: "로그아웃 되었습니다.",
+        icon: "success"
+        });
+        store.userLogout();
+    }
+    });
 }
 
 </script>

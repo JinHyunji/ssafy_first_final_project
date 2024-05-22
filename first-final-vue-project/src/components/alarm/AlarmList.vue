@@ -68,6 +68,7 @@ const alarmMap = new Map();
 onMounted(async () => {
     await store.getAlarmList();
     listForAlarm.value = store.alarmList;
+    clearAlarm();
 })
 
 onUnmounted(() => {
@@ -144,9 +145,12 @@ watch(
                             console.log(newValue[j].title, "알림을 삭제함")
                             alarmMap.delete(newValue[j].alarmId);
                         }
+                        setTimeout(() => { alarmOn(curAlarm) }, plusGap)
+                        console.log(curAlarm.title, "알림을 활성화했습니다.", new Date());
                     }
                 }
             }
+        }
         }
     },
     { deep: true },
