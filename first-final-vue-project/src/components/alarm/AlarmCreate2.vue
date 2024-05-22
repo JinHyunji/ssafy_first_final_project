@@ -82,6 +82,7 @@ const youtubeStore = useYoutubeStore();
 
 const createAlarm = function () {
     store.createAlarm();
+    youtubeStore.checkedVideoTitle = null;
 }
 
 const fileToBase64 = function (file) {
