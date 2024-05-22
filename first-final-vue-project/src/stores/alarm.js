@@ -114,7 +114,7 @@ export const useAlarmStore = defineStore('alarm', () => {
         alarm.title,
         {
           image: imgSrc, // 경로를 바꾸라는 경고문이 뜨지만 바꾸면 이미지가 안뜸..
-          body: "alarm.duration" + " | 척추수술 1700만원",
+          body: alarm.exerType+" 운동",
           requireInteraction: true // true -> 사용자가 동작하기 전까지 꺼지지 않음
         });
       notification.onclick = (event) => {

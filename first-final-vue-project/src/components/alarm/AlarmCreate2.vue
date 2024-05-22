@@ -12,7 +12,7 @@
                         aria-describedby="passwordHelpBlock">
                 </div>
                 <div class="input">
-                    <label for="inputPassword5" class="form-label">영상 추가</label>
+                    <label class="form-label">영상 추가</label>
                     <br>
                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
@@ -51,7 +51,7 @@
                 </div>
                 <div class="input">
                     <div class="mb-3">
-                        <label for="inputPassword5" class="form-label">이미지 추가</label>
+                        <labe class="form-label">이미지 추가</labe>
                         <input multiple type="file" name="img" @change="imageUpload($event.target.files)"
                             ref="imageInput" class="form-control" id="formFile">
                     </div>

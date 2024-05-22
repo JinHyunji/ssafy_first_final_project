@@ -198,7 +198,6 @@ const deleteVideo = function () {
     youtubeStore.checkedVideoTitle = null;
 }
 
-
 </script>
 
 <style scoped>

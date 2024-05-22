@@ -1,7 +1,9 @@
 <template>
     <nav class="navbar">
         <div class="container">
+
             <RouterLink class="navbar-brand" :to="{name:'alarmList'}">
+
                 <div class="logos">
                     <img src="/src/assets/img/Logo10.png" width="30px
                     
@@ -29,6 +31,8 @@ import { useUserStore } from "@/stores/user";
 
 const store = useUserStore();
 const isLogined = ref(false);
+
+const logoLink = isLogined === true ? "/" : "/alarm/list";
 
 const restoreSession = function() {
     const savedUser = sessionStorage.getItem('loginUser');

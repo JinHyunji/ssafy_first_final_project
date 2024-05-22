@@ -51,14 +51,19 @@ export const useUserStore = defineStore('user', () => {
         text: `${res.data.nickname}` + "님 반갑습니다!",
         icon: "success"
       });
+
       sessionStorage.setItem('loginUser', JSON.stringify(res.data));
       router.push({name: 'alarmList'});
     })
     .catch((err) => {
+
       Swal.fire({
         text: "일치하는 회원 정보가 없습니다.",
         icon: "error"
       });
+
+      alert('일치하는 회원 정보가 없습니다.');
+
     })
   }
 

@@ -72,7 +72,7 @@ public class AlarmRestController {
 	@PutMapping("/alarm")
 	@Operation(summary = "알람 수정")
 	public ResponseEntity<?> modifyAlarm(@RequestBody Alarm alarm) {
-		if (alarm.getImg() != null && alarm.getImg().length() != 0) {
+		if (alarm.getImg() != null && alarm.getImg().length() != 0 && alarm.getImg().length() > 50) {
 			String alarmImgFileSource = alarmService.base64ToFileSource(alarm.getImg());
 			alarm.setImg(alarmImgFileSource);
 		} 
