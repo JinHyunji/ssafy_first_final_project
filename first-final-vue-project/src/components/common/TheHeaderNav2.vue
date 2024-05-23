@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar shadow-sm p-3 mb-3 bg-body rounded">
+    <nav class="navbar shadow-sm p-3 mb-3y bg-body rounded">
         <div class="container">
             <RouterLink class="navbar-brand" to="/">
                 <div class="logos">
