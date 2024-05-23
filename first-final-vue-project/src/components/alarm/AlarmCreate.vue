@@ -1,5 +1,5 @@
 <template>
-    <button @click="goCancel" style="margin-top: 30px; margin-left: 970px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <button @click="goCancel" style="margin-top: 20px; margin-left: 970px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     <div class="time-setting">
         <h3>시간 설정하기</h3>
         <div class="inputs">

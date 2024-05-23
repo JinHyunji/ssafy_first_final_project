@@ -101,10 +101,10 @@ const goBack = function() {
 
 <style scoped>
     .container {
+        margin-top: 80px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 60px;
     }
     .signup-inputs {
         display: flex;

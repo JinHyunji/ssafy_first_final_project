@@ -1,11 +1,11 @@
 <template>
-    <div class="position-absolute top-20 start-50 translate-middle-x mt-5">
+    <div class="position-absolute top-20 start-50 translate-middle-x mt-3">
         <div>
-            <h2 class="my-3 ms-4 mb-4">{{ user }}님의 알람목록</h2>
+            <h2 class="p-3 mb-2">{{ user }}님의 알람목록</h2>
         </div>
 
-        <div class="d-flex align-self-start" id="listBox">
-            <div class="d-flex flex-column mb-3 mx-3 my-1" id="alarmlistBox">
+        <div class="d-flex align-self-start shadow p-3 mb-5 bg-body-white rounded" id="listBox">
+            <div class="d-flex flex-column mb-3 mx-3 my-1">
                 <button type="button" class="btn btn btn-dark px-2 ms-auto p-1 mb-2" @click="createAlarm">새로운 알람
                     생성</button>
                 <div v-for="alarm in listForAlarm" :key="alarm.alarmId" class="d-flex w-100 m-2" id="alarmBox">
@@ -32,8 +32,8 @@
                 <div class="my-2">{{ targetAlarm.cycle }} 요일에</div>
                 <div class="my-2">{{ targetAlarm.startTime }}부터 {{ targetAlarm.endTime }}까지</div>
                 <div class="my-2">{{ targetAlarm.term }}분 마다</div>
-                <div class="my-2">{{ targetAlarm.exerType }} 운동을</div>
-                <img class="my-2" :src="targetAlarmImgSrc" style="width:100px">
+                <div class="my-2">{{ targetAlarm.exerType }} 운동</div>
+                <img class="my-2" :src="targetAlarmImgSrc" style="width:300px">
             </div>
 
         </div>
@@ -139,9 +139,7 @@ watch(
                 }
             });
         }
-    }
-
-    ,
+    },
     { deep: true },
 )
 
@@ -169,10 +167,12 @@ const changeShowAlarm = function (alarm) {
     targetAlarm.value.exerType = alarm.exerType;
     const weekArr = alarm.cycle.split("").map(Number);
     weekArr.sort();
+
     for (var i = 0; i < weekArr.length; i++) {
         targetAlarm.value.cycle += transWeek[weekArr[i]] + ", ";
     }
     targetAlarm.value.cycle = targetAlarm.value.cycle.slice(0, -2);
+
     if (alarm.videoId !== null && alarm.videoId.length === 11) {
         targetAlarmImgSrc.value = 'https://img.youtube.com/vi/' + alarm.videoId + "/mqdefault.jpg";
     } else if (alarm.img.length === 17) {
