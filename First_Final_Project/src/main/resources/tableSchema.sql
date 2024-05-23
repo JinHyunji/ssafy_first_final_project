@@ -34,7 +34,7 @@ CREATE TABLE `template` (
 );
 
 INSERT INTO template(temp_id, exer_type, video_id) VALUES 
-(1, '기타'),
+(1, '기타', ''),
 (2, '목', 'KurrgZEGhrs'),
 (3, '손목', 'PE1fnYPZno0'),
 (4, '복근', 'mUnSpfItRf0'),
