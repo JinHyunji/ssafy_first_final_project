@@ -1,7 +1,35 @@
 <template>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">ChatGPT</h1><h1 class="modal-title fs-5" id="exampleModalLabel" v-if="gptAnswer.length===0">의 답변을 기다리는 중</h1><h1 class="modal-title fs-5" id="exampleModalLabel" v-else>의 답변</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-box">
+                    <div v-if="gptAnswer.length===0" id="loading" class="position-absolute top-50 start-50 translate-middle">
+                        <div class="spinner-grow text-warning" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    {{ gptAnswer }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" >확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="position-absolute top-20 start-50 translate-middle-x mt-3">
         <div>
             <h2 class="p-3 mb-2">{{ user }}님의 알람목록</h2>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="ChatGPT에게 물어보기" aria-label="Recipient's username"
+                aria-describedby="button-addon2" v-model="gptInput">
+            <button class="btn btn-warning " type="button" id="button-addon2" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" @click="getGPTResponse()">검색</button>
         </div>
 
         <div class="d-flex align-self-start shadow p-3 mb-5 bg-body-white rounded" id="listBox">
@@ -45,6 +73,7 @@
 import { ref, onMounted, onUpdated, watch, computed, onBeforeMount, onUnmounted } from 'vue';
 import { useAlarmStore } from '@/stores/alarm';
 import { useRouter } from 'vue-router';
+import OpenAI from 'openai';
 
 const store = useAlarmStore();
 const router = useRouter();
@@ -64,6 +93,8 @@ const user = JSON.parse(sessionStorage.getItem('loginUser')).nickname;
 
 const listForAlarm = ref([]);
 const alarmMap = new Map();
+let gptAnswer = ref("");
+const gptInput = ref("");
 
 onMounted(async () => {
     await store.getAlarmList();
@@ -123,7 +154,7 @@ watch(
 
                                 alarmMap.set(curAlarm, 0);
                                 setTimeout(() => { alarmOn(curAlarm) }, plusGap)
-                                console.log(curAlarm.title, "알림을 활성화했습니다.", new Date(), " 알림까지 남은 시간 : ", Math.floor(plusGap / 60 / 1000), "분 ", Math.floor(plusGap/1000)%60, "초");
+                                console.log(curAlarm.title, "알림을 활성화했습니다.", new Date(), " 알림까지 남은 시간 : ", Math.floor(plusGap / 60 / 1000), "분 ", Math.floor(plusGap / 1000) % 60, "초");
                                 console.log(alarmMap)
                             }
                         }
@@ -180,6 +211,31 @@ const changeShowAlarm = function (alarm) {
     }
 }
 
+const getGPTResponse = async () => {
+    try {
+        gptAnswer.value = "";
+        const openai = new OpenAI({
+            apiKey: ``,
+            dangerouslyAllowBrowser: true,
+        })
+
+        const response = await openai.chat.completions.create({
+            messages: [
+                {
+                    role: 'user',
+                    content: `${gptInput.value} 라는 질문에 대해 줄바꿈해서 답변해줘`,
+                },
+            ],
+            model: 'gpt-3.5-turbo',
+        })
+        gptAnswer.value = response.choices[0].message.content;
+        console.log('chatGPT 결과: ', response.choices[0].message.content)
+
+    } catch (error) {
+        console.log('chatGPT: 🚨 에러가 발생했습니다.')
+    }
+}
+
 const modifyAlarm = function (id) {
     router.push({ name: 'alarmModify', params: { alarmId: id } });
 }
@@ -215,4 +271,10 @@ const previewAlarm = function (alarm) {
 #infoBox {
     max-width: 400px;
 }
+
+#modal-box{
+    min-width: 400px;
+    min-height: 600px;
+}
+
 </style>
