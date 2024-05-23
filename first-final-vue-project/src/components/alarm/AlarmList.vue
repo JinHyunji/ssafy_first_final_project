@@ -4,7 +4,7 @@
             <h2 class="p-3 mb-2">{{ user }}님의 알람목록</h2>
         </div>
 
-        <div class="d-flex align-self-start shadow p-3 mb-5 bg-body-white rounded" id="listBox">
+        <div class="d-flex justify-content-evenly shadow p-3 mb-5 bg-light text-warning-emphasis" id="listBox">
             <div class="d-flex flex-column mb-3 mx-3 my-1">
                 <button type="button" class="btn btn btn-dark px-2 ms-auto p-1 mb-2" @click="createAlarm">새로운 알람
                     생성</button>

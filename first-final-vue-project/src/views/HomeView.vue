@@ -2,8 +2,8 @@
   <!-- <TheHeaderNav/> -->
   <div class="container"> 
     <img class="homeImg" src="/src/assets/img/Logo10.png">
-    <h1 class="logo">Alarm Service</h1>
-    <p>맞춤 운동 알람을 경험해보세요.</p>
+    <h1 class="logo">알써 알써</h1>
+    <p>맞춤 운동 알람을 경험해보세요!</p>
     <div class="home-btns">
       <RouterLink to="/login">
         <button type="button" class="btn btn-outline-warning">로그인</button>
@@ -48,4 +48,5 @@ import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
   p {
     color: grey;;
   }
+  
 </style>
