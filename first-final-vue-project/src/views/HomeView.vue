@@ -25,6 +25,7 @@ import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
     flex-direction: column;
     align-items: center;
     margin-top: 150px;
+    width: 30%;
   }
   .homeImg {
     width: 150px;

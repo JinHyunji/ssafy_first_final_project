@@ -1,5 +1,5 @@
 <template>
-    <button @click="goCancel" style="margin-top: 30px; margin-left: 1060px;" class="btn-close" data-bs-dismiss="modal"
+    <button @click="goCancel" style="margin-top: 30px; margin-left: 1120px;" class="btn-close" data-bs-dismiss="modal"
         aria-label="Close"></button>
     <div class="exer-setting-all">
         <AlarmTemplateList />
@@ -125,6 +125,7 @@ const search = function () {
 
 const deleteVideo = function () {
     youtubeStore.checkedVideoTitle = null;
+    store.savedAlarm.videoId = null;
 }
 
 const goCancel = function () {

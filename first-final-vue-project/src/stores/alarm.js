@@ -23,12 +23,12 @@ export const useAlarmStore = defineStore('alarm', () => {
     await axios.get(`${REST_ALARM_API}/${alarmId}`)
       .then((res) => {
         alarmObject.value = res.data;
-        // console.log(alarmObject);
+        // console.log(alarmObject.value);
       })
   }
 
   const modifyAlarm = function () {
-    console.log(alarmObject.value.tempId)
+    // console.log(alarmObject.value.tempId)
     axios.put(REST_ALARM_API, alarmObject.value)
       .then((res) => {
         router.push({ name: 'alarmList' })
@@ -63,6 +63,7 @@ export const useAlarmStore = defineStore('alarm', () => {
     axios.get(`${REST_TEMP_API}/${tempId}`)
       .then((res) => {
         savedAlarm.value.exerType = res.data.exerType;
+        alarmObject.value.exerType = res.data.exerType;
         savedAlarm.value.videoId = res.data.videoId;
         savedAlarm.value.img = res.data.img;
       })
@@ -76,6 +77,7 @@ export const useAlarmStore = defineStore('alarm', () => {
   }
 
   const createAlarm = function () {
+    alarmObject.value.exerType = savedAlarm.value.exerType; 
     axios.post(`${REST_ALARM_API}/${savedTempId.value}`, savedAlarm.value)
       .then((res) => {
         router.push({ name: 'alarmList' });

@@ -1,7 +1,7 @@
 <template>
     <TheHeaderNav2/>
     <div onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
-        <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="position-absolute top-50 start-50 translate-middle ">
             <div class="d-flex flex-column align-items-start" id="loginBox">
                 <div class="mx-auto p-2 bd-highlight">
                     <h2>Login</h2>
