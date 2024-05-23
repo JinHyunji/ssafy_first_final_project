@@ -8,7 +8,7 @@
                     <img src="/src/assets/img/Logo10.png" width="30px
                     
                     ">
-                    <h3 style="color: #FFC107;"> Alarm</h3>
+                    <h3 style="color: #FFC107;"> 알써 알써</h3>
                 </div>
 
             </RouterLink>
