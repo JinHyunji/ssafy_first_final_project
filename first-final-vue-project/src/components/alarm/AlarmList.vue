@@ -237,7 +237,7 @@ const getGPTResponse = async () => {
             messages: [
                 {
                     role: 'user',
-                    content: `${gptInput.value} 라는 질문에 대해 줄바꿈해서 답변해줘`,
+                    content: `${gptInput.value}`,
                 },
             ],
             model: 'gpt-3.5-turbo',
@@ -246,7 +246,7 @@ const getGPTResponse = async () => {
         console.log('chatGPT 결과: ', response.choices[0].message.content)
 
     } catch (error) {
-        console.log('chatGPT: 🚨 에러가 발생했습니다.')
+        console.log("에러 발생")
     }
 }
 
