@@ -32,8 +32,6 @@
                 data-bs-target="#exampleModal" @click="getGPTResponse()">검색</button>
         </div>
 
-
-
         <div class="d-flex align-self-start shadow p-3 mb-5 bg-body-white rounded" id="listBox">
             <div class="d-flex flex-column mb-3 mx-3 my-1">
                 <button type="button" class="btn btn btn-dark px-2 ms-auto p-1 mb-2" @click="createAlarm">새로운 알람
