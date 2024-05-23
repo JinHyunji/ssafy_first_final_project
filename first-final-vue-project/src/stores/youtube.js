@@ -23,7 +23,6 @@ export const useYoutubeStore = defineStore('youtube', () => {
         })
         .then((res) => {
             videos.value = res.data.items
-            console.log(videos.value);
         })
     }
 
