@@ -114,12 +114,25 @@
                 <div class="input">
                     <label for="inputPassword5" class="form-label">영상 추가</label>
                     <br>
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         영상 검색
                     </button>
                     <span style="margin: 0px 5px 0px 10px;">{{ youtubeStore.checkedVideoTitle }}</span>
                     <button @click="deleteVideo" v-if="youtubeStore.checkedVideoTitle" class="btn-close"
+                        aria-label="Close"></button> -->
+                    <div class="d-flex flex-column mb-3">
+                        <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            영상 검색
+                        </button>
+                        <iframe v-if="store.alarmObject.videoId != null && store.alarmObject.videoId.length === 11" width="500px" height="280px"
+                            :src="getVideoSrc(store.alarmObject.videoId)" title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button @click="deleteVideo" v-if="store.alarmObject.videoId" class="btn-close"
                         aria-label="Close"></button>
                     
                 </div>
@@ -157,7 +170,6 @@ const selectedDay = ref([]);
 onMounted(async () => {
     await store.getAlarm(route.params.alarmId);
     selectedDay.value = store.alarmObject.cycle.split("");
-    console.log(selectedDay.value)
     store.getTemplates();
 })
 
@@ -206,6 +218,13 @@ const search = function () {
 
 const deleteVideo = function () {
     youtubeStore.checkedVideoTitle = null;
+    store.savedAlarm.videoId = null;
+    store.alarmObject.videoId = null;
+}
+
+const getVideoSrc = function (videoLink) {
+    console.log('www.youtube.com?v=' + videoLink);
+    return "https://www.youtube.com/embed/" + videoLink;
 }
 
 </script>

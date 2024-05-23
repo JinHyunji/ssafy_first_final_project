@@ -23,12 +23,12 @@ export const useAlarmStore = defineStore('alarm', () => {
     await axios.get(`${REST_ALARM_API}/${alarmId}`)
       .then((res) => {
         alarmObject.value = res.data;
-        // console.log(alarmObject);
+        // console.log(alarmObject.value);
       })
   }
 
   const modifyAlarm = function () {
-    console.log(alarmObject.value.tempId)
+    // console.log(alarmObject.value.tempId)
     axios.put(REST_ALARM_API, alarmObject.value)
       .then((res) => {
         router.push({ name: 'alarmList' })
@@ -102,7 +102,6 @@ export const useAlarmStore = defineStore('alarm', () => {
     }
 
     let imgSrc = "";
-    console.log(alarm.videoId)
     if (alarm.videoId !== null && alarm.videoId.length === 11) {
       imgSrc = 'https://img.youtube.com/vi/' + alarm.videoId + "/mqdefault.jpg";
     } else {

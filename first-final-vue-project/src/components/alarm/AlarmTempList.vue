@@ -13,6 +13,7 @@
 
 <script setup>
 import { useAlarmStore } from '@/stores/alarm';
+import { useYoutubeStore } from '@/stores/youtube';
 import { onMounted, ref } from 'vue';
 const store = useAlarmStore();
 const tempCnt = ref(0);

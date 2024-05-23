@@ -14,11 +14,17 @@
                 <div class="input">
                     <label class="form-label">영상 추가</label>
                     <br>
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        영상 검색
-                    </button>
-                    <span style="margin: 0px 5px 0px 10px;">{{ youtubeStore.checkedVideoTitle }}</span>
+                    <div class="d-flex flex-column mb-3">
+                        <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            영상 검색
+                        </button>
+                        <iframe v-if="store.savedAlarm.videoId != null && store.savedAlarm.videoId.length === 11" width="500px" height="280px"
+                            :src="getVideoSrc(store.savedAlarm.videoId)" title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        </iframe>
+                    </div>
                     <button @click="deleteVideo" v-if="youtubeStore.checkedVideoTitle" class="btn-close"
                         aria-label="Close"></button>
 
@@ -106,6 +112,11 @@ const imageUpload = async (gotImage) => {
     }
 }
 
+const getVideoSrc = function (videoLink) {
+    console.log('www.youtube.com?v=' + videoLink);
+    return "https://www.youtube.com/embed/" + videoLink;
+}
+
 const keyword = ref('');
 
 const search = function () {
@@ -114,6 +125,7 @@ const search = function () {
 
 const deleteVideo = function () {
     youtubeStore.checkedVideoTitle = null;
+    store.savedAlarm.videoId = null;
 }
 
 const goCancel = function () {

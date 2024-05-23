@@ -3,18 +3,18 @@
     <div class="container">
         <h3 class="shadow p-3 mb-5 w-50 text-center bg-body-tertiary rounded rounded-pill">
             {{ store.alarmObject.title }}
-        </h3>  
-        <div class="border border-warning-subtle border border-2" v-if="store.alarmObject.img">
-            <img :src="getImgSrc(store.alarmObject.img)">
-        </div>
-        <div class="" v-else-if="store.alarmObject.videoId">
+        </h3>    
+        <div class="" v-if="store.alarmObject.videoId">
             <iframe class="rounded-4" width= "700px" height="393.75px" :src="getVideoSrc(store.alarmObject.videoId)"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
             </iframe>
         </div>
-        <div class="border border-warning-subtle border border-2" v-else>
+        <div class="" v-else-if="store.alarmObject.img">
+            <img :src="getImgSrc(store.alarmObject.img)">
+        </div>
+        <div class="" v-else>
 
         </div>
     </div>
