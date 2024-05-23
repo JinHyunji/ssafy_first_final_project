@@ -129,7 +129,7 @@ const deleteVideo = function () {
 }
 
 const goCancel = function () {
-    router.push({ name: 'alarmList' })
+    router.push({ name:'alarmList'});
 }
 </script>
 
