@@ -8,6 +8,6 @@ public interface UserService {
 	
 	public User login(String id, String password);
 	
-	public User getUserByID(String id);
+	public User getUserByID(String userId);
 
 }

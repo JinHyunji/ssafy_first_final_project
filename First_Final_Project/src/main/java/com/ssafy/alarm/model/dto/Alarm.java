@@ -15,6 +15,7 @@ public class Alarm {
 	private String videoId;
 	private String img;
 	private String userId;
+	private String activate;
 	
 	public Alarm() {
 	}
@@ -99,11 +100,20 @@ public class Alarm {
 		this.userId = userId;
 	}
 
+	public String getActivate() {
+		return activate;
+	}
+
+	public void setActivate(String activate) {
+		this.activate = activate;
+	}
+
 	@Override
 	public String toString() {
 		return "Alarm [alarmId=" + alarmId + ", title=" + title + ", startTime=" + startTime + ", endTime=" + endTime
 				+ ", term=" + term + ", cycle=" + cycle + ", exerType=" + exerType + ", videoId=" + videoId + ", img="
-				+ img + ", userId=" + userId + "]";
+				+ img + ", userId=" + userId + ", activate=" + activate + "]";
 	}
-	
+
+
 }

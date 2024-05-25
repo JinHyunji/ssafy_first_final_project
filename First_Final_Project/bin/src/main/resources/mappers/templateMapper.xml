@@ -10,7 +10,16 @@
 		from template
 		where temp_id = #{tempId};
 	</select>
+	
+	<select id="selectAll">
+		select *
+		from template;
+	</select>
 
-
+	<update id="countTemp" parameterType="Integer">
+		update template
+		set count = count+1
+		where temp_id = #{tempId};
+	</update>
 
 </mapper>

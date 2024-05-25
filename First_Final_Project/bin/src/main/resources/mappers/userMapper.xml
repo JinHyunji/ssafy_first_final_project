@@ -4,7 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
 <mapper namespace="com.ssafy.alarm.model.dao.UserDao">
-
 <insert id="insertUser" parameterType="User">
 	INSERT INTO user (user_id, password, nickname, email)
 	VALUES (#{userId}, #{password}, #{nickname}, #{email});
@@ -19,8 +18,6 @@
 <select id="selectById" parameterType="String">
 	SELECT *
 	FROM user
-	WHERE user_id = #{value};
+	WHERE user_id = #{userId};
 </select>
-
-
 </mapper>

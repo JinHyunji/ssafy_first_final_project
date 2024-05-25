@@ -20,7 +20,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api-exerinfo")
-@CrossOrigin("*")
 @Tag(name = "ExerInfoController", description = "운동 정보 조회")
 public class ExerInfoController {
 	

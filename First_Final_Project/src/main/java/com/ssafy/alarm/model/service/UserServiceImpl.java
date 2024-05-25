@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getUserByID(String id) {
-		return userDao.selectById(id);
+	public User getUserByID(String userId) {
+		return userDao.selectById(userId);
 	}
 	
 

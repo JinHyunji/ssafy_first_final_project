@@ -28,8 +28,15 @@
 		where alarm_id = #{alarmId};
 	</select>
 
-	<select id="selectAll">
+	<select id="selectAllByUserId" parameterType="String">
 		select *
-		from alarm;
+		from alarm
+		where user_id = #{userId};
 	</select>
+	
+	<update id="alarmOnOff" parameterType="Map">
+		update alarm
+		set activate = #{alarmAct}
+		where alarm_id = #{alarmId};
+	</update>
 </mapper>
