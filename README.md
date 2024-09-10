@@ -10,7 +10,7 @@
 <br>
 
 ## 서비스 화면
-### 알람 시연 영상
+### 시연 영상
 - [유튜브 링크](https://www.youtube.com/watch?v=t-qRwD1HJkY)
 
 <br>
