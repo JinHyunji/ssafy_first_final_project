@@ -179,7 +179,6 @@ const clickTemp = function(tempId) {
 
 const modified = function () {
     store.alarmObject.cycle = selectedDay.value.join('');
-    console.log(selectedDay)
     store.modifyAlarm();
     youtubeStore.checkedVideoTitle = null;
 }
@@ -199,7 +198,6 @@ const imageUpload = async (gotImage) => {
             // const imageName = gotImage[0].name;
             const data = await fileToBase64(gotImage[0]);
             store.alarmObject.img = data;
-            // console.log(data);
         } catch (error) {
             alert("파일을 변환하는데 실패했습니다.")
         }
@@ -223,7 +221,6 @@ const deleteVideo = function () {
 }
 
 const getVideoSrc = function (videoLink) {
-    console.log('www.youtube.com?v=' + videoLink);
     return "https://www.youtube.com/embed/" + videoLink;
 }
 

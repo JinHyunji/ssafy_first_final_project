@@ -28,7 +28,6 @@ export const useAlarmStore = defineStore('alarm', () => {
   }
 
   const modifyAlarm = function () {
-    console.log(alarmObject.value.tempId)
     axios.put(REST_ALARM_API, alarmObject.value)
       .then((res) => {
         router.push({ name: 'alarmList' })
@@ -70,14 +69,12 @@ export const useAlarmStore = defineStore('alarm', () => {
   }
 
   const updateAlarmVideoId = function (newVideoId) {
-    console.log(newVideoId);
     savedAlarm.value.videoId = newVideoId;
     alarmObject.value.videoId = newVideoId;
-    console.log(savedAlarm.value);
   }
 
   const createAlarm = function () {
-    alarmObject.value.exerType = savedAlarm.value.exerType; 
+    alarmObject.value.exerType = savedAlarm.value.exerType;
     axios.post(`${REST_ALARM_API}/${savedTempId.value}`, savedAlarm.value)
       .then((res) => {
         router.push({ name: 'alarmList' });
@@ -90,14 +87,12 @@ export const useAlarmStore = defineStore('alarm', () => {
   const alarmOnOff = function (alarmId) {
     axios.get(`${REST_ALARM_API}/onoff/${alarmId}`)
       .then((res) => {
-        console.log("알림 온오프 완료");
       })
   }
 
-  const callAlarm = (alarm, isNew="true") => {
+  const callAlarm = (alarm, isNew = "true") => {
 
-    if (isNew==="true" && calculateGap(alarm.endTime) > 0) {
-      console.log("페이지를 로드하여 알람을 비활성화합니다.");
+    if (isNew === "true" && calculateGap(alarm.endTime) > 0) {
       router.go(0);
     }
 
@@ -115,7 +110,7 @@ export const useAlarmStore = defineStore('alarm', () => {
         alarm.title,
         {
           image: imgSrc, // 경로를 바꾸라는 경고문이 뜨지만 바꾸면 이미지가 안뜸..
-          body: alarm.exerType+" 운동",
+          body: alarm.exerType + " 운동",
           requireInteraction: true // true -> 사용자가 동작하기 전까지 꺼지지 않음
         });
       notification.onclick = (event) => {
@@ -123,7 +118,6 @@ export const useAlarmStore = defineStore('alarm', () => {
         window.open("http://localhost:5173/popup/" + alarm.alarmId, "_blank");
       };
 
-      console.log(alarm.title, "알림이 전송되었습니다.", new Date())
 
     } else if (Notification.permission !== "denied") {
       Notification.requestPermission().then((permission) => {
@@ -133,6 +127,7 @@ export const useAlarmStore = defineStore('alarm', () => {
       });
     }
   }
+
 
   const calculateGap = function (timeString) {
     const timeArr = timeString.split(":").map(Number);
@@ -146,6 +141,8 @@ export const useAlarmStore = defineStore('alarm', () => {
     return timeGap;
   }
 
+  const alarmMap = new Map();
+  const firstAlarmMap = new Map();
 
   return {
     alarmList,
@@ -166,6 +163,8 @@ export const useAlarmStore = defineStore('alarm', () => {
     updateAlarmVideoId,
     alarmOnOff,
     calculateGap,
+    alarmMap,
+    firstAlarmMap,
 
 
   }

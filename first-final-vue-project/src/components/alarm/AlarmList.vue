@@ -4,11 +4,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">ChatGPT</h1><h1 class="modal-title fs-5" id="exampleModalLabel" v-if="gptAnswer.length===0">의 답변을 기다리는 중</h1><h1 class="modal-title fs-5" id="exampleModalLabel" v-else>의 답변</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">ChatGPT</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" v-if="gptAnswer.length === 0">의 답변을 기다리는 중</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" v-else>의 답변</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modal-box">
-                    <div v-if="gptAnswer.length===0" id="loading" class="position-absolute top-50 start-50 translate-middle">
+                    <div v-if="gptAnswer.length === 0" id="loading"
+                        class="position-absolute top-50 start-50 translate-middle">
                         <div class="spinner-grow text-warning" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
@@ -16,7 +19,7 @@
                     {{ gptAnswer }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" >확인</button>
+                    <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">확인</button>
                 </div>
             </div>
         </div>
@@ -31,7 +34,7 @@
             <button class="btn btn-warning " type="button" id="button-addon2" data-bs-toggle="modal"
                 data-bs-target="#exampleModal" @click="getGPTResponse()">검색</button>
         </div>
-        <div class="d-flex justify-content-evenly shadow p-3 mb-5 bg-light text-warning-emphasis" id="listBox">
+        <div class="d-flex justify-content-end shadow p-3 mb-5 bg-light text-warning-emphasis" id="listBox">
             <div class="d-flex flex-column mb-3 mx-3 my-1">
                 <button type="button" class="btn btn btn-dark px-2 ms-auto p-1 mb-2" @click="createAlarm">새로운 알람
                     생성</button>
@@ -91,7 +94,6 @@ const targetAlarmImgSrc = ref("/src/assets/img/Logo10.png")
 const user = JSON.parse(sessionStorage.getItem('loginUser')).nickname;
 
 const listForAlarm = ref([]);
-const alarmMap = new Map();
 let gptAnswer = ref("");
 const gptInput = ref("");
 
@@ -101,23 +103,17 @@ onMounted(async () => {
 })
 
 onUnmounted(async () => {
-    console.log(alarmMap)
     await clearAlarm();
-    console.log(alarmMap)
 })
 
 const alarmOn = function (alarm) {
-    console.log(alarmMap)
-    if (alarmMap.has(alarm)) {
-        console.log(alarm.title, "알림을 초기화합니다.")
+    if (store.alarmMap.has(alarm) && store.alarmMap.get(alarm) !== 0) {
         clearInterval(alarm);
     }
 
     store.callAlarm(alarm);
     const newAlarm = setInterval(() => store.callAlarm(alarm), alarm.term * 1000 * 60);
-    alarmMap.set(alarm, newAlarm);
-    console.log(alarm.title, "알림 자동전송이 설정되었습니다.")
-    console.log(alarmMap)
+    store.alarmMap.set(alarm, newAlarm);
 }
 
 watch(
@@ -125,12 +121,9 @@ watch(
     async (newValue, oldValue) => {
 
         if (oldValue.length === 0) {
-            console.log("알림 재설정 로드")
-            console.log("처음 로드되었을 때의 map 정보", alarmMap)
-
             //처음 로드되었을 경우, 시간을 계산해서 일회성 알림을 보내야 함
             for (var j = 0; j < newValue.length; j++) {
-                if (!alarmMap.has(newValue[j])) {
+                if (!store.alarmMap.has(newValue[j])) {
                     if (newValue[j].activate === "true" || newValue[j].activate === true) {
                         if (newValue[j].term === 0) {
                             alert("알림 간격이 0인 알림을 비활성화 함");
@@ -151,21 +144,23 @@ watch(
                                     plusGap = Math.abs(calTime);
                                 }
 
-                                alarmMap.set(curAlarm, 0);
-                                setTimeout(() => { alarmOn(curAlarm) }, plusGap)
-                                console.log(curAlarm.title, "알림을 활성화했습니다.", new Date(), " 알림까지 남은 시간 : ", Math.floor(plusGap / 60 / 1000), "분 ", Math.floor(plusGap / 1000) % 60, "초");
-                                console.log(alarmMap)
+                                store.alarmMap.set(curAlarm, 0);
+                                if (store.firstAlarmMap.has(curAlarm.alarmId)) {
+                                    clearTimeout(curAlarm.alarmId);
+                                    store.firstAlarmMap.delete(curAlarm.alarmId);
+                                }
+                                const newTimeOut = setTimeout(() => { alarmOn(curAlarm) }, plusGap)
+                                store.firstAlarmMap.set(curAlarm.alarmId, newTimeOut);
                             }
                         }
                     }
                 }
             }
         } else {
-            alarmMap.forEach((newAlarm, alarm) => {
+            store.alarmMap.forEach((newAlarm, alarm) => {
                 if (!alarm.activate) {
-                    console.log(alarm.title, "알림의 자동전송을 삭제합니다.")
-                    clearInterval(newAlarm);  // intervalId는 newAlarm을 의미
-                    alarmMap.delete(alarm);
+                    clearInterval(newAlarm);
+                    store.alarmMap.delete(alarm);
                 }
             });
         }
@@ -178,12 +173,14 @@ const changed = function (alarm) {
 }
 
 const clearAlarm = function () {
-    console.log("clearAlarm")
-    alarmMap.forEach((newAlarm, alarm) => {
-        console.log(newAlarm, alarm);
+    store.alarmMap.forEach((newAlarm, alarm) => {
         clearInterval(newAlarm);  // intervalId는 newAlarm을 의미
     });
-    alarmMap.clear();
+    store.alarmMap.clear();
+    store.firstAlarmMap.forEach((newAlarm, alarmId) => {
+        clearTimeout(newAlarm);  // intervalId는 newAlarm을 의미
+    });
+    store.firstAlarmMap.clear();
 }
 
 const transWeek = ["0", "월", "화", "수", "목", "금", "토", "일"];
@@ -214,7 +211,7 @@ const getGPTResponse = async () => {
     try {
         gptAnswer.value = "";
         const openai = new OpenAI({
-            apiKey: ``,
+            apiKey: `sk-proj-FXqBoGDtt4CV7rDKOdQwT3BlbkFJunGiDCoyLD1Hj2RWcQPo`,
             dangerouslyAllowBrowser: true,
         })
 
@@ -222,7 +219,7 @@ const getGPTResponse = async () => {
             messages: [
                 {
                     role: 'user',
-                    content: `${gptInput.value} 라는 질문에 대해 줄바꿈해서 답변해줘`,
+                    content: `${gptInput.value}`,
                 },
             ],
             model: 'gpt-3.5-turbo',
@@ -231,7 +228,7 @@ const getGPTResponse = async () => {
         console.log('chatGPT 결과: ', response.choices[0].message.content)
 
     } catch (error) {
-        console.log('chatGPT: 🚨 에러가 발생했습니다.')
+        console.log("에러 발생")
     }
 }
 
@@ -271,9 +268,8 @@ const previewAlarm = function (alarm) {
     max-width: 400px;
 }
 
-#modal-box{
+#modal-box {
     min-width: 400px;
     min-height: 600px;
 }
-
 </style>

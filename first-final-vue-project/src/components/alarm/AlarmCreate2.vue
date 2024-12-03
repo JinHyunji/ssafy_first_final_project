@@ -113,7 +113,6 @@ const imageUpload = async (gotImage) => {
 }
 
 const getVideoSrc = function (videoLink) {
-    console.log('www.youtube.com?v=' + videoLink);
     return "https://www.youtube.com/embed/" + videoLink;
 }
 
